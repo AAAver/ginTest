@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
+import common.LoginPage;
+import inspection.InspectionObjectTab;
 import tests.BaseTest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,12 +33,14 @@ public class TestFake extends BaseTest {
 	}
 
 	@Test(priority = 1, description = "Один из методов")
-	public void screenShotTest() throws IOException {
-		String time = new SimpleDateFormat("yyyy_MM_dd_HH_mm").format(new Date());
-		System.out.println(time);
-		driver.get("https://yandex.ru");
-		Assert.assertTrue(true);
-		log.info("HELLO");
+	public void screenShotTest() throws InterruptedException {
+		driver.get("http://10.127.48.19/GinRelease598/Controls/EditInsp/842993");
+		LoginPage l = new LoginPage(driver);
+		l.loginAs("3","password123");
+		InspectionObjectTab obj = new InspectionObjectTab(driver);
+		obj.objectTabSwitch();
+		obj.setObjSquare("300");
+
 	}
 
 

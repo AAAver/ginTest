@@ -78,6 +78,7 @@ public class InspectionPage extends CommonPage {
 	By addExactUbsBtn = By.xpath("//*[@id='unauth-table-container'] //a[contains(@class,'choice-btn')]");
 	By acceptUbsModal = By.xpath("//*[@id='bind-to-unauth-dlg']/following-sibling::div //button[contains(@class,'btn-success')]");
 
+	By kadastrNum = By.id("KadastrZu");
 
 	public void verify() throws InterruptedException {
 		scrollToTop();

@@ -4,11 +4,8 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Locale;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,18 +15,16 @@ import com.github.javafaker.Faker;
 import misc.Generator;
 
 public class InspectionObjectTab extends InspectionPage {
-
+	WebDriver driver;
+	WebDriverWait wait;
 	public InspectionObjectTab(WebDriver driver) {
 		super(driver);
+		this.driver = driver;
 	}
 
 	String owner = fake.name().fullName();
 	String kadastrNumberNf = Generator.fakeKadastr();	
 	String unom = fake.number().digits(5);
-	
-
-	// Все(ну почти все) справочники в дропдаунах
-	By select2drop = By.xpath("//div[@id='select2-drop'] //ul/li");
 
 	// Данные объекта
 	By okrug = By.id("s2id_AoIdM");
@@ -40,7 +35,7 @@ public class InspectionObjectTab extends InspectionPage {
 	By objSquare = By.id("SquareM");
 	By explotationRight = By.id("s2id_ExploitationRightCtId");
 	By kadastrYN = By.id("s2id_HasKadastrZuRegistration");
-	By kadastrNum = By.id("KadastrZu");
+
 	By objTypeDrop = By.id("s2id_ObjectTypeCtIds");
 	By clearTypeBtn = By.xpath("//*[@id='s2id_ObjectTypeCtIds'] //a");
 
@@ -75,50 +70,32 @@ public class InspectionObjectTab extends InspectionPage {
 
 	
 	//===============ДАННЫЕ ОБЪЕКТА===============//
-	private WebElement fieldAddressKIM() {
-		wait.until(ExpectedConditions.visibilityOfElementLocated(addressKIM));
-		return driver.findElement(addressKIM);
-	}
-	private WebElement fieldObjSqr() {
-		wait.until(ExpectedConditions.visibilityOfElementLocated(objSquare));
-		return driver.findElement(objSquare);
-	}
-	private WebElement fieldKadNum() {
-		return driver.findElement(kadastrNum);
-	}
+
 	public void setAddress(String address) {
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();",
-				fieldAddressKIM());
-		((JavascriptExecutor) driver).executeScript("window.scrollBy(0,-200)");
-		
-		fieldAddressKIM().clear();
-		fieldAddressKIM().sendKeys(address);
+		scrollIntoViewBy(addressKIM);
+		clearField(addressKIM);
+		writeText(addressKIM, address);
 	}
-	public void setObjSquare(String objSquare) {
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();",
-				fieldObjSqr());
-		((JavascriptExecutor) driver).executeScript("window.scrollBy(0,-200)");
-		
-		fieldObjSqr().clear();
-		fieldObjSqr().sendKeys(objSquare);
+
+	public void setObjSquare(String objectSquare) {
+		scrollIntoViewBy(objSquare);
+		if(!getAttributeValue(objSquare, "value").isEmpty()) {
+			clearField(objSquare);
+		}
+		writeText(objSquare, objectSquare);
 	}
 	public void pickKadNumExist(boolean kadNumExist) {
-		wait.until(ExpectedConditions.visibilityOfElementLocated(kadastrYN));
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();",
-				driver.findElement(kadastrYN));
-		((JavascriptExecutor) driver).executeScript("window.scrollBy(0,-200)");
-		
-		driver.findElement(kadastrYN).click();
-		List<WebElement> decisions = driver.findElements(select2drop);
+		scrollIntoViewBy(kadastrYN);
+		click(kadastrYN);
+		var decisions = getElementList(select2drop);
 		if (kadNumExist) {
-			decisions.get(0).click();
-			wait.until(ExpectedConditions.visibilityOfElementLocated(kadastrNum));	
-			fieldKadNum().clear();
-			fieldKadNum().sendKeys(Generator.fakeKadastr());
+			click(decisions.get(0));
+			waitVisibility(kadastrNum);
+			clearField(kadastrNum);
+			writeText(kadastrNum, Generator.fakeKadastr());
 		} else {
-			decisions.get(1).click();
+			click(decisions.get(1));
 		}
-
 	}
 		
 	//============= ТАБЛИЦА ИНФОРМАЦИЯ О ЗДАНИИ ИЗ ЕГРН ===========//
@@ -185,10 +162,10 @@ public class InspectionObjectTab extends InspectionPage {
 		okrug().click();
 		Thread.sleep(500);
 		List<WebElement> okrugs = driver.findElements(select2drop);
-		for (int i = 0; i < okrugs.size(); i++) {
-			String okrugName = okrugs.get(i).getText();
+		for (WebElement webElement : okrugs) {
+			String okrugName = webElement.getText();
 			if (okrugName.contains(AO)) {
-				okrugs.get(i).click();
+				webElement.click();
 				break;
 			}
 
@@ -235,17 +212,7 @@ public class InspectionObjectTab extends InspectionPage {
 		}
 
 	}
-	public void fillCommonInfo() {
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();",
-				explotationRigth());
-		((JavascriptExecutor) driver).executeScript("window.scrollBy(0,-200)");
-		
-		explotationRigth().click();
-		List<WebElement> rights = driver.findElements(select2drop);
-		rights.get(Generator.getRandomUpTo(rights.size())).click();
-		fieldAddressKIM().clear();
-		fieldAddressKIM().sendKeys(fake.address().streetAddress());
-	}
+
 	public void setObjType(String objType) {
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(objTypeDrop));
 		((JavascriptExecutor) driver).executeScript("window.scrollBy(0,-200)");

@@ -56,16 +56,14 @@ public class CommonPage {
 
     public void scrollIntoViewBy(By elementLocator) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(elementLocator));
-        if (!driver.findElement(elementLocator).isDisplayed()) {
-            ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,-200)");
-        }
+        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,-200)");
+
     }
 
     public void scrollIntoViewBy(WebElement element) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
-        if (!element.isDisplayed()) {
-            ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,-200)");
-        }
+        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,-200)");
+
     }
 
     public void scrollToBottom() {
@@ -86,6 +84,22 @@ public class CommonPage {
 
     public void waitVisibilityMultipleElements(By by) {
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
+    }
+
+    public String getAttributeValue (By by, String attribute){
+        waitVisibility(by);
+        return driver.findElement(by).getAttribute(attribute);
+    }
+    public String getAttributeValue (WebElement element, String attribute){
+        waitVisibility(element);
+        return element.getAttribute(attribute);
+    }
+
+    public void clearField (By by){
+        driver.findElement(by).clear();
+    }
+    public void clearField (WebElement element){
+        element.clear();
     }
 
 }

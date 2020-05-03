@@ -61,18 +61,19 @@ public class ActMissAct extends BaseTest {
 		d.addInspection();
 
 		InspectionPage i = new InspectionPage(driver);
+		InspectionMainTab main = new InspectionMainTab(driver);
 		InspectionObjectTab obj = new InspectionObjectTab(driver);
 		InspSubj subj = new InspSubj(driver);
 		InspectionActNF act = new InspectionActNF(driver);
 		InspViol viol = new InspViol(driver);
 		
 		//==== ТЕМАТИКА/РЕЗУЛЬТАТ ====//	
-		i.setInspectionTheme(inspTheme);
-		i.setInspectionResult(inspResult);
+		main.setInspectionTheme(inspTheme);
+		main.setInspectionResult(inspResult);
 
 		//==== ОБЩАЯ ИНФА ====//
-		i.populateCommonInformation();
-		i.isRepresentativeRefusedToSign(false);
+		main.populateCommonInformation();
+
 		act.populateCommonInformation();
 
 		//==== АКТ НФ (НАРУШЕНИЯ) ====//	
