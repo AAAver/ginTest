@@ -1,4 +1,4 @@
-package misc;
+package utilities;
 
 public class Catalog {
 //======================== ПРОВЕРКИ ============================//

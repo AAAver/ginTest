@@ -9,7 +9,7 @@ import java.sql.Statement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import misc.Props;
+import utilities.Props;
 
 public class DbConnect {
 

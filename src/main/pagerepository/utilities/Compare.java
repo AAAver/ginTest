@@ -1,4 +1,4 @@
-package misc;
+package utilities;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,7 +7,7 @@ import java.util.List;
 public class Compare {
 
 	
-	public static boolean equalLists(List<String> one, List<String> two){     
+	public static boolean checkEquality(List<String> one, List<String> two){
 	    if (one == null && two == null){
 	        return true;
 	    }

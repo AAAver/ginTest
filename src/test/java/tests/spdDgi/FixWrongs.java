@@ -14,8 +14,8 @@ import org.testng.annotations.Test;
 import common.Save;
 import common.Upload;
 import inspection.InspectionObjectTab;
-import misc.Catalog;
-import misc.Props;
+import utilities.Catalog;
+import utilities.Props;
 
 public class FixWrongs {
 

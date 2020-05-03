@@ -17,8 +17,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.github.javafaker.Faker;
 
 import common.Upload;
-import misc.Catalog;
-import misc.Generator;
+import utilities.Catalog;
+import utilities.Generator;
 
 public class InspViol {
 	WebDriver driver;

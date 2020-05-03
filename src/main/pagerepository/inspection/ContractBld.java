@@ -9,13 +9,15 @@ import org.openqa.selenium.WebElement;
 
 import com.github.javafaker.Faker;
 
-import misc.Generator;
+import utilities.CorePage;
+import utilities.Generator;
 
-public class ContractBld {
+public class ContractBld extends CorePage {
 
 	WebDriver driver;
 
 	public ContractBld(WebDriver driver) {
+		super(driver);
 		this.driver = driver;
 	}
 

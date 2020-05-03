@@ -14,9 +14,9 @@ import common.LoginPage;
 import common.Save;
 import common.Upload;
 import inspection.InspectionPage;
-import misc.Catalog;
-import misc.Generator;
-import misc.Props;
+import utilities.Catalog;
+import utilities.Generator;
+import utilities.Props;
 import unauthBuilding.UbsScratch;
 import unauthBuilding.UnauthBldList;
 
@@ -33,7 +33,7 @@ public class Pp3violNum2 {
 	private String address = fake.address().streetAddress();
 	private String ao = Catalog.area.ao.DEFAULT_AO;
 	//==== ОСС РАССМАТРИВАЕТСЯ В РАМКАХ ====//
-	private String ubsResolution = misc.Catalog.ubs.resolution.PP_819;
+	private String ubsResolution = utilities.Catalog.ubs.resolution.PP_819;
 	//==== СХД ====//
 	private String shd = Catalog.shd.DEFAULT_SHD;
 	//==== ПЕРВАЯ ПРОВЕРКА (819-ПП) ====//

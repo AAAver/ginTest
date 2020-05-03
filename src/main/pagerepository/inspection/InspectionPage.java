@@ -1,7 +1,7 @@
 package inspection;
 
 import com.github.javafaker.Faker;
-import common.CommonPage;
+import utilities.CorePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class InspectionPage extends CommonPage {
+public class InspectionPage extends CorePage {
 
 	WebDriver driver;
 	WebDriverWait wait;

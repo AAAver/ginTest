@@ -15,9 +15,9 @@ import common.LoginPage;
 import common.Save;
 import common.Upload;
 import inspection.InspectionPage;
-import misc.Catalog;
-import misc.Generator;
-import misc.Props;
+import utilities.Catalog;
+import utilities.Generator;
+import utilities.Props;
 
 
 public class ActMissContract  {

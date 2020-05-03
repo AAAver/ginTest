@@ -1,12 +1,7 @@
 package inspection;
 
-import misc.Generator;
-import org.openqa.selenium.JavascriptExecutor;
+import utilities.Generator;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import java.util.List;
 
 public class InspectionMainTab extends InspectionPage {
 

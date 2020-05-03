@@ -1,4 +1,4 @@
-package common;
+package utilities;
 
 import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
@@ -12,19 +12,19 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Locale;
 
-public class CommonPage {
+public class CorePage {
 
     WebDriver driver;
     WebDriverWait wait;
 
     Faker fake = new Faker(new Locale("ru"));
 
-    public CommonPage(WebDriver driver) {
+    public CorePage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
-    public CommonPage(WebDriver driver, int waitTime) {
+    public CorePage(WebDriver driver, int waitTime) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(waitTime));
     }

@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.github.javafaker.Faker;
 
-import misc.Generator;
+import utilities.Generator;
 
 public class InspSubj {
 

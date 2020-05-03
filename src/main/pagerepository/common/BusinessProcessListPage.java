@@ -6,11 +6,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-public class Bp {
+public class BusinessProcessListPage {
 
 	WebDriver driver;
 
-	public Bp(WebDriver driver) {
+	public BusinessProcessListPage(WebDriver driver) {
 		this.driver = driver;
 	}
 

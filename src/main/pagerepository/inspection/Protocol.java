@@ -14,8 +14,8 @@ import com.github.javafaker.Faker;
 
 import common.Save;
 import common.Upload;
-import misc.Catalog;
-import misc.Generator;
+import utilities.Catalog;
+import utilities.Generator;
 
 public class Protocol {
 

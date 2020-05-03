@@ -15,9 +15,9 @@ import common.Save;
 import inspection.InspectionMainTab;
 import inspection.InspectionObjectTab;
 import inspection.InspSubj;
-import misc.Catalog;
-import misc.Generator;
-import misc.Props;
+import utilities.Catalog;
+import utilities.Generator;
+import utilities.Props;
 import unauthBuilding.UbsScratch;
 import unauthBuilding.UnauthBldList;
 
