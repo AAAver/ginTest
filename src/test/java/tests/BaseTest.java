@@ -1,5 +1,9 @@
 package tests;
 
+import com.github.javafaker.Faker;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import training.TestFake;
 import utilities.Props;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -13,12 +17,15 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 
 public class BaseTest {
 
     public static WebDriver driver;
+    public Faker fake = new Faker(new Locale("ru"));
+    public Logger log = LogManager.getLogger(TestFake.class.getName());
 
 
     public static void setUpDriver(){

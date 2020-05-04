@@ -84,8 +84,8 @@ private Faker fake = new Faker(new Locale("ru"));
 		}		
 		//==== ИНФОРМАЦИЯ О ЗДАНИИ ====//
 		i.objectTabSwitch();
-		obj.addEgrnTable();
-		obj.addRoomTable();
+		obj.createEgrnTable();
+		obj.createRoomInfoTable();
 		Save.saveThis(driver);		
 		//==== ДОГОВОР НА ПОМЕЩЕНИЕ ОТСУТСТВУЕТ ====//
 				

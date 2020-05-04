@@ -126,8 +126,8 @@ public class TestSplit extends BaseTest {
     public void fillRestInfo() throws InterruptedException {
         //==== ИНФОРМАЦИЯ О ЗДАНИИ ====//
         i.objectTabSwitch();
-        obj.addEgrnTable();
-        obj.addRoomTable();
+        obj.createEgrnTable();
+        obj.createRoomInfoTable();
         Save.saveThis(driver);
         //==== ДОГОВОР НА ПОМЕЩЕНИЕ ====//
         i.objectTabSwitch();

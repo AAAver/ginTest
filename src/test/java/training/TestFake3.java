@@ -1,8 +1,12 @@
 package training;
 
 
+import common.LoginPage;
+import inspection.InspectionActNF;
+import inspection.InspectionPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -33,20 +37,18 @@ public class TestFake3 extends BaseTest {
 
 	@Test(priority = 1, description = "1-й метод")
 	public void screenShotTest() {
-		String time = new SimpleDateFormat("yyyy_MM_dd_HH_mm").format(new Date());
-		System.out.println(time);
-		driver.get("https://yandex.ru");
-		Assert.assertTrue(true);
-		log.info("HELLO");
-	}
+	driver.get("http://10.127.48.19/GinRelease586/Controls/EditInsp/842993");
+		LoginPage l = new LoginPage(driver);
+		l.loginAs("3","password123");
 
-	@Test(priority = 1, description = "2-й метод")
-	public void screenShotTest2() {
-		String time = new SimpleDateFormat("yyyy_MM_dd_HH_mm").format(new Date());
-		System.out.println(time);
-		driver.get("https://yandex.ru");
-		Assert.assertTrue(true);
-		log.info("HELLO");
+		var x = driver.findElement(By.xpath("//*[@id = 'ControlPremicyInfo_FacadeHasPictures' and @value ='True']/parent::label"));
+		System.out.println(x.isDisplayed());
+		System.out.println(x.isEnabled());
+
+		var y = driver.findElement(By.xpath("//*[@id = 'ControlPremicyInfo_FacadeHasPictures' and @value ='False']"));
+		System.out.println(y.isDisplayed());
+		System.out.println(y.isEnabled());
+
 	}
 
 

@@ -87,8 +87,8 @@ public class ActWrongRightFirst  {
 		}		
 		//==== ИНФОРМАЦИЯ О ЗДАНИИ ====//
 		i.objectTabSwitch();
-		obj.addEgrnTable();
-		obj.addRoomTable();
+		obj.createEgrnTable();
+		obj.createRoomInfoTable();
 		Save.saveThis(driver);	
 		//==== ДОГОВОР НА ПОМЕЩЕНИЕ (АРЕНДА) ====//
 		i.objectTabSwitch();

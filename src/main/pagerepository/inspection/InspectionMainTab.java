@@ -1,5 +1,6 @@
 package inspection;
 
+import org.openqa.selenium.WebElement;
 import utilities.Generator;
 import org.openqa.selenium.WebDriver;
 
@@ -8,6 +9,34 @@ public class InspectionMainTab extends InspectionPage {
     public InspectionMainTab(WebDriver driver) {
         super(driver);
     }
+
+    //=================== ТЕМАТИКА / РЕЗУЛЬТАТ ================//
+
+    public void setInspectionTheme(String theme) {
+        scrollIntoViewBy(inspectionTheme);
+        click(inspectionTheme);
+        var inspectionThemes = getElementList(select2drop);
+        for (WebElement i : inspectionThemes) {
+            if (getText(i).contains(theme)) {
+                click(i);
+                break;
+            }
+        }
+    }
+
+    public void setInspectionResult(String result) {
+        scrollIntoViewBy(inspectionResult);
+        click(inspectionResult);
+        var results = getElementList(select2drop);
+        for (WebElement webElement : results) {
+            if (getText(webElement).contains(result)) {
+                click(webElement);
+                break;
+            }
+        }
+    }
+
+    //=================== СВЯЗКА С ОСС ================//
 
     public void connectUbs(String address) {
         scrollIntoViewBy(ubsCollapse);
@@ -19,6 +48,8 @@ public class InspectionMainTab extends InspectionPage {
         click(acceptUbsModal);
         scrollIntoViewBy(ubsCollapse);
     }
+
+    //=================== ОБЩАЯ ИНФОРМАЦИЯ ================//
 
     public void addInspectors() {
         scrollIntoViewBy(addInspectorBtn);
@@ -34,40 +65,13 @@ public class InspectionMainTab extends InspectionPage {
         click(isResponsible.get(0));
     }
 
-    public void setInspectionTheme(String theme) {
-        scrollIntoViewBy(inspectionTheme);
-        click(inspectionTheme);
-        var inspectionThemes = getElementList(select2drop);
-        for (int i = 0; i < inspectionThemes.size(); i++) {
-            String inspectionThemeText = inspectionThemes.get(i).getText();
-            if (inspectionThemeText.contains(theme)) {
-                click(inspectionThemes.get(i));
-                break;
-            }
-        }
-    }
-
-    public void setInspectionResult(String result) {
-        scrollIntoViewBy(inspectionResult);
-        click(inspectionResult);
-        var results = getElementList(select2drop);
-        for (int i = 0; i < results.size(); i++) {
-            String resultText = results.get(i).getText();
-            if (resultText.contains(result)) {
-                results.get(i).click();
-                break;
-            }
-        }
-    }
-
     public void objectConstructionStage(String constructionStage) {
         scrollIntoViewBy(objectConstructionStage);
         click(objectConstructionStage);
         var stages = getElementList(select2drop);
-        for (int i = 0; i < stages.size(); i++) {
-            String resultText = stages.get(i).getText();
-            if (resultText.contains(constructionStage)) {
-                stages.get(i).click();
+        for (WebElement stage : stages) {
+            if (getText(stage).contains(constructionStage)) {
+                click(stage);
                 break;
             }
         }
@@ -77,7 +81,7 @@ public class InspectionMainTab extends InspectionPage {
         scrollIntoViewBy(objectConstructionStage);
         click(objectConstructionStage);
         var stages = getElementList(select2drop);
-        click(stages.get(Generator.getRandomUpTo(stages.size())));
+        click(stages.get(random.nextInt(stages.size())));
 
     }
 
@@ -85,9 +89,8 @@ public class InspectionMainTab extends InspectionPage {
         scrollIntoViewBy(factUsage);
         click(factUsage);
         var usages = getElementList(select2drop);
-        click(usages.get(Generator.getRandomUpTo(usages.size())));
+        click(usages.get(random.nextInt(usages.size())));
     }
-
 
     //=================== ПРЕДСТАВИТЕЛЬ ПРОВЕРЯЕМОГО ЛИЦА ================//
 
@@ -97,13 +100,13 @@ public class InspectionMainTab extends InspectionPage {
         writeText(representativeFirstName, fake.name().lastName());
         click(representativePosition);
         var positions = getElementList(select2drop);
-        positions.get(Generator.getRandomUpTo(positions.size())).click();
+        click(positions.get(random.nextInt(positions.size())));
         click(representativeRefuse);
         var decisions = getElementList(select2drop);
         if (refusedToSign) {
-            decisions.get(0).click();
+            click(decisions.get(0));
         } else {
-            decisions.get(1).click();
+            click(decisions.get(1));
         }
     }
 
@@ -113,34 +116,35 @@ public class InspectionMainTab extends InspectionPage {
         writeText(representativeFirstName, firstName);
         click(representativePosition);
         var positions = getElementList(select2drop);
-        for (int i = 0; i < positions.size(); i++) {
-            if (positions.get(i).getText().contains(position)) {
-                positions.get(i).click();
+        for (WebElement webElement : positions) {
+            if (getText(webElement).contains(position)) {
+                click(webElement);
                 break;
             }
         }
         click(representativeRefuse);
         var decisions = getElementList(select2drop);
         if (refusedToSign) {
-            decisions.get(0).click();
+            click(decisions.get(0));
         } else {
-            decisions.get(1).click();
+            click(decisions.get(1));
         }
     }
 
-
     //=================== ПРИЗНАКИ ОПАСНОСТИ ================//
+
     public void dangerSignal(boolean signal) {
         click(dangerSignal);
         var decisions = getElementList(select2drop);
         if (signal) {
-            decisions.get(0).click();
+            click(decisions.get(0));
         } else {
-            decisions.get(1).click();
+            click(decisions.get(1));
         }
     }
 
     //=================== ГЕНЕРАЦИЯ РАНДОМНОЙ ИНФЫ ================//
+
     public void populateCommonInformation() {
         scrollIntoViewBy(controlSubNumber);
         writeText(controlSubNumber, fake.number().digits(4));

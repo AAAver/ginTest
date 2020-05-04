@@ -106,7 +106,6 @@ public class Listeners extends BaseTest implements ITestListener {
 
     @Override
     public void onFinish(ITestContext iTestContext) {
-
         //Do tier down operations for extentreports reporting!
         ExtentTestManager.endTest();
         ExtentManager.getReporter().flush();
