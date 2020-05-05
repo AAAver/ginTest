@@ -4,14 +4,13 @@ import com.github.javafaker.Faker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Listeners;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -26,7 +25,7 @@ public class CorePage {
     public static Logger log = LogManager.getLogger(CorePage.class.getName());
 
     //===== Все или почти все справочники =====//
-    public static final By select2drop = By.xpath("//div[@id='select2-drop'] //ul/li");
+    public static final By select2drop = By.xpath("//div[@id='select2-drop'] //ul/li/div");
 
     public CorePage(WebDriver driver) {
         this.driver = driver;
@@ -38,14 +37,27 @@ public class CorePage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(waitTime));
     }
 
-    public void click(By elementLocation) {
-        waitVisibility(elementLocation);
-        driver.findElement(elementLocation).click();
+    public void click(By by) {
+        waitVisibility(by);
+        int attempts = 0;
+        while (attempts < 2) {
+            try {
+                driver.findElement(by).click();
+                break;
+            } catch (StaleElementReferenceException e) {
+            }
+            attempts++;
+        }
     }
 
     public void click(WebElement element) {
         waitVisibility(element);
-        element.click();
+        try {
+            element.click();
+        } catch (StaleElementReferenceException e) {
+            wait.until(ExpectedConditions.refreshed(ExpectedConditions.stalenessOf(element)));
+            element.click();
+        }
     }
 
     public void writeText(By elementLocation, String text) {
@@ -89,42 +101,50 @@ public class CorePage {
     }
 
     public void waitVisibility(By by) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        } catch (Exception TimeoutException) {
+            wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(by, 0));
+        }
     }
 
     public void waitVisibility(WebElement element) {
         wait.until(ExpectedConditions.visibilityOf(element));
+
+
     }
 
     public void waitVisibilityMultipleElements(By by) {
         try {
             wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
         } catch (Exception TimeoutException) {
-            wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(by,0));
+            wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(by, 0));
         }
     }
 
-    public String getAttribute(By by, String attribute){
+    public String getAttribute(By by, String attribute) {
         waitVisibility(by);
         return driver.findElement(by).getAttribute(attribute);
     }
-    public String getAttribute(WebElement element, String attribute){
+
+    public String getAttribute(WebElement element, String attribute) {
         waitVisibility(element);
         return element.getAttribute(attribute);
     }
 
-    public void clearField (By by){
+    public void clearField(By by) {
         driver.findElement(by).clear();
     }
-    public void clearField (@NotNull WebElement element){
+
+    public void clearField(@NotNull WebElement element) {
         element.clear();
     }
 
-    public boolean isDisplayed(By by){
+    public boolean isDisplayed(By by) {
         return driver.findElement(by).isDisplayed();
     }
 
-    public WebElement castToWebElement(By by){
+    public WebElement castToWebElement(By by) {
         return driver.findElement(by);
     }
 
@@ -134,4 +154,45 @@ public class CorePage {
         return tail;
     }
 
+    public void setDate(By by, String date) {
+        waitVisibility(by);
+        driver.findElement(by).sendKeys(date);
+        driver.findElement(by).sendKeys(Keys.chord(Keys.ENTER));
+    }
+
+    public String getActualValueFromDrop(By by) {
+
+            String xpath = "";
+            String[] p = by.toString().split(" ");
+            for (int i = 1; i < p.length; i++) {
+                if (i != p.length - 1) {
+                    xpath += p[i] + " ";
+                } else {
+                    xpath += p[i];
+                }
+            }
+            String correctedXPath = xpath + " //span[contains(@class, 'chosen')]";
+            By correctedBy = By.xpath(correctedXPath);
+            return getAttribute(correctedBy, "innerHTML");
+    }
+
+    public List<String> getActualValuesFromField(By by) {
+        String xpath = "";
+        String[] p = by.toString().split(" ");
+        for (int i = 1; i < p.length; i++) {
+            if (i != p.length - 1) {
+                xpath += p[i] + " ";
+            } else {
+                xpath += p[i];
+            }
+        }
+        String correctedXPath = xpath + "/ul/li/div";
+        By correctedBy = By.xpath(correctedXPath);
+        List<String> values = new ArrayList<>();
+        for(WebElement i : getElementList(correctedBy)){
+            values.add(i.getText());
+        }
+        return values;
+
+    }
 }

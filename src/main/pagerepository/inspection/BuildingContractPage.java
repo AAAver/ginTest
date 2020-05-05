@@ -17,8 +17,6 @@ public class BuildingContractPage extends CorePage {
         super(driver);
     }
 
-    Faker fake = new Faker(new Locale("ru"));
-
     // Кнопка Проверка
     By toInspBtn = By.xpath("//a[@title='Проверка']");
 

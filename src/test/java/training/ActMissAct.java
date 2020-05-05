@@ -1,5 +1,6 @@
-package tests.spdDgi;
+package training;
 
+import com.relevantcodes.extentreports.LogStatus;
 import common.DisposalPage;
 import common.LoginPage;
 import common.Save;
@@ -13,6 +14,7 @@ import tests.BaseTest;
 import utilities.Catalog;
 import utilities.Generator;
 import utilities.Props;
+import utils.ExtentTestManager;
 
 import java.io.File;
 
@@ -33,7 +35,7 @@ public class ActMissAct extends BaseTest {
     private final String rightType = Catalog.useRight.RENT;
     private final String docCategory = Catalog.docs.category.RAPORT;
     private final String docPath = (new File(Catalog.docs.path.RAPORT)).getAbsolutePath();
-
+    String inspId;
 
     @BeforeClass
     void setDriver() {
@@ -76,20 +78,21 @@ public class ActMissAct extends BaseTest {
     }
 
     @Test(dependsOnMethods = "authorization", description = "Выбор тематики и результата")
-    public void settingThemeAndResult() {
+    public void settingThemeAndResult() throws NoSuchFieldException, IllegalAccessException {
         main.setInspectionTheme(inspTheme);
         main.setInspectionResult(inspResult);
+        main.populateCommonInformation();
+        act.populateCommonInformation();
+        main.scrollIntoViewBy(insp.getByByName("inspectionTheme"));
     }
 
     @Test(dependsOnMethods = "settingThemeAndResult", description = "Установка нарушений акта НФ")
     public void setUpViolations() {
-        main.populateCommonInformation();
-        act.populateCommonInformation();
         act.previousViolations(false);
-        act.isActualUsage(false);
         act.isReplanned(true);
         act.isPremicyUsed(false);
         act.isThirdPartyUsesBuilding(false);
+        act.isActualUsage(false);
     }
 
     @Test(dependsOnMethods = "setUpViolations", description = "Загрузка документа(не Акт НФ)")
@@ -99,22 +102,23 @@ public class ActMissAct extends BaseTest {
     }
 
     @Test(dependsOnMethods = "uploadDocuments", description = "Заполнение данных на вкладке объект")
-    public void setObjectInformation() {
+    public void setObjectInformation() throws InterruptedException {
         obj.objectTabSwitch();
         obj.setAddress(address);
         obj.setObjSquare(objSquare);
         obj.pickKadNumExist(true);
+        Save.saveThis(driver);
+        inspId = insp.getUrlTail();
+        ExtentTestManager.getTest().log(LogStatus.INFO, "Id проверки: " + inspId);
+        obj.objectTabSwitch();
     }
 
     @Test(dependsOnMethods = "setObjectInformation", description = "Прикрепление СХД")
     public void setShd() throws InterruptedException {
+        subj.subjectTabSwitch();
+        subj.peekShd(companyName);
         Save.saveThis(driver);
         subj.subjectTabSwitch();
-        while (!subj.isShdPresented()) {
-            subj.peekShd(companyName);
-            Save.saveThis(driver);
-            subj.subjectTabSwitch();
-        }
     }
 
     @Test(dependsOnMethods = "setShd", description = "Информация о здании")
@@ -125,30 +129,27 @@ public class ActMissAct extends BaseTest {
     }
 
     @Test(dependsOnMethods = "setEgrnInfo", description = "Прикрепление договора")
-    void setBuildingContract() throws InterruptedException {
+    void setBuildingContract() throws InterruptedException, NoSuchFieldException, IllegalAccessException {
         Save.saveThis(driver);
         obj.objectTabSwitch();
         obj.createContractTable(rightType);
         obj.objectTabSwitch();
+        obj.scrollIntoViewBy(obj.getByByName("BtnContract"));
     }
 
     @Test(dependsOnMethods = "setBuildingContract", description = "Добавление предупреждения")
-    void addWarningCard() throws InterruptedException {
+    void addWarningCard() throws InterruptedException, NoSuchFieldException, IllegalAccessException {
         viol.violTabSwitch();
         viol.addWarning();
         viol.violTabSwitch();
+        viol.scrollIntoViewBy(viol.getByByName("warningBtn"));
     }
 
     @Test(dependsOnMethods = "addWarningCard", description = "Верификация карточки")
     void verification() throws InterruptedException {
         insp.verify();
-        String inspId = insp.getUrlTail();
-        Props.setProperty("inspIdMissAct",inspId);
+        Props.setProperty("inspIdMissAct", inspId);
     }
-
-
-
-
 
 
 }

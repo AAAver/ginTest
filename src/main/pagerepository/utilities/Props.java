@@ -13,7 +13,7 @@ public class Props {
 	private static final String PROP_PATH = "./cfg.properties";
 	public static final String BASE_URL = "http://10.127.48.19/GinRelease586";
 	public static final String DISPOSAL_URL_NF = "http://10.127.48.19/GinRelease586/Disposals/Edit/818931";
-	public static final String DISPOSAL_URL_ZU_1 = BASE_URL + "/Disposals/Edit/819076";
+	public static final String DISPOSAL_URL_ZU_1 = BASE_URL + "/Disposals/Edit/819077";
 	public static final String DISPOSAL_URL_ZU_2 = BASE_URL + "/Disposals/Edit/819076";
 	public static final String UBS_LIST_URL = BASE_URL + "/UnauthorizedBuilding";
 

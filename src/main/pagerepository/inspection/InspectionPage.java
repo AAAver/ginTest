@@ -47,7 +47,7 @@ public class InspectionPage extends CorePage {
 
 
 	// ======== ВКЛАДКА [Мероприятия] ========= //
-	By inspectionTheme = By.id("s2id_InspThemeCtIdM");
+	public static By inspectionTheme = By.id("s2id_InspThemeCtIdM");
 	By controlSubNumber = By.id("ControlSubnumber");
 	By controlDate = By.id("ControlDate");
 	By actDate = By.id("ActDate");
@@ -58,7 +58,7 @@ public class InspectionPage extends CorePage {
 	By isResponsibleInsp = By.xpath("//table[@id='table-inspector-info'] //tr[1] //div[contains(@id, 'IsResponsibleEnum')]");
 	By inspectionResult = By.id("s2id_ResultCtIdM");
 	By objectConstructionStage = By.id("s2id_ObjectConstructionStageCtId");
-	By factUsage = By.id("s2id_ActualUsageCtIds");
+	By factUsage = By.xpath("//*[@id = 's2id_ActualUsageCtIds']");
 	By representativeLastName = By.id("RepresentativeLastName");
 	By representativeFirstName = By.id("RepresentativeFirstName");
 	By representativePosition = By.id("s2id_RepresentativePositionCtId");
@@ -273,5 +273,8 @@ public class InspectionPage extends CorePage {
 		click(saveBtn);
 	}
 
+	public By getByByName (String name) throws NoSuchFieldException, IllegalAccessException {
+		return (By) InspectionPage.class.getDeclaredField(name).get(this);
+	}
 
 }

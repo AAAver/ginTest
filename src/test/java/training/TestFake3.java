@@ -3,7 +3,9 @@ package training;
 
 import common.LoginPage;
 import inspection.InspectionActNF;
+import inspection.InspectionMainTab;
 import inspection.InspectionPage;
+import inspection.Prescription;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -13,6 +15,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import tests.BaseTest;
+import unauthBuilding.UbsScratch;
 import utils.ExtentTestManager;
 
 import java.io.IOException;
@@ -28,26 +31,26 @@ public class TestFake3 extends BaseTest {
 		setUpDriver();
 		ExtentTestManager.startTest(getClass().getName(), "Тестовый сценарий");
 	}
-
-
-	@AfterClass
-	void tearDown(){
-		driver.quit();
-	}
+//
+//
+//	@AfterClass
+//	void tearDown(){
+//		driver.quit();
+//	}
 
 	@Test(priority = 1, description = "1-й метод")
-	public void screenShotTest() {
-	driver.get("http://10.127.48.19/GinRelease586/Controls/EditInsp/842993");
+	public void screenShotTest() throws NoSuchFieldException, IllegalAccessException {
+	driver.get("http://10.127.48.19/GinRelease586/Controls/EditInsp/843015");
 		LoginPage l = new LoginPage(driver);
 		l.loginAs("3","password123");
 
-		var x = driver.findElement(By.xpath("//*[@id = 'ControlPremicyInfo_FacadeHasPictures' and @value ='True']/parent::label"));
-		System.out.println(x.isDisplayed());
-		System.out.println(x.isEnabled());
-
-		var y = driver.findElement(By.xpath("//*[@id = 'ControlPremicyInfo_FacadeHasPictures' and @value ='False']"));
-		System.out.println(y.isDisplayed());
-		System.out.println(y.isEnabled());
+		InspectionMainTab m = new InspectionMainTab(driver);
+		var x = m.getActualValuesFromField(m.getByByName("factUsage"));
+		for(String i : x){
+			System.out.println(i);
+		}
+		System.out.println(x.contains("навесы - укрытия"));
+		System.out.println(x.contains("навесы"));
 
 	}
 

@@ -87,9 +87,11 @@ public class InspectionMainTab extends InspectionPage {
 
     public void factUsage() {
         scrollIntoViewBy(factUsage);
-        click(factUsage);
-        var usages = getElementList(select2drop);
-        click(usages.get(random.nextInt(usages.size())));
+        do {
+            click(factUsage);
+            var usages = getElementList(select2drop);
+            click(usages.get(random.nextInt(usages.size())));
+        } while (getActualValuesFromField(factUsage).contains("навесы - укрытия"));
     }
 
     //=================== ПРЕДСТАВИТЕЛЬ ПРОВЕРЯЕМОГО ЛИЦА ================//

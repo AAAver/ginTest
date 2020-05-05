@@ -12,6 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import utils.ExtentTestManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,6 +65,10 @@ public class BaseTest {
 
     public WebDriver getDriver() {
         return driver;
+    }
+
+    public void setUpExtentReport(String description){
+        ExtentTestManager.startTest(getClass().getName(), description);
     }
 
 }
