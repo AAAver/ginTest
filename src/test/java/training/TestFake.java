@@ -1,30 +1,28 @@
 package training;
 
 
-import common.DisposalPage;
-import common.LoginPage;
-import common.Save;
-import common.Upload;
+import java.common.DisposalPage;
+import java.common.LoginPage;
+import java.common.Save;
+import java.common.Upload;
 import inspection.*;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import tests.BaseTest;
-import utilities.Catalog;
-import utilities.Generator;
-import utilities.Props;
-import utils.ExtentTestManager;
+import java.utilities.Catalog;
+import java.utilities.Generator;
+import java.utilities.Props;
 
 import java.io.File;
 
-@Listeners(listeners.Listeners.class)
+
 public class TestFake extends BaseTest {
 
     @BeforeClass
     void setDriver() {
         setUpDriver();
-        ExtentTestManager.startTest(getClass().getName(), "Тестовый сценарий");
+        setUpExtentReport("Новый тест");
     }
 
     @AfterClass
@@ -51,7 +49,6 @@ public class TestFake extends BaseTest {
 
     @Test(priority = 1, description = "Один из методов")
     public void missAct() throws InterruptedException {
-        ExtentTestManager.startTest(getClass().getName(), "Создание проверки НФ без прикрепенного документа категории Акт осмотра НФ. Отправка в СПД не происходит");
         driver.get(baseUrl);
 
         LoginPage l = new LoginPage(driver);

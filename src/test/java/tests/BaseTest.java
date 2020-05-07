@@ -4,32 +4,26 @@ import com.github.javafaker.Faker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import training.TestFake;
-import utilities.Props;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import java.utilities.Props;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import utils.ExtentTestManager;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 
 public class BaseTest {
 
-    public static WebDriver driver;
+    public WebDriver driver;
     public Faker fake = new Faker(new Locale("ru"));
     public Logger log = LogManager.getLogger(TestFake.class.getName());
 
 
-    public static void setUpDriver(){
+    public void setUpDriver(){
         System.setProperty(Props.CHROME_DRIVER, Props.CHROME_DRIVER_PATH);
 
         DesiredCapabilities dcap = new DesiredCapabilities();
@@ -43,25 +37,25 @@ public class BaseTest {
         driver.manage().window().maximize();
     }
 
-    public void takeScreenshotSuccess(String methodName) {
-       File screenShotFile =  ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-       String time = new SimpleDateFormat("yyyy_MM_dd_HH_mm").format(new Date());
-        try {
-            FileHandler.copy(screenShotFile, new File("./logs/screenshots_success/"+methodName+"_"+time+"_.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void takeScreenshotFail(String methodName) {
-        File screenShotFile =  ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        String time = new SimpleDateFormat("yyyy_MM_dd_HH_mm").format(new Date());
-        try {
-            FileHandler.copy(screenShotFile, new File("./logs/screenshots_fail/"+methodName+"_"+time+"_.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void takeScreenshotSuccess(String methodName) {
+//       File screenShotFile =  ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+//       String time = new SimpleDateFormat("yyyy_MM_dd_HH_mm").format(new Date());
+//        try {
+//            FileHandler.copy(screenShotFile, new File("./logs/screenshots_success/"+methodName+"_"+time+"_.png"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public void takeScreenshotFail(String methodName) {
+//        File screenShotFile =  ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+//        String time = new SimpleDateFormat("yyyy_MM_dd_HH_mm").format(new Date());
+//        try {
+//            FileHandler.copy(screenShotFile, new File("./logs/screenshots_fail/"+methodName+"_"+time+"_.png"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public WebDriver getDriver() {
         return driver;

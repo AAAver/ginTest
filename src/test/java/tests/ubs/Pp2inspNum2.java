@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.Locale;
 
 import inspection.*;
-import org.jsoup.Connection;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
@@ -13,16 +11,16 @@ import org.testng.annotations.Test;
 
 import com.github.javafaker.Faker;
 
-import common.DisposalPage;
-import common.LoginPage;
-import common.Save;
-import common.Upload;
-import inspection.InspectionPage;
+import java.common.DisposalPage;
+import java.common.LoginPage;
+import java.common.Save;
+import java.common.Upload;
+
 import tests.BaseTest;
-import utilities.Catalog;
-import utilities.Props;
-import unauthBuilding.UbsScratch;
-import unauthBuilding.UnauthBldList;
+import java.utilities.Catalog;
+import java.utilities.Props;
+import java.unauthBuilding.UbsScratch;
+import java.unauthBuilding.UnauthBldList;
 import utils.ExtentTestManager;
 
 @Listeners(listeners.Listeners.class)
@@ -38,7 +36,7 @@ public class Pp2inspNum2 extends BaseTest {
 	private String address = fake.address().streetAddress();
 	private String ao = Catalog.area.ao.DEFAULT_AO;
 	//==== ОСС РАССМАТРИВАЕТСЯ В РАМКАХ ====//
-	private String ubsResolution = utilities.Catalog.ubs.resolution.PP_819;
+	private String ubsResolution = Catalog.ubs.resolution.PP_819;
 	//==== СХД ====//
 	private String shd = Catalog.shd.DEFAULT_SHD;
 	//==== ПЕРВАЯ ПРОВЕРКА (819-ПП) ====//

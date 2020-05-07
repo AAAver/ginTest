@@ -29,9 +29,9 @@ public class Listeners extends BaseTest implements ITestListener {
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        // ДЕФОЛТНЫЙ СКРИНШОТ И ЛОГИРОВАНИЕ
-        takeScreenshotSuccess(result.getMethod().getMethodName());
-        log.debug("TEST " + result.getMethod().getMethodName() + " SUCCEEDED.");
+//        // ДЕФОЛТНЫЙ СКРИНШОТ И ЛОГИРОВАНИЕ
+//        takeScreenshotSuccess(result.getMethod().getMethodName());
+//        log.debug("TEST " + result.getMethod().getMethodName() + " SUCCEEDED.");
 
         // EXTENT ОТЧЁТ И СКРИНШОТ
         Object testClass = result.getInstance();
@@ -50,8 +50,8 @@ public class Listeners extends BaseTest implements ITestListener {
     @Override
     public void onTestFailure(ITestResult result) {
         // ДЕФОЛТНЫЙ СКРИНШОТ И ЛОГИРОВАНИЕ
-        takeScreenshotFail(result.getMethod().getMethodName());
-        log.error("TEST " + result.getMethod().getMethodName() + " FAILED. Trace follows: ", result.getThrowable());
+//        takeScreenshotFail(result.getMethod().getMethodName());
+//        log.error("TEST " + result.getMethod().getMethodName() + " FAILED. Trace follows: ", result.getThrowable());
 
         // EXTENT ОТЧЁТ И СКРИНШОТ
         Object testClass = result.getInstance();
@@ -82,8 +82,8 @@ public class Listeners extends BaseTest implements ITestListener {
     @Override
     public void onTestFailedWithTimeout(ITestResult result) {
         // ДЕФОЛТНЫЙ СКРИНШОТ И ЛОГИРОВАНИЕ
-        takeScreenshotFail(result.getMethod().getMethodName());
-        log.error("TEST " + result.getMethod().getMethodName() + " FAILED. Trace follows: ", result.getThrowable());
+//        takeScreenshotFail(result.getMethod().getMethodName());
+//        log.error("TEST " + result.getMethod().getMethodName() + " FAILED. Trace follows: ", result.getThrowable());
 
         // EXTENT ОТЧЁТ И СКРИНШОТ
         Object testClass = result.getInstance();
