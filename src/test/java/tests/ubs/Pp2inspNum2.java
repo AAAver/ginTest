@@ -18,6 +18,7 @@ import common.Upload;
 
 import tests.BaseTest;
 import utilities.Catalog;
+import utilities.Generator;
 import utilities.Props;
 import unauthBuilding.UbsScratch;
 import unauthBuilding.UnauthBldList;
@@ -54,16 +55,16 @@ public class Pp2inspNum2 extends BaseTest {
 		ExtentTestManager.startTest(getClass().getName(), "Тестовый сценарий");
 	}
 
-
-	@AfterClass
-	void tearDown(){
-		driver.quit();
-	}
+//
+//	@AfterClass
+//	void tearDown(){
+//		driver.quit();
+//	}
 
 
 	
 	@Test(priority = 1, description = "Новый тест")
-	public void addUbs819pp3() throws InterruptedException {
+	public void addUbs819pp2() throws InterruptedException {
 
 		driver.get(ubsListUrl);
 		LoginPage l = new LoginPage(driver);
@@ -75,6 +76,7 @@ public class Pp2inspNum2 extends BaseTest {
 
 		UbsScratch ubs = new UbsScratch(driver);
 		ubs.generateUBS(address, ao, ubsResolution);
+		String ubsUrl = driver.getCurrentUrl();
 		String objSquare = ubs.getObjSquare();
 		
 		//==== ПЕРВАЯ ПРОВЕРКА (819-ПП) ====//
@@ -128,5 +130,11 @@ public class Pp2inspNum2 extends BaseTest {
 		viol.addProtocol("Воспрепятствование проведения проверки должностному лицу");
 		viol.violTabSwitch();
 		viol.addPrescription("Воспрепятствование проведения проверки должностному лицу");
+
+		driver.get(ubsUrl);
+
+		ubs.zpo(true);
+		ubs.setBuildingKadastr(Generator.fakeKadastr());
+		System.out.println(ubs.getUrlTail());
 	}
 }

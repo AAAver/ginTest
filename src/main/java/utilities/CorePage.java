@@ -8,6 +8,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,15 +35,7 @@ public class CorePage {
 
     public void click(By by) {
         waitVisibility(by);
-        int attempts = 0;
-        while (attempts < 2) {
-            try {
-                driver.findElement(by).click();
-                break;
-            } catch (StaleElementReferenceException e) {
-            }
-            attempts++;
-        }
+        driver.findElement(by).click();
     }
 
     public void click(WebElement element) {

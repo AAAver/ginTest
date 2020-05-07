@@ -13,8 +13,10 @@ public class UnauthBldList extends CorePage {
 	By addUnauthBld = By.xpath("//a[text()='Добавить карточку объекта']");
 	
 	public void addUnauthBld() {
-		click(addUnauthBld);
-		
+		do {
+			click(addUnauthBld);
+		} while (!driver.getCurrentUrl().contains("Add"));
+
 	}
 
 }

@@ -11,24 +11,21 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class Props {
 	private static final String PROP_PATH = "./cfg.properties";
-	public static final String BASE_URL = "http://10.127.48.19/GinRelease586";
+	public static final String BASE_URL = "http://192.168.4.117/586";
 	public static final String DISPOSAL_URL_NF = "http://10.127.48.19/GinRelease586/Disposals/Edit/818931";
-	public static final String DISPOSAL_URL_ZU_1 = BASE_URL + "/Disposals/Edit/819077";
-	public static final String DISPOSAL_URL_ZU_2 = BASE_URL + "/Disposals/Edit/819076";
+	public static final String DISPOSAL_URL_ZU_1 = BASE_URL + "/Disposals/Edit/849541";
+	public static final String DISPOSAL_URL_ZU_2 = BASE_URL + "/Disposals/Edit/849540";
 	public static final String UBS_LIST_URL = BASE_URL + "/UnauthorizedBuilding";
 
 	public static final String ULT_LOGIN = "3";
-	public static final String ULT_PASSWORD = "password123";
+	public static final String ULT_PASSWORD = "password";
 
 	public static final String CHROME_DRIVER = "webdriver.chrome.driver";
 	public static final String CHROME_DRIVER_PATH = "./driver/chromedriver.exe";	
 	public static final String PHOTO_PATH_A = "images/ubsA.jpg";
 	public static final String PHOTO_PATH_U = "images/ubsU.png";
 	public static final String PHOTO_PATH_T = "images/ubsT.png";
-	public static final String PHOTO_PATH_O = "images/ubsO.jpg";	
-	
-	
-	
+	public static final String PHOTO_PATH_O = "images/ubsO.jpg";
 	
 	public static WebDriver initChromeDriver() {
 		System.setProperty(Props.CHROME_DRIVER, Props.CHROME_DRIVER_PATH);

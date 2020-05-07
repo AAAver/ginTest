@@ -34,8 +34,7 @@ public class Protocol extends CorePage {
 
     public void fillCommonProtocol() throws InterruptedException {
         writeText(subNumber, Integer.toString(random.nextInt(300)));
-        writeText(date, Generator.getCurrentDate());
-        writeText(date, Keys.chord(Keys.ENTER));
+        setDate(date, Generator.getCurrentDate());
         click(responsiblePerson);
         List<WebElement> persons = getElementList(select2drop);
         click(persons.get(random.nextInt(persons.size())));
