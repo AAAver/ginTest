@@ -1,6 +1,6 @@
-package java.inspection;
+package inspection;
 
-import java.utilities.CorePage;
+import utilities.CorePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 

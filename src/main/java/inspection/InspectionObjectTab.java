@@ -1,8 +1,8 @@
-package java.inspection;
+package inspection;
 
 import org.openqa.selenium.*;
 
-import java.utilities.Generator;
+import utilities.Generator;
 
 public class InspectionObjectTab extends InspectionPage {
 

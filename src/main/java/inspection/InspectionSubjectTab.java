@@ -1,4 +1,4 @@
-package java.inspection;
+package inspection;
 
 import org.openqa.selenium.WebDriver;
 

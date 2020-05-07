@@ -1,8 +1,8 @@
-package java.common;
+package common;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import java.utilities.CorePage;
+import utilities.CorePage;
 
 public class MainPage extends CorePage {
 

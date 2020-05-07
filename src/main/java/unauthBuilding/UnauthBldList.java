@@ -1,8 +1,8 @@
-package java.unauthBuilding;
+package unauthBuilding;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import java.utilities.CorePage;
+import utilities.CorePage;
 
 public class UnauthBldList extends CorePage {
 

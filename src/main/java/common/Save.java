@@ -1,4 +1,4 @@
-package java.common;
+package common;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;

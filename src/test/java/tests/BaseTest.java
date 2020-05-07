@@ -3,13 +3,12 @@ package tests;
 import com.github.javafaker.Faker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import training.TestFake;
-import java.utilities.Props;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import training.TestFake;
+import utilities.Props;
 import utils.ExtentTestManager;
 
 import java.util.Locale;

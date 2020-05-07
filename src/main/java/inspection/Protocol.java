@@ -1,18 +1,18 @@
-package java.inspection;
+package inspection;
 
 import java.io.File;
 import java.util.List;
-import java.utilities.Catalog;
-import java.utilities.CorePage;
-import java.utilities.Generator;
+import utilities.Catalog;
+import utilities.CorePage;
+import utilities.Generator;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.common.Save;
-import java.common.Upload;
+import common.Save;
+import common.Upload;
 
 public class Protocol extends CorePage {
 

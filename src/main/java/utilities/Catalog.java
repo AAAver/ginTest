@@ -1,4 +1,4 @@
-package java.utilities;
+package utilities;
 
 public class Catalog {
 //======================== ПРОВЕРКИ ============================//

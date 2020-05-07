@@ -1,4 +1,4 @@
-package java.utilities;
+package utilities;
 
 import com.github.javafaker.Faker;
 import org.apache.logging.log4j.LogManager;

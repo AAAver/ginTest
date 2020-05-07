@@ -1,16 +1,16 @@
-package java.inspection;
+package inspection;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.utilities.Catalog;
+import utilities.Catalog;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
-import java.common.Upload;
+import common.Upload;
 
 public class InspectionViolationTab extends InspectionPage {
 

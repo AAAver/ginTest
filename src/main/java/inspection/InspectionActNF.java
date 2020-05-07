@@ -1,9 +1,9 @@
-package java.inspection;
+package inspection;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
-import java.utilities.Generator;
+import utilities.Generator;
 
 public class InspectionActNF extends InspectionPage {
 

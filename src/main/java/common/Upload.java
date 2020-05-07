@@ -1,7 +1,7 @@
-package java.common;
+package common;
 
 import java.io.File;
-import java.utilities.Generator;
+import utilities.Generator;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;

@@ -1,18 +1,18 @@
 package training;
 
 
-import java.common.DisposalPage;
-import java.common.LoginPage;
-import java.common.Save;
-import java.common.Upload;
+import common.DisposalPage;
+import common.LoginPage;
+import common.Save;
+import common.Upload;
 import inspection.*;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tests.BaseTest;
-import java.utilities.Catalog;
-import java.utilities.Generator;
-import java.utilities.Props;
+import utilities.Catalog;
+import utilities.Generator;
+import utilities.Props;
 
 import java.io.File;
 

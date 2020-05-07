@@ -1,8 +1,8 @@
 package training;
 
 
-import java.common.LoginPage;
-import java.inspection.InspectionMainTab;
+import common.LoginPage;
+import inspection.InspectionMainTab;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -11,16 +11,16 @@ import org.testng.annotations.Test;
 
 import com.github.javafaker.Faker;
 
-import java.common.DisposalPage;
-import java.common.LoginPage;
-import java.common.Save;
-import java.common.Upload;
+import common.DisposalPage;
+import common.LoginPage;
+import common.Save;
+import common.Upload;
 
 import tests.BaseTest;
-import java.utilities.Catalog;
-import java.utilities.Props;
-import java.unauthBuilding.UbsScratch;
-import java.unauthBuilding.UnauthBldList;
+import utilities.Catalog;
+import utilities.Props;
+import unauthBuilding.UbsScratch;
+import unauthBuilding.UnauthBldList;
 import utils.ExtentTestManager;
 
 @Listeners(listeners.Listeners.class)

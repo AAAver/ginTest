@@ -1,11 +1,4 @@
-package java.unauthBuilding;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.utilities.Catalog;
-import java.utilities.Generator;
-import java.utilities.Props;
+package unauthBuilding;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -14,8 +7,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
-import java.common.Save;
-import java.utilities.CorePage;
+import common.Save;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import utilities.Catalog;
+import utilities.CorePage;
+import utilities.Generator;
+import utilities.Props;
 
 public class UbsScratch extends CorePage {
 

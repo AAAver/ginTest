@@ -1,7 +1,7 @@
-package java.common;
+package common;
 
 import java.util.List;
-import java.utilities.CorePage;
+import utilities.CorePage;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

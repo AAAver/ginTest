@@ -5,9 +5,9 @@ import java.io.IOException;
 
 import org.openqa.selenium.WebDriver;
 
-import java.common.LoginPage;
-import java.utilities.Props;
-import java.unauthBuilding.UbsScratch;
+import common.LoginPage;
+import utilities.Props;
+import unauthBuilding.UbsScratch;
 
 public class TestFake2 {
 

@@ -1,7 +1,7 @@
-package java.inspection;
+package inspection;
 
 import org.openqa.selenium.WebElement;
-import java.utilities.Generator;
+import utilities.Generator;
 import org.openqa.selenium.WebDriver;
 
 public class InspectionMainTab extends InspectionPage {
