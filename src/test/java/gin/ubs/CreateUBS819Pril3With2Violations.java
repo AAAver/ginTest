@@ -25,7 +25,6 @@ import ubs.UnauthBldList;
 
 @Listeners(utils.Listeners.class)
 public class CreateUBS819Pril3With2Violations extends BaseTest {
-    private Faker fake = new Faker(new Locale("ru"));
 
     private String ubsListUrl = Props.UBS_LIST_URL;
     private String ultLogin = Props.ULT_LOGIN;

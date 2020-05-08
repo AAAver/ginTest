@@ -118,9 +118,11 @@ public class Ubs819Pril2Included extends BaseTest {
 	@Test(dependsOnMethods = "settingObjectInfo", description = "Информация о субъекте")
 	public void settingSubjectInfo() throws InterruptedException {
 		subj.subjectTabSwitch();
-		subj.peekShd(shd);
-		Save.saveThis(driver);
-		subj.subjectTabSwitch();
+		while (!subj.isShdPresented()) {
+			subj.peekShd(shd);
+			Save.saveThis(driver);
+			subj.subjectTabSwitch();
+		}
 	}
 
 	@Test(dependsOnMethods = "settingSubjectInfo", description = "Дозаполнение ОСС")
@@ -133,13 +135,13 @@ public class Ubs819Pril2Included extends BaseTest {
 		Save.saveThis(driver);
 	}
 
-//	@Test(dependsOnMethods = "updatingUbs", description = "Верификация")
-//	public void verification() throws InterruptedException {
-//		ubs.verify();
-//		String ubs819IncludedId = ubs.getUrlTail();
-//		Props.setProperty("ubs819IncludedId", ubs819IncludedId);
-//		log.info("ubs 819 Included ID: " + ubs819IncludedId);
-//	}
+	@Test(dependsOnMethods = "updatingUbs", description = "Верификация")
+	public void verification() throws InterruptedException {
+		ubs.verify();
+		String ubs819IncludedId = ubs.getUrlTail();
+		Props.setProperty("ubs819IncludedId", ubs819IncludedId);
+		log.info("ubs 819 Included ID: " + ubs819IncludedId);
+	}
 
 
 }

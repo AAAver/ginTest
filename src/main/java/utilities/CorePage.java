@@ -1,6 +1,7 @@
 package utilities;
 
 import com.github.javafaker.Faker;
+import common.LoginPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -189,4 +190,5 @@ public class CorePage {
         return values;
 
     }
+
 }

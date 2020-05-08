@@ -117,9 +117,11 @@ public class Ubs819Pril2SignsConfirmed extends BaseTest {
 	@Test(dependsOnMethods = "settingObjectInfo", description = "Информация о субъекте")
 	public void settingSubjectInfo() throws InterruptedException {
 		subj.subjectTabSwitch();
-		subj.peekShd(shd);
-		Save.saveThis(driver);
-		subj.subjectTabSwitch();
+		while (!subj.isShdPresented()) {
+			subj.peekShd(shd);
+			Save.saveThis(driver);
+			subj.subjectTabSwitch();
+		}
 	}
 
 	@Test(dependsOnMethods = "settingSubjectInfo", description = "Дозаполнение ОСС")
