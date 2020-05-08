@@ -1,10 +1,9 @@
-package tests.ubs;
+package gin.ubs;
 
 import java.io.File;
 import java.util.Locale;
 
 import inspection.*;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -16,15 +15,15 @@ import common.LoginPage;
 import common.Save;
 import common.Upload;
 
-import tests.BaseTest;
+import utils.BaseTest;
 import utilities.Catalog;
 import utilities.Generator;
 import utilities.Props;
-import unauthBuilding.UbsScratch;
-import unauthBuilding.UnauthBldList;
+import ubs.UbsScratch;
+import ubs.UnauthBldList;
 import utils.ExtentTestManager;
 
-@Listeners(listeners.Listeners.class)
+@Listeners(utils.Listeners.class)
 public class Pp2inspNum2 extends BaseTest {
 	private Faker fake = new Faker(new Locale("ru"));
 

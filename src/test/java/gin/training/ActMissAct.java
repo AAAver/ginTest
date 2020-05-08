@@ -1,4 +1,4 @@
-package training;
+package gin.training;
 
 import com.relevantcodes.extentreports.LogStatus;
 import common.DisposalPage;
@@ -10,7 +10,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import tests.BaseTest;
+import utils.BaseTest;
 import utilities.Catalog;
 import utilities.Generator;
 import utilities.Props;
@@ -18,7 +18,7 @@ import utils.ExtentTestManager;
 
 import java.io.File;
 
-@Listeners(listeners.Listeners.class)
+@Listeners(utils.Listeners.class)
 public class ActMissAct extends BaseTest {
 
     private final String baseUrl = Props.BASE_URL;

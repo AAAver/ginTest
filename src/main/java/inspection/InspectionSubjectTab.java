@@ -49,7 +49,6 @@ public class InspectionSubjectTab extends InspectionPage {
 	}
 	
 	public boolean isShdPresented() {
-		var sh = getElementList(snapshot);
 		if(!isDisplayed(snapshot)) {
 			return false;
 		}

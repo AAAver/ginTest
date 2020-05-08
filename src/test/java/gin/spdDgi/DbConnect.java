@@ -1,4 +1,4 @@
-package tests.spdDgi;
+package gin.spdDgi;
 
 import java.io.IOException;
 import java.sql.Connection;

@@ -1,22 +1,21 @@
-package tests.spdDgi;
+package gin.spdDgi;
 
 import common.DisposalPage;
 import common.LoginPage;
 import common.Save;
 import common.Upload;
 import inspection.*;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import tests.BaseTest;
+import utils.BaseTest;
 import utilities.Catalog;
 import utilities.Generator;
 import utilities.Props;
 
 import java.io.File;
 
-@Listeners(listeners.Listeners.class)
+@Listeners(utils.Listeners.class)
 public class ActMissAct extends BaseTest {
 
     private final String baseUrl = Props.BASE_URL;
@@ -38,13 +37,13 @@ public class ActMissAct extends BaseTest {
     @BeforeClass
     void setDriver() {
         setUpDriver();
-        setUpExtentReport("Генерация акта НФ без прикрепленного документа категории \"Акт осмотра НФ\"");
+        setUpExtentReport("Генерация акта НФ без прикрепленного документа категории \"Акт осмотра НФ\". 1010 = 1, 1011 = 3, is_done = 0");
     }
 
-    @AfterClass
-    void tearDown() {
-        driver.quit();
-    }
+//    @AfterClass
+//    void tearDown() {
+//        driver.quit();
+//    }
 
     LoginPage l;
     DisposalPage d;
@@ -57,6 +56,7 @@ public class ActMissAct extends BaseTest {
 
     @Test(description = "Инициализация страниц(сервисный шаг)")
     public void initialization() {
+        log.info("Initializing pages");
         l = new LoginPage(driver);
         d = new DisposalPage(driver);
         insp = new InspectionPage(driver);
@@ -65,6 +65,7 @@ public class ActMissAct extends BaseTest {
         act = new InspectionActNF(driver);
         viol = new InspectionViolationTab(driver);
         subj = new InspectionSubjectTab(driver);
+        log.info("Pages initialized");
     }
 
     @Test(dependsOnMethods = "initialization", description = "Авторизация и создание проверки")
@@ -144,6 +145,7 @@ public class ActMissAct extends BaseTest {
         insp.verify();
         String inspId = insp.getUrlTail();
         Props.setProperty("inspIdMissAct",inspId);
+        log.info("Inspection with no act nf document attached. ID = " + inspId);
     }
 
 

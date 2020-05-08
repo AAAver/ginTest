@@ -1,16 +1,15 @@
-package unauthBuilding;
+package ubs;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 import common.Save;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import utilities.Catalog;
 import utilities.CorePage;
 import utilities.Generator;
@@ -47,7 +46,7 @@ public class UbsScratch extends CorePage {
     By dropManualCorrection = By.id("s2id_IsStateHandControlM");
     By fieldManualCorrectionComments = By.id("StateHandControlCommentsM");
     // ++++ Состояние ОСС* ++++//
-    By dropState = By.id("s2id_StateM");
+    By dropState = By.xpath("//*[@id = 's2id_StateM']");
     By dropStateActualState = By.xpath("//*[@id='s2id_StateM'] //span");
     // ++++ Рассматривается в рамках ++++//
     By resol = By.id("s2id_ResolutionNumberId");
@@ -115,7 +114,7 @@ public class UbsScratch extends CorePage {
             .xpath("//form[contains(@action, 'UpdateActualizationNumber')] //button[@title='Сохранить']");
     By toActualizationCard = By.xpath("//*[@id='ireon-map-container']/following-sibling::div[3] //a");
 
-    public void actualizePril(String pril) throws InterruptedException {
+    public void actualizePril(String pril) {
         scrollIntoViewBy(btnActualize);
         click(btnActualize);
         click(actualize819Pril);
@@ -200,13 +199,12 @@ public class UbsScratch extends CorePage {
     public void zpo(boolean exist) {
         scrollIntoViewBy(zpoTrue);
         if (exist) {
-           click(zpoTrue);
+            click(zpoTrue);
             writeText(rentContractZPO, Generator.fakeContractNum());
             setDate(contractStartDateZPO, Generator.fakeDatePast());
             setDate(contractEndDateZPO, Generator.fakeDateFuture());
-            writeText(usageTypeZPO,"готовка пищи");
-        }
-        else{
+            writeText(usageTypeZPO, "готовка пищи");
+        } else {
             click(zpoFalse);
         }
     }
@@ -275,8 +273,8 @@ public class UbsScratch extends CorePage {
 
     public void setAddress(String address) {
         scrollIntoViewBy(addressZU);
-        writeText(addressZU,address);
-        writeText(this.address,address);
+        writeText(addressZU, address);
+        writeText(this.address, address);
     }
 
     public void setAo(String setAo) throws InterruptedException {
@@ -306,7 +304,7 @@ public class UbsScratch extends CorePage {
         }
     }
 
-    public void setResolution(String resolution){
+    public void setResolution(String resolution) {
         scrollIntoViewBy(resol);
         click(resol);
         List<WebElement> resolutions = getElementList(select2drop);
@@ -318,7 +316,7 @@ public class UbsScratch extends CorePage {
         }
     }
 
-    public void isManualCorrection(boolean bool){
+    public void isManualCorrection(boolean bool) {
         log.info("ENTER isManualCorrection(), going to change to " + bool);
         scrollIntoViewBy(dropManualCorrection);
         log.info("Element 'dropManualCorrection' found. Scrolled to element");
@@ -328,7 +326,7 @@ public class UbsScratch extends CorePage {
         if (bool) {
             click(b.get(0));
             log.info("Manual correction is picked");
-            writeText(fieldManualCorrectionComments,"Необходима ручная корректировка");
+            writeText(fieldManualCorrectionComments, "Необходима ручная корректировка");
             log.info("Comments to manual correction are populated. EXIT isManualCorrection()");
         } else {
             click(b.get(1));
@@ -350,11 +348,10 @@ public class UbsScratch extends CorePage {
                 break;
             }
         }
-        if(!getActualValueFromDrop(dropState).equals(state)){
-            log.error("State did not change correctly. Expected: " + state +". Actual: " + getActualValueFromDrop(dropState));
-        }
-        else{
-            log.info("State changed to "+state);
+        if (!getActualValueFromDrop(dropState).equals(state)) {
+            log.error("State did not change correctly. Expected: " + state + ". Actual: " + getActualValueFromDrop(dropState));
+        } else {
+            log.info("State changed to " + state);
             log.info("EXIT setUbsState()");
         }
 
@@ -383,15 +380,17 @@ public class UbsScratch extends CorePage {
             log.info("Modal opened");
             String path = (new File(docPath[i])).getAbsolutePath();
             writeText(inputFileField, path);
-            log.info("File " + i + "attached");
+            log.info("File " + (i + 1) + " attached");
             Select s = new Select(castToWebElement(dropCategory));
             s.selectByVisibleText(docCategory[i]);
-            log.info("Category " + i + "choosen");
+            log.info("Category " + (i + 1) + " chosen");
 
             try {
                 setDate(documentDate, Generator.getCurrentDate());
                 log.info("Date picked");
             } catch (NoSuchElementException e) {
+                log.info("Field date is absent");
+            } catch (TimeoutException e) {
                 log.info("Field date is absent");
             }
 

@@ -10,7 +10,7 @@ public class DisposalPage extends CorePage {
 		super(driver);
 	}
 
-	By addInspection = By.xpath("//a[@title='Добавить Обследование']");
+	By addInspection = By.xpath("//a[@title='Добавить Обследование' or @title='Добавить Проверку']");
 
 	public void addInspection() {
 		click(addInspection);

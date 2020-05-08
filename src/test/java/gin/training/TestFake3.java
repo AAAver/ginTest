@@ -1,4 +1,4 @@
-package training;
+package gin.training;
 
 
 import common.LoginPage;
@@ -9,10 +9,10 @@ import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import tests.BaseTest;
+import utils.BaseTest;
 import utils.ExtentTestManager;
 
-@Listeners(listeners.Listeners.class)
+@Listeners(utils.Listeners.class)
 public class TestFake3 extends BaseTest {
 	private Logger log = LogManager.getLogger(TestFake3.class.getName());
 

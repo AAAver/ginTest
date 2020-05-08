@@ -173,8 +173,7 @@ public class InspectionActNF extends InspectionPage {
             click(previousViolationsTrue);
             if(getAttribute(previousViolationDate, "class").contains("dirty-input") || !getAttribute(previousViolationDate, "value").isBlank())
             {clearField(previousViolationDate);}
-            writeText(previousViolationDate, Generator.fakeDatePast());
-            writeText(previousViolationDate, Keys.chord(Keys.ENTER));
+            setDate(previousViolationDate, Generator.fakeDatePast());
         } else {
             click(previousViolationsFalse);
         }

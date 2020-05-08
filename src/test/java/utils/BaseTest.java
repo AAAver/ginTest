@@ -1,4 +1,4 @@
-package tests;
+package utils;
 
 import com.github.javafaker.Faker;
 import org.apache.logging.log4j.LogManager;
@@ -7,7 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import training.TestFake;
 import utilities.Props;
 import utils.ExtentTestManager;
 
@@ -19,7 +18,7 @@ public class BaseTest {
 
     public WebDriver driver;
     public Faker fake = new Faker(new Locale("ru"));
-    public Logger log = LogManager.getLogger(TestFake.class.getName());
+    public Logger log = LogManager.getLogger("ginLogger");
 
 
     public void setUpDriver(){

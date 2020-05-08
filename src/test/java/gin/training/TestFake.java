@@ -1,4 +1,4 @@
-package training;
+package gin.training;
 
 
 import common.DisposalPage;
@@ -9,7 +9,7 @@ import inspection.*;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import tests.BaseTest;
+import utils.BaseTest;
 import utilities.Catalog;
 import utilities.Generator;
 import utilities.Props;

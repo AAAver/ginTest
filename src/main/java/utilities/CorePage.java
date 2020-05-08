@@ -27,7 +27,7 @@ public class CorePage {
 
     public static Faker fake = new Faker(new Locale("ru"));
     public static Random random = new Random();
-    public static Logger log = LogManager.getLogger(CorePage.class.getName());
+    public static Logger log = LogManager.getLogger("ginLogger");
 
     //===== Все или почти все справочники =====//
     public static final By select2drop = By.xpath("//div[@id='select2-drop'] //ul/li/div");
@@ -129,7 +129,13 @@ public class CorePage {
     }
 
     public boolean isDisplayed(By by) {
-        return driver.findElement(by).isDisplayed();
+        try {
+            return driver.findElement(by).isDisplayed();
+        } catch (TimeoutException e) {
+            return false;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 
     public WebElement castToWebElement(By by) {
@@ -150,18 +156,18 @@ public class CorePage {
 
     public String getActualValueFromDrop(By by) {
 
-            String xpath = "";
-            String[] p = by.toString().split(" ");
-            for (int i = 1; i < p.length; i++) {
-                if (i != p.length - 1) {
-                    xpath += p[i] + " ";
-                } else {
-                    xpath += p[i];
-                }
+        String xpath = "";
+        String[] p = by.toString().split(" ");
+        for (int i = 1; i < p.length; i++) {
+            if (i != p.length - 1) {
+                xpath += p[i] + " ";
+            } else {
+                xpath += p[i];
             }
-            String correctedXPath = xpath + " //span[contains(@class, 'chosen')]";
-            By correctedBy = By.xpath(correctedXPath);
-            return getAttribute(correctedBy, "innerHTML");
+        }
+        String correctedXPath = xpath + " //span[contains(@class, 'chosen')]";
+        By correctedBy = By.xpath(correctedXPath);
+        return getAttribute(correctedBy, "innerHTML");
     }
 
     public List<String> getActualValuesFromField(By by) {
@@ -177,7 +183,7 @@ public class CorePage {
         String correctedXPath = xpath + "/ul/li/div";
         By correctedBy = By.xpath(correctedXPath);
         List<String> values = new ArrayList<>();
-        for(WebElement i : getElementList(correctedBy)){
+        for (WebElement i : getElementList(correctedBy)) {
             values.add(i.getText());
         }
         return values;

@@ -1,4 +1,4 @@
-package tests.ubs;
+package gin.ubs;
 
 import java.io.File;
 import java.util.Locale;
@@ -16,15 +16,14 @@ import common.LoginPage;
 import common.Save;
 import common.Upload;
 
-import tests.BaseTest;
+import utils.BaseTest;
 import utilities.Catalog;
 import utilities.Generator;
 import utilities.Props;
-import unauthBuilding.UbsScratch;
-import unauthBuilding.UnauthBldList;
-import utils.ExtentTestManager;
+import ubs.UbsScratch;
+import ubs.UnauthBldList;
 
-@Listeners(listeners.Listeners.class)
+@Listeners(utils.Listeners.class)
 public class CreateUBS819Pril3With2Violations extends BaseTest {
     private Faker fake = new Faker(new Locale("ru"));
 

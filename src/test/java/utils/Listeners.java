@@ -1,8 +1,7 @@
-package listeners;
+package utils;
 
 
 import com.relevantcodes.extentreports.LogStatus;
-import tests.BaseTest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.OutputType;
@@ -11,8 +10,6 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import utils.ExtentManager;
-import utils.ExtentTestManager;
 
 public class Listeners extends BaseTest implements ITestListener {
 

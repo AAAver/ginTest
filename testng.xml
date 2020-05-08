@@ -2,29 +2,28 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="SPD_DGI">
 <!--  <listeners>-->
-<!--    <listener class-name="listeners.Listeners" />-->
+<!--    <listener class-name="utils.Listeners" />-->
 <!--  </listeners>-->
-  <test thread-count="3" name="FAKE TEST">
-    <classes>
-      <class name="training.TestFake"/>
-      <class name="training.TestFake3"/>
-    </classes>
-  </test>
-<!--  <test thread-count="3" name="EXPORT_QUEUES TEST">-->
+<!--  <test thread-count="3" name="FAKE TEST">-->
 <!--    <classes>-->
-<!--      <class name="tests.spdDgi.ActMissAct"/>-->
-<!--      <class name="tests.spdDgi.ActMissContract"/>-->
-<!--      <class name="tests.spdDgi.ActNoPrevViol"/>-->
-<!--      <class name="tests.spdDgi.ActNoViol"/>-->
-<!--      <class name="tests.spdDgi.ActPrevViol"/>-->
-<!--      <class name="tests.spdDgi.ActWrongRightFirst"/>-->
-<!--      <class name="tests.spdDgi.ActWrongRightLast"/>-->
-<!--      <class name="tests.spdDgi.Ubs234PPIncluded"/>-->
-<!--      <class name="tests.spdDgi.Ubs234PPSignsConfirmed"/>-->
-<!--      <class name="tests.spdDgi.Ubs234PPTakenIntoAccount"/>-->
-<!--      <class name="tests.spdDgi.Ubs819Pril2Included"/>-->
-<!--      <class name="tests.spdDgi.Ubs819Pril2SignsConfirmed"/>-->
-<!--      <class name="tests.spdDgi.Ubs819Pril2TakenIntoAccount"/>-->
+<!--      <class name="gin.training.TestFake"/>-->
 <!--    </classes>-->
-<!--  </test> &lt;!&ndash; EXPORT_QUEUES TEST &ndash;&gt;-->
+<!--  </test>-->
+  <test thread-count="3" name="EXPORT_QUEUES TEST">
+    <classes>
+<!--      <class name="gin.spdDgi.ActMissAct"/>-->
+      <class name="gin.spdDgi.ActMissContract"/>
+      <class name="gin.spdDgi.ActNoPrevViol"/>
+      <class name="gin.spdDgi.ActNoViol"/>
+      <class name="gin.spdDgi.ActPrevViol"/>
+      <class name="gin.spdDgi.ActWrongRightFirst"/>
+      <class name="gin.spdDgi.ActWrongRightLast"/>
+      <class name="gin.spdDgi.Ubs234PPIncluded"/>
+      <class name="gin.spdDgi.Ubs234PPSignsConfirmed"/>
+      <class name="gin.spdDgi.Ubs234PPTakenIntoAccount"/>
+      <class name="gin.spdDgi.Ubs819Pril2Included"/>
+      <class name="gin.spdDgi.Ubs819Pril2SignsConfirmed"/>
+      <class name="gin.spdDgi.Ubs819Pril2TakenIntoAccount"/>
+    </classes>
+  </test> <!-- EXPORT_QUEUES TEST -->
 </suite> <!-- SPD_DGI -->
