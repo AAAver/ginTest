@@ -115,7 +115,6 @@ public class Props {
                 baseUrl += parts[i] + "/";
             }
         }
-        System.out.println(baseUrl);
         return baseUrl;
     }
 

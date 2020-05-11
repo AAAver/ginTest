@@ -35,15 +35,20 @@ public class CorePage {
 
     public void click(By by) {
         waitVisibility(by);
-        driver.findElement(by).click();
+        try {
+            driver.findElement(by).click();
+        } catch (ElementClickInterceptedException e) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(by));
+            driver.findElement(by).click();
+        }
     }
 
     public void click(WebElement element) {
         waitVisibility(element);
         try {
             element.click();
-        } catch (StaleElementReferenceException e) {
-            wait.until(ExpectedConditions.refreshed(ExpectedConditions.stalenessOf(element)));
+        } catch (ElementClickInterceptedException e) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
             element.click();
         }
     }
@@ -72,6 +77,12 @@ public class CorePage {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(elementLocator));
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,-200)");
 
+    }
+
+    public void scrollXY(int x, int y){
+        String sx = Integer.toString(x);
+        String yx = Integer.toString(y);
+        ((JavascriptExecutor) driver).executeScript("window.scrollBy("+x+","+y+")");
     }
 
     public void scrollIntoViewBy(WebElement element) {

@@ -1,19 +1,20 @@
 package runner;
 
-import org.testng.TestNG;
-import tests.training.TestFake;
-
 import javax.swing.*;
+import java.io.UnsupportedEncodingException;
 
 public class TestRunner {
-	static TestNG test;
 
 	public static void main(String[] args) {
 
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				new MainFrame("GIN Automation");
+				try {
+					new MainFrame("GIN Automation");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 

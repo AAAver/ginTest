@@ -3,9 +3,13 @@ package tests.utils;
 import com.github.javafaker.Faker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import pagerepository.utilities.Catalog;
 import pagerepository.utilities.Props;
@@ -40,7 +44,7 @@ public class BaseTest {
     public String fakeAddress = fake.address().streetAddress();
 
 
-    public void setUpDriver(){
+    public void setUpDriver() {
         System.setProperty(Props.CHROME_DRIVER, Props.CHROME_DRIVER_PATH);
 
         DesiredCapabilities dcap = new DesiredCapabilities();
@@ -52,6 +56,10 @@ public class BaseTest {
         driver = new ChromeDriver(opt);
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         driver.manage().window().maximize();
+        driver.get(baseUrl);
+
+
+
     }
 
 //    public void takeScreenshotSuccess(String methodName) {
@@ -78,7 +86,7 @@ public class BaseTest {
         return driver;
     }
 
-    public void setUpExtentReport(String description){
+    public void setUpExtentReport(String description) {
         ExtentTestManager.startTest(getClass().getName(), description);
     }
 

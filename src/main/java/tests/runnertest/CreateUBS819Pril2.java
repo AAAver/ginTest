@@ -1,5 +1,7 @@
 package tests.runnertest;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
@@ -15,6 +17,8 @@ import pagerepository.utilities.Catalog;
 import pagerepository.utilities.Generator;
 import tests.utils.BaseTest;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.File;
 
 @Listeners(tests.utils.Listeners.class)
@@ -44,10 +48,10 @@ public class CreateUBS819Pril2 extends BaseTest {
     }
 
 
-    @AfterClass
-    void tearDown() {
-        driver.quit();
-    }
+//    @AfterClass
+//    void tearDown() {
+//        driver.quit();
+//    }
 
     LoginPage l;
     DisposalPage d;
@@ -62,7 +66,7 @@ public class CreateUBS819Pril2 extends BaseTest {
 
     @Test(description = "Инициализация страниц(сервисный шаг)")
     public void initialization() {
-        log.info("Initializing pages");
+        log.info("Начинаем выпекать страницы");
         l = new LoginPage(driver);
         d = new DisposalPage(driver);
         insp = new InspectionPage(driver);
@@ -73,11 +77,11 @@ public class CreateUBS819Pril2 extends BaseTest {
         subj = new InspectionSubjectTab(driver);
         ubsList = new UnauthBldList(driver);
         ubs = new UbsScratch(driver);
-        log.info("Pages initialized");
+        log.info("Выпечка завершена");
     }
 
     @Test(dependsOnMethods = "initialization", description = "Авторизация и создание карточки ОСС")
-    public void authorization() throws InterruptedException {
+    public void authorization() throws InterruptedException, AWTException {
         driver.get(ubsListUrl);
         l.loginAs(ultLogin, ultPassword);
         ubsList.addUnauthBld();
@@ -149,7 +153,6 @@ public class CreateUBS819Pril2 extends BaseTest {
     @Test(dependsOnMethods = "setUpInspectionThemeAndResultTwo", description = "Связка с ОСС")
     public void connectUbsTwo() {
         main.connectUbs(fakeAddress);
-        Upload.file(driver, docCategory1, docPath1);
     }
 
     @Test(dependsOnMethods = "connectUbsTwo", description = "Заполнение вкладки объект")
@@ -188,6 +191,6 @@ public class CreateUBS819Pril2 extends BaseTest {
         driver.get(ubsUrl);
         ubs.zpo(true);
         ubs.setBuildingKadastr(Generator.fakeKadastr());
-        System.out.println(ubs.getUrlTail());
+        log.warn("Ubs 819 pril.2 ID: " + ubs.getUrlTail());
     }
 }

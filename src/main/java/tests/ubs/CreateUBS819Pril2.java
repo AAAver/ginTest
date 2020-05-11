@@ -151,7 +151,6 @@ public class CreateUBS819Pril2 extends BaseTest {
     @Test(dependsOnMethods = "setUpInspectionThemeAndResultTwo", description = "Связка с ОСС")
     public void connectUbsTwo() {
         main.connectUbs(fakeAddress);
-        Upload.file(driver, docCategory1, docPath1);
     }
 
     @Test(dependsOnMethods = "connectUbsTwo", description = "Заполнение вкладки объект")

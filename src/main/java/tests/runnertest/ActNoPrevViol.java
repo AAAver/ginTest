@@ -130,10 +130,9 @@ public class ActNoPrevViol extends BaseTest {
 	}
 
 	@Test(dependsOnMethods = "addWarningCard", description = "Верификация карточки")
-	void verification() throws InterruptedException {
-		insp.verify();
+	void finalization(){
 		String inspId = insp.getUrlTail();
-		Props.setProperty("inspIdMissAct",inspId);
-		log.info("4 violations whit no previous 1010+1011x4_Is_done=1. ID = " + inspId);
+		Props.setProperty("inspIdMissAct", inspId);
+		log.warn("4 violations whit no previous 1010+1011x4_Is_done=1. ID = " + inspId);
 	}
 }

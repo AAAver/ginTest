@@ -41,10 +41,10 @@ public class CreateUBS819Pril3With2Violations extends BaseTest {
         setUpExtentReport("Создание ОСС по прил.3 с проверкой в которой 2 нарушения");
     }
 
-    @AfterClass
-    void tearDown(){
-        driver.quit();
-    }
+//    @AfterClass
+//    void tearDown(){
+//        driver.quit();
+//    }
 
     @Test(priority = 1, description = "Новый тест")
     public void addUbs819pp3() throws InterruptedException {
@@ -105,7 +105,6 @@ public class CreateUBS819Pril3With2Violations extends BaseTest {
         ubs.setBuildingKadastr(Generator.fakeKadastr());
         Save.saveThis(driver);
         ubs.verify();
-        log.info(ubs.getUrlTail() + " Ubs ID");
-
+        log.warn("Ubs 819 pril.3 ID: " + ubs.getUrlTail());
     }
 }

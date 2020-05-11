@@ -172,14 +172,14 @@ public class SettingsPanel extends JPanel {
         add(testList, gc);
 
         //============ NEXT ROW ============//
-        gc.gridy ++;
-
-        gc.gridx = 1;
-        gc.weightx = 1;
-        gc.weighty = 0.1;
-        gc.insets = new Insets(0,0,0,0);
-        gc.anchor = GridBagConstraints.FIRST_LINE_START;
-        add(comboBox, gc);
+//        gc.gridy ++;
+//
+//        gc.gridx = 1;
+//        gc.weightx = 1;
+//        gc.weighty = 0.1;
+//        gc.insets = new Insets(0,0,0,0);
+//        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+//        add(comboBox, gc);
 
         //============ NEXT ROW ============//
         gc.gridy ++;

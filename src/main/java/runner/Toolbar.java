@@ -45,7 +45,7 @@ public class Toolbar extends JPanel implements ActionListener {
 
     }
 
-    public void setComponentCommunicator(ToolbarListener communicator) {
+    public void setToolbarListener(ToolbarListener communicator) {
         this.toolbarListener = communicator;
     }
 

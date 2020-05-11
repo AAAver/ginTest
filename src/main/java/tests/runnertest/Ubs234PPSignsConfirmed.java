@@ -134,7 +134,7 @@ public class Ubs234PPSignsConfirmed extends BaseTest {
 		ubs.verify();
 		String ubs234PPSignsConfirmedId = ubs.getUrlTail();
 		Props.setProperty("ubs234PPIncluded", ubs234PPSignsConfirmedId);
-		log.info("Ubs 234 PP Signs Confirmed ID: " + ubs234PPSignsConfirmedId);
+		log.warn("Ubs 234 PP Signs Confirmed ID: " + ubs234PPSignsConfirmedId);
 	}
 
 }

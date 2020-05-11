@@ -44,6 +44,7 @@ public class InspectionObjectTab extends InspectionPage {
     public void pickKadNumExist(boolean kadNumExist, String number) {
         scrollIntoViewBy(kadastrYN);
         click(kadastrYN);
+
         var decisions = getElementList(select2drop);
         if (kadNumExist) {
             click(decisions.get(0));
