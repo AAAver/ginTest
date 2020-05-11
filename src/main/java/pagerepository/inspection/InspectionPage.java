@@ -115,7 +115,7 @@ public class InspectionPage extends CorePage {
 	//============== АКТ НФ =================//
 	// 1. Характеристики помещения
 	By premicyLocationTable = By.id("premicy-location-table");
-	By addPremicyLocationBtn = By.id("add-ctrl-premicy-location-btn");
+	By addPremicyLocationBtn = By.xpath("//*[@id='add-ctrl-premicy-location-btn']");
 	By floors = By.xpath("//tr[last()] //div[contains(@id, 'FloorCtIds')]");
 	By facilityNumbers = By.xpath("//tr[last()] //input[contains(@id, 'FacilityNumber')]");
 	By roomNumbers = By.xpath("//tr[last()] //input[contains(@id, 'RoomsNumber')]");

@@ -12,18 +12,18 @@
   <test thread-count="3" name="EXPORT_QUEUES TEST">
     <classes>
 <!--      <class name="gin.spdDgi.ActMissAct"/>-->
-      <class name="gin.spdDgi.ActMissContract"/>
-      <class name="gin.spdDgi.ActNoPrevViol"/>
-      <class name="gin.spdDgi.ActNoViol"/>
-      <class name="gin.spdDgi.ActPrevViol"/>
-      <class name="gin.spdDgi.ActWrongRightFirst"/>
-      <class name="gin.spdDgi.ActWrongRightLast"/>
-      <class name="gin.spdDgi.Ubs234PPIncluded"/>
-      <class name="gin.spdDgi.Ubs234PPSignsConfirmed"/>
-      <class name="gin.spdDgi.Ubs234PPTakenIntoAccount"/>
-      <class name="gin.spdDgi.Ubs819Pril2Included"/>
-      <class name="gin.spdDgi.Ubs819Pril2SignsConfirmed"/>
-      <class name="gin.spdDgi.Ubs819Pril2TakenIntoAccount"/>
+      <class name="tests.spdDgi.ActMissContract"/>
+      <class name="tests.spdDgi.ActNoPrevViol"/>
+      <class name="tests.spdDgi.ActNoViol"/>
+      <class name="tests.spdDgi.ActPrevViol"/>
+      <class name="tests.spdDgi.ActWrongRightFirst"/>
+      <class name="tests.spdDgi.ActWrongRightLast"/>
+      <class name="tests.spdDgi.Ubs234PPIncluded"/>
+      <class name="tests.spdDgi.Ubs234PPSignsConfirmed"/>
+      <class name="tests.spdDgi.Ubs234PPTakenIntoAccount"/>
+      <class name="tests.spdDgi.Ubs819Pril2Included"/>
+      <class name="tests.spdDgi.Ubs819Pril2SignsConfirmed"/>
+      <class name="tests.spdDgi.Ubs819Pril2TakenIntoAccount"/>
     </classes>
   </test> <!-- EXPORT_QUEUES TEST -->
 </suite> <!-- SPD_DGI -->

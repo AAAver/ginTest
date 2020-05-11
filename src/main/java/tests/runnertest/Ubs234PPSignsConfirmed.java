@@ -1,15 +1,12 @@
-package tests.spdDgi;
+package tests.runnertest;
 
-import pagerepository.common.DisposalPage;
-import pagerepository.common.LoginPage;
-import pagerepository.common.Save;
-
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import pagerepository.common.DisposalPage;
+import pagerepository.common.LoginPage;
+import pagerepository.common.Save;
 import pagerepository.inspection.*;
-
 import pagerepository.ubs.UbsScratch;
 import pagerepository.ubs.UnauthBldList;
 import pagerepository.utilities.Catalog;

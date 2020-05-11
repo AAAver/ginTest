@@ -1,7 +1,5 @@
 package tests.spdDgi;
 
-import java.io.File;
-
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -21,21 +19,13 @@ import tests.utils.BaseTest;
 
 @Listeners(tests.utils.Listeners.class)
 public class ActWrongRightFirst extends BaseTest {
-	
-	private String baseUrl = Props.BASE_URL;
-	private String disposalUrl = Props.DISPOSAL_URL_NF;
-	private String ultLogin = Props.ULT_LOGIN;
-	private String ultPassword = Props.ULT_PASSWORD;
-	
-	private String address = fake.address().streetAddress();
+
 	private String companyName = "Альянс Девелопмент";	
 	private String objSquare = Integer.toString(Generator.getRandomUpTo(5000));
 	private String inspTheme = Catalog.inspection.theme.ONF;
 	private String inspResult = Catalog.inspection.result.VIOL_SIGNS_IDENT;
 	private String wrongRightType = Catalog.useRight.RIGHT_OF_USE;
 	private String correctRightType = Catalog.useRight.RENT;
-	private String docCategory = Catalog.docs.category.ACT_NF;
-	private String docPath = (new File(Catalog.docs.path.ACT_NF)).getAbsolutePath();
 
 	@BeforeClass
 	void setDriver() {
@@ -75,7 +65,7 @@ public class ActWrongRightFirst extends BaseTest {
 	public void authorization() {
 		driver.get(baseUrl);
 		l.loginAs(ultLogin, ultPassword);
-		driver.get(disposalUrl);
+		driver.get(disposalUrlNf);
 		d.addInspection();
 	}
 
@@ -98,14 +88,14 @@ public class ActWrongRightFirst extends BaseTest {
 
 	@Test(dependsOnMethods = "setUpViolations", description = "Загрузка документа(Акт НФ)")
 	public void uploadDocuments() {
-		Upload.file(driver, docCategory, docPath);
+		Upload.file(driver, actNf, actNfPath);
 		act.scrollToBottom();
 	}
 
 	@Test(dependsOnMethods = "uploadDocuments", description = "Заполнение данных на вкладке объект")
 	public void setObjectInformation() {
 		obj.objectTabSwitch();
-		obj.setAddress(address);
+		obj.setAddress(fakeAddress);
 		obj.setObjSquare(objSquare);
 		obj.pickKadNumExist(true);
 	}

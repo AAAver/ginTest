@@ -1,41 +1,38 @@
-package tests.spdDgi;
+package tests.runnertest;
 
 
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
 import pagerepository.common.DisposalPage;
 import pagerepository.common.LoginPage;
 import pagerepository.common.Save;
 import pagerepository.common.Upload;
 import pagerepository.inspection.*;
-
 import pagerepository.utilities.Catalog;
 import pagerepository.utilities.Generator;
 import pagerepository.utilities.Props;
 import tests.utils.BaseTest;
 
 @Listeners(tests.utils.Listeners.class)
-public class ActMissContract extends BaseTest {
+public class ActNoPrevViol extends BaseTest {
 
 	private String companyName = "Альянс Девелопмент";	
 	private String objSquare = Integer.toString(Generator.getRandomUpTo(5000));
 	private String inspTheme = Catalog.inspection.theme.ONF;
-	private String inspResult = Catalog.inspection.result.VIOL_SIGNS_IDENT;	
-
+	private String inspResult = Catalog.inspection.result.VIOL_SIGNS_IDENT;
+	private String rightType = Catalog.useRight.RENT;
 
 	@BeforeClass
 	void setDriver() {
 		setUpDriver();
-		setUpExtentReport("Генерация акта НФ без договора (Таблица 2). 1010 = 1, 1011 = 2, is_done = 0");
+		setUpExtentReport("Генерация акта НФ c 4-мя нарушениями без ранее выявленных. 1010 = 1, 1011 = 4, is_done = 1");
 	}
 
-	@AfterClass
-	void tearDown() {
-		driver.quit();
-	}
+//	@AfterClass
+//	void tearDown() {
+//		driver.quit();
+//	}
 
 	LoginPage l;
 	DisposalPage d;
@@ -74,15 +71,15 @@ public class ActMissContract extends BaseTest {
 		main.setInspectionResult(inspResult);
 	}
 
-	@Test(dependsOnMethods = "settingThemeAndResult", description = "Установка нарушений акта НФ")
+	@Test(dependsOnMethods = "settingThemeAndResult", description = "Установка нарушений акта НФ. 4 нарушения без ранее выявленных")
 	public void setUpViolations() {
 		main.populateCommonInformation();
 		act.populateCommonInformation();
 		act.previousViolations(false);
-		act.isActualUsage(true);
+		act.isActualUsage(false);
 		act.isReplanned(true);
 		act.isPremicyUsed(false);
-		act.isThirdPartyUsesBuilding(false);
+		act.isThirdPartyUsesBuilding(true);
 	}
 
 	@Test(dependsOnMethods = "setUpViolations", description = "Загрузка документа(Акт НФ)")
@@ -117,11 +114,12 @@ public class ActMissContract extends BaseTest {
 		obj.createEgrnTable();
 	}
 
-	@Test(dependsOnMethods = "setEgrnInfo", description = "Договор не прикрепляется")
-	void setBuildingContract() throws InterruptedException, NoSuchFieldException, IllegalAccessException {
+	@Test(dependsOnMethods = "setEgrnInfo", description = "Прикрепление договора")
+	void setBuildingContract() throws InterruptedException {
 		Save.saveThis(driver);
 		obj.objectTabSwitch();
-		obj.scrollIntoViewBy(obj.getByByName("BtnContract"));
+		obj.createContractTable(rightType);
+		obj.objectTabSwitch();
 	}
 
 	@Test(dependsOnMethods = "setBuildingContract", description = "Добавление предупреждения")
@@ -136,6 +134,6 @@ public class ActMissContract extends BaseTest {
 		insp.verify();
 		String inspId = insp.getUrlTail();
 		Props.setProperty("inspIdMissAct",inspId);
-		log.info("Inspection with NO CONTRACT created. ID = " + inspId);
+		log.info("4 violations whit no previous 1010+1011x4_Is_done=1. ID = " + inspId);
 	}
 }

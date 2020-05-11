@@ -20,16 +20,10 @@ import tests.utils.BaseTest;
 @Listeners(tests.utils.Listeners.class)
 public class Ubs819Pril2TakenIntoAccount extends BaseTest {
 
-	private String login = Props.ULT_LOGIN;
-	private String password = Props.ULT_PASSWORD;
-	private String ubsListUrl = Props.UBS_LIST_URL;
 	private String ubsResol = Catalog.ubs.resolution.PP_819;
 	private String ubsState = Catalog.ubs.state.TAKEN_INTO_ACCOUNT;
 	private String inspTheme = Catalog.inspection.theme.UBS_819_IDENT;
 	private String inspResult = Catalog.inspection.result.PRIL_2;
-	private String[] dgiDocs = Catalog.docs.category.DGI_PACK;
-	private String[] dgiDocsPath = Catalog.docs.path.DGI_PACK;
-	private String address = fake.address().streetAddress();
 	private String ao = Catalog.area.ao.DEFAULT_AO;
 	private String disposalUrl = Props.DISPOSAL_URL_ZU_1;
 	private String shd = Catalog.shd.DEFAULT_SHD;
@@ -78,13 +72,13 @@ public class Ubs819Pril2TakenIntoAccount extends BaseTest {
 	@Test(dependsOnMethods = "initialization", description = "Авторизация и создание ОСС")
 	public void authorization() {
 		driver.get(ubsListUrl);
-		l.loginAs(login, password);
+		l.loginAs(ultLogin, ultPassword);
 		ubsList.addUnauthBld();
 	}
 
 	@Test(dependsOnMethods = "authorization", description = "Первичное заполнение ОСС")
 	public void populateUbs() throws InterruptedException {
-		ubs.generateUBS(address, ao, ubsResol);
+		ubs.generateUBS(fakeAddress, ao, ubsResol);
 		objSquare = ubs.getObjSquare();
 		ubsUrl = driver.getCurrentUrl();
 	}
@@ -104,13 +98,13 @@ public class Ubs819Pril2TakenIntoAccount extends BaseTest {
 	@Test(dependsOnMethods = "controlThemeAndResult", description = "Связка с ОСС")
 	public void connectUbs() {
 		main.populateCommonInformation();
-		main.connectUbs(address);
+		main.connectUbs(fakeAddress);
 	}
 
 	@Test(dependsOnMethods = "connectUbs", description = "Информация об объекте")
 	public void settingObjectInfo() throws InterruptedException {
 		obj.objectTabSwitch();
-		obj.setAddress(address);
+		obj.setAddress(fakeAddress);
 		obj.setObjSquare(objSquare);
 		obj.pickKadNumExist(true);
 		Save.saveThis(driver);
@@ -133,7 +127,7 @@ public class Ubs819Pril2TakenIntoAccount extends BaseTest {
 		ubs.isManualCorrection(true);
 		ubs.setUbsState(ubsState);
 		ubs.setBuildingKadastr(Generator.fakeKadastr());
-		ubs.uploadFile(driver, dgiDocs, dgiDocsPath);
+		ubs.uploadFile(driver, dgiPack, dgiPackPath);
 		Save.saveThis(driver);
 	}
 

@@ -99,7 +99,7 @@ public class UbsScratch extends CorePage {
     By dropVerification = By.xpath("//*[@class='btn-group']/*[@data-toggle='dropdown']");
     By btnToVerification = By.xpath("//a[contains(text(),'Отправить на верификацию')]");
     By btnAcceptInSendToVerDialog = By.xpath(
-            "//div[contains(@class, 'ui-dialog')]//*[@id='send-to-verification-dialog']/following-sibling::div //button[@class='btn btn-xs btn-success']");
+            "//div[contains(@class, 'ui-dialog')]//*[@id='send-to-verification-dialog']/following-sibling::div //button[contains(@class, 'btn-success')]");
     By btnVerifyUKON = By.id("verify-btn");
     By btnAcceptInVerUkonDialog = By
             .xpath("//*[@id='verify-dialog']/following-sibling::div //button[@class='btn btn-xs btn-success']");

@@ -1,23 +1,21 @@
-package tests.ubs;
+package tests.runnertest;
 
-import java.io.File;
-
-import pagerepository.inspection.*;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
 import pagerepository.common.DisposalPage;
 import pagerepository.common.LoginPage;
 import pagerepository.common.Save;
 import pagerepository.common.Upload;
-
-import tests.utils.BaseTest;
-import pagerepository.utilities.Catalog;
-import pagerepository.utilities.Generator;
+import pagerepository.inspection.*;
 import pagerepository.ubs.UbsScratch;
 import pagerepository.ubs.UnauthBldList;
+import pagerepository.utilities.Catalog;
+import pagerepository.utilities.Generator;
+import tests.utils.BaseTest;
+
+import java.io.File;
 
 @Listeners(tests.utils.Listeners.class)
 public class CreateUBS819Pril2 extends BaseTest {
