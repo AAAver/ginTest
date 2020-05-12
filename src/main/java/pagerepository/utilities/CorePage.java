@@ -38,8 +38,13 @@ public class CorePage {
         try {
             driver.findElement(by).click();
         } catch (ElementClickInterceptedException e) {
-            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(by));
-            driver.findElement(by).click();
+            scrollXY(0,200);
+            try {
+                driver.findElement(by).click();
+            } catch (ElementClickInterceptedException e2) {
+                scrollXY(0,-400);
+                driver.findElement(by).click();
+            }
         }
     }
 
@@ -48,8 +53,13 @@ public class CorePage {
         try {
             element.click();
         } catch (ElementClickInterceptedException e) {
-            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
-            element.click();
+            scrollXY(0,200);
+            try {
+                element.click();
+            } catch (ElementClickInterceptedException e2) {
+                scrollXY(0,-400);
+                element.click();
+            }
         }
     }
 

@@ -22,13 +22,13 @@ public class Protocol extends CorePage {
     String protocolCategory = Catalog.docs.category.PROTOCOL;
     String protocolFile = (new File(Catalog.docs.path.PROTOCOL)).getAbsolutePath();
 
-    By subNumber = By.id("ProtocolSubnumber");
-    By date = By.id("ProtocolDate");
-    By responsiblePerson = By.id("s2id_InspectorUserId");
-    By deliveryType = By.id("s2id_DeliveryTypeCtId");
-    By violatorType = By.id("s2id_ViolatorTypeCtId");
-    By collapse = By.cssSelector(".collapse-head-line");
-    By protocolContent = By.id("ProtocolContent");
+    By subNumber = By.xpath("//*[@id='ProtocolSubnumber']");
+    By date = By.xpath("//*[@id='ProtocolDate']");
+    By responsiblePerson = By.xpath("//*[@id='s2id_InspectorUserId']");
+    By deliveryType = By.xpath("//*[@id='s2id_DeliveryTypeCtId']");
+    By violatorType = By.xpath("//*[@id='s2id_ViolatorTypeCtId']");
+    By collapse = By.cssSelector(".collapse-head-line']");
+    By protocolContent = By.xpath("//*[@id='ProtocolContent']");
     By toInspBtn = By.xpath("//a[@title='Карточка проверки']");
 
     public void fillCommonProtocol() throws InterruptedException {

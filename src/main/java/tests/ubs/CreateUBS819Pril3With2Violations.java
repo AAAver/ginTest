@@ -43,10 +43,10 @@ public class CreateUBS819Pril3With2Violations extends BaseTest {
         setUpExtentReport("Создание ОСС по прил.3 с проверкой в которой 2 нарушения");
     }
 
-    @AfterClass
-    void tearDown(){
-        driver.quit();
-    }
+//    @AfterClass
+//    void tearDown(){
+//        driver.quit();
+//    }
 
     @Test(priority = 1, description = "Новый тест")
     public void addUbs819pp3() throws InterruptedException {

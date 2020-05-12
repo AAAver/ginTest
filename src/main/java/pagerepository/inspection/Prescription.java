@@ -12,14 +12,14 @@ public class Prescription extends CorePage {
 		super(driver);
 	}
 
-	By subNumber = By.id("RequirementSubNumber");
-	By issueDate = By.id("IssueDate");
-	By deadlineDate = By.id("DeadLineDateM");
-	By type = By.id("s2id_RequirementTypeM");
-	By responsibleInspector = By.id("s2id_InspectorUserId");
-	By deliveryType = By.id("s2id_DeliveryTypeCtId");
-	By content = By.id("Contents");
-	By saveBtn = By.id("submit-form-btn");
+	By subNumber = By.xpath("//*[@id='RequirementSubNumber']");
+	By issueDate = By.xpath("//*[@id='IssueDate']");
+	By deadlineDate = By.xpath("//*[@id='DeadLineDateM']");
+	By type = By.xpath("//*[@id='s2id_RequirementTypeM']");
+	By responsibleInspector = By.xpath("//*[@id='s2id_InspectorUserId']");
+	By deliveryType = By.xpath("//*[@id='s2id_DeliveryTypeCtId']");
+	By content = By.xpath("//*[@id='Contents']");
+	By saveBtn = By.xpath("//*[@id='submit-form-btn']");
 	By toInspBtn =By.xpath("//a[@title='Карточка проверки']");
 	
 	public void fillPrescription() {

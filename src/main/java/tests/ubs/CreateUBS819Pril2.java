@@ -46,10 +46,10 @@ public class CreateUBS819Pril2 extends BaseTest {
     }
 
 
-    @AfterClass
-    void tearDown() {
-        driver.quit();
-    }
+//    @AfterClass
+//    void tearDown() {
+//        driver.quit();
+//    }
 
     LoginPage l;
     DisposalPage d;

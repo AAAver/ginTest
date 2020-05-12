@@ -19,10 +19,10 @@ public class InspectionPage extends CorePage {
 
 	// ======== ВЕРИФИКАЦИЯ ====== //
 	By toVer = By.xpath("//button[contains(.,'Верификация')]");
-	By sendVerBtn = By.id("send-to-verification-btn");
+	By sendVerBtn = By.xpath("//*[@id='send-to-verification-btn']");
 	By sendVerModal = By
 			.xpath("//div[@aria-describedby='send-to-verification-dialog'] //button[contains(@class, 'btn-success')]");
-	By verify = By.id("verify-btn");
+	By verify = By.xpath("//*[@id='verify-btn']");
 	By verModal = By.xpath("//div[@aria-describedby='verify-dialog'] //button[contains(@class, 'btn-success')]");
 
 	// Переход по вкладкам
@@ -43,50 +43,50 @@ public class InspectionPage extends CorePage {
 
 
 	// ======== ВКЛАДКА [Мероприятия] ========= //
-	public static By inspectionTheme = By.id("s2id_InspThemeCtIdM");
-	By controlSubNumber = By.id("ControlSubnumber");
-	By controlDate = By.id("ControlDate");
-	By actDate = By.id("ActDate");
-	By durationHours = By.id("DurationHours");
-	By controlTime = By.id("ControlTime");
-	By addInspectorBtn = By.id("add-inspector-btn"); // Кнопка [Добавить инспектора]
+	public static By inspectionTheme = By.xpath("//*[@id='s2id_InspThemeCtIdM']");
+	By controlSubNumber = By.xpath("//*[@id='ControlSubnumber']");
+	By controlDate = By.xpath("//*[@id='ControlDate']");
+	By actDate = By.xpath("//*[@id='ActDate']");
+	By durationHours = By.xpath("//*[@id='DurationHours']");
+	By controlTime = By.xpath("//*[@id='ControlTime']");
+	By addInspectorBtn = By.xpath("//*[@id='add-inspector-btn']"); // Кнопка [Добавить инспектора]
 	By firstInspector = By.xpath("//table[@id='table-inspector-info'] //tr[1] //div[contains(@id, 'UserId')]"); 
 	By isResponsibleInsp = By.xpath("//table[@id='table-inspector-info'] //tr[1] //div[contains(@id, 'IsResponsibleEnum')]");
-	By inspectionResult = By.id("s2id_ResultCtIdM");
-	By objectConstructionStage = By.id("s2id_ObjectConstructionStageCtId");
+	By inspectionResult = By.xpath("//*[@id='s2id_ResultCtIdM']");
+	By objectConstructionStage = By.xpath("//*[@id='s2id_ObjectConstructionStageCtId']");
 	By factUsage = By.xpath("//*[@id = 's2id_ActualUsageCtIds']");
-	By representativeLastName = By.id("RepresentativeLastName");
-	By representativeFirstName = By.id("RepresentativeFirstName");
-	By representativePosition = By.id("s2id_RepresentativePositionCtId");
-	By representativeRefuse = By.id("s2id_IsRefusalExploreAct");
-	By dangerSignal = By.id("s2id_IsDangerSignal");
+	By representativeLastName = By.xpath("//*[@id='RepresentativeLastName']");
+	By representativeFirstName = By.xpath("//*[@id='RepresentativeFirstName']");
+	By representativePosition = By.xpath("//*[@id='s2id_RepresentativePositionCtId']");
+	By representativeRefuse = By.xpath("//*[@id='s2id_IsRefusalExploreAct']");
+	By dangerSignal = By.xpath("//*[@id='s2id_IsDangerSignal']");
 	By attachFile = By.xpath("//a[@title='Добавить документ (Ctrl+D)']");
 	By ubsCollapse = By.xpath("//div[@id='eventTab'] //*[contains(., 'Объект самостроя')]");
-	By bindUbsBtn = By.id("bind-to-unauth-btn");
-	By ubsAddress = By.id("LandAddress");
+	By bindUbsBtn = By.xpath("//*[@id='bind-to-unauth-btn']");
+	By ubsAddress = By.xpath("//*[@id='LandAddress']");
 	By searchUbsBtn = By.xpath("//div[@id='bind-to-unauth-dlg'] //button[text()='Поиск']");
 	By addExactUbsBtn = By.xpath("//*[@id='unauth-table-container'] //a[contains(@class,'choice-btn')]");
 	By acceptUbsModal = By.xpath("//*[@id='bind-to-unauth-dlg']/following-sibling::div //button[contains(@class,'btn-success')]");
-	By kadastrNum = By.id("KadastrZu");
+	By kadastrNum = By.xpath("//*[@id='KadastrZu']");
 
 	// Данные объекта
-	By okrug = By.id("s2id_AoIdM");
+	By okrug = By.xpath("//*[@id='s2id_AoIdM']");
 	By okrugRemove = By.xpath("//*[@id='s2id_AoIdM'] //abbr");
-	By district = By.id("s2id_DistrictIdM");
-	By addressKIM = By.id("AddressM_Address");
-	By roadAccess = By.id("IsAvailableFromRoadway");
-	By objSquare = By.id("SquareM");
-	By explotationRight = By.id("s2id_ExploitationRightCtId");
-	By kadastrYN = By.id("s2id_HasKadastrZuRegistration");
+	By district = By.xpath("//*[@id='s2id_DistrictIdM']");
+	By addressKIM = By.xpath("//*[@id='AddressM_Address']");
+	By roadAccess = By.xpath("//*[@id='IsAvailableFromRoadway']");
+	By objSquare = By.xpath("//*[@id='SquareM']");
+	By explotationRight = By.xpath("//*[@id='s2id_ExploitationRightCtId']");
+	By kadastrYN = By.xpath("//*[@id='s2id_HasKadastrZuRegistration']");
 
-	By objTypeDrop = By.id("s2id_ObjectTypeCtIds");
+	By objTypeDrop = By.xpath("//*[@id='s2id_ObjectTypeCtIds']");
 	By clearTypeBtn = By.xpath("//*[@id='s2id_ObjectTypeCtIds'] //a");
 
 
 	// Таблица 1. Иформация о здании из ЕГРН
-	By egrnTableAdd = By.id("add-ctrl-bld-btn");
+	By egrnTableAdd = By.xpath("//*[@id='add-ctrl-bld-btn']");
 	By buildingEgrnAddres = By.xpath("//table[@id='table-ctrl-building-info'] //input[contains(@id, 'Address')]");
-	By egrnInfoAddBld = By.id("add-ctrl-bld-btn");
+	By egrnInfoAddBld = By.xpath("//*[@id='add-ctrl-bld-btn']");
 	By egrnTblAddress = By
 			.xpath("//table[@id='table-ctrl-building-info'] //tbody/tr[last()] //input[contains(@id, '_Address')]");
 	By egrnTblOwner = By
@@ -103,7 +103,7 @@ public class InspectionPage extends CorePage {
 
 	// Таблица 3. Информация о помещениях в здании
 	By premicyCollapse = By.xpath("//div[@name='nf-info-container']/div[3]");
-	By addRoomBtn = By.id("add-room-btn");
+	By addRoomBtn = By.xpath("//*[@id='add-room-btn']");
 	By roomKadastrNumber = By
 			.xpath("//table[@id='table-room-info'] //tbody/tr[last()] //input[contains(@id, '_KadastrRoom')]");
 	By parkingPlace = By
@@ -114,16 +114,16 @@ public class InspectionPage extends CorePage {
 
 	//============== АКТ НФ =================//
 	// 1. Характеристики помещения
-	By premicyLocationTable = By.id("premicy-location-table");
+	By premicyLocationTable = By.xpath("//*[@id='premicy-location-table']");
 	By addPremicyLocationBtn = By.xpath("//*[@id='add-ctrl-premicy-location-btn']");
 	By floors = By.xpath("//tr[last()] //div[contains(@id, 'FloorCtIds')]");
 	By facilityNumbers = By.xpath("//tr[last()] //input[contains(@id, 'FacilityNumber')]");
 	By roomNumbers = By.xpath("//tr[last()] //input[contains(@id, 'RoomsNumber')]");
 	By separateEntranceTrue = By.xpath("//*[@id = 'ControlPremicyInfo_HasSeparateEntrance' and @value ='True']/parent::label");
 	By separateEntranceFalse = By.xpath("//*[@id = 'ControlPremicyInfo_HasSeparateEntrance' and @value ='False']/parent::label");
-	By sepEntrDescrip = By.id("ControlPremicyInfo_SeparateEntranceThrough");
-	By techCond = By.id("s2id_ControlPremicyInfo_FacilityTechnicalConditionCtId");
-	By techCondFacade = By.id("s2id_ControlPremicyInfo_FacadeTechnicalConditionCtId");
+	By sepEntrDescrip = By.xpath("//*[@id='ControlPremicyInfo_SeparateEntranceThrough']");
+	By techCond = By.xpath("//*[@id='s2id_ControlPremicyInfo_FacilityTechnicalConditionCtId']");
+	By techCondFacade = By.xpath("//*[@id='s2id_ControlPremicyInfo_FacadeTechnicalConditionCtId']");
 	By graffitiTrue = By.xpath("//*[@id = 'ControlPremicyInfo_FacadeHasPictures' and @value ='True']/parent::label");
 	By graffitiFalse = By.xpath("//*[@id = 'ControlPremicyInfo_FacadeHasPictures' and @value ='False']/parent::label");
 	By territoryUsableTrue = By.xpath("//*[@id = 'ControlPremicyInfo_IsAdjacentTerritoryUsable' and @value ='True']/parent::label");
@@ -132,17 +132,17 @@ public class InspectionPage extends CorePage {
 	By actualUsageTrue = By.xpath("//*[@id = 'ControlPremicyInfo_IsActualUsage' and @value ='True']/parent::label");
 	By actualUsageFalse = By.xpath("//*[@id = 'ControlPremicyInfo_IsActualUsage' and @value ='False']/parent::label");
 	By actualUsageOther = By.xpath("//*[@id = 'ControlPremicyInfo_IsActualUsage' and @value ='']/parent::label");
-	By actualUsageDescription = By.id("ControlPremicyInfo_ActualUsageDescription");
+	By actualUsageDescription = By.xpath("//*[@id='ControlPremicyInfo_ActualUsageDescription']");
 	By replanTrue = By.xpath("//*[@id = 'ControlPremicyInfo_IsReplanned' and @value ='True']/parent::label");
 	By replanFalse = By.xpath("//*[@id = 'ControlPremicyInfo_IsReplanned' and @value ='False']/parent::label");
-	By replanDescription = By.id("ControlPremicyInfo_ReplanningComment");
+	By replanDescription = By.xpath("//*[@id='ControlPremicyInfo_ReplanningComment']");
 	By premicyUsedTrue = By.xpath("//*[@id = 'ControlPremicyInfo_IsUsed' and @value ='True']/parent::label");
 	By premicyUsedFalse = By.xpath("//*[@id = 'ControlPremicyInfo_IsUsed' and @value ='False']/parent::label");
 	By premicyUsedPartially = By.xpath("//*[@id = 'ControlPremicyInfo_IsUsed' and @value ='']/parent::label");
-	By premicyUsedPercent = By.id("ControlPremicyInfo_UsagePercent");
+	By premicyUsedPercent = By.xpath("//*[@id='ControlPremicyInfo_UsagePercent']");
 	By thirdPartyTrue = By.xpath("//*[@id = 'ControlPremicyInfo_HasThirdPartyOrganizations' and @value ='True']/parent::label");
 	By thirdPartyFalse = By.xpath("//*[@id = 'ControlPremicyInfo_HasThirdPartyOrganizations' and @value ='False']/parent::label");
-	By thirdPartyAddTableBtn = By.id("add-thrd-party-org-btn");
+	By thirdPartyAddTableBtn = By.xpath("//*[@id='add-thrd-party-org-btn']");
 	By thirdPartyName = By.xpath("//input[contains(@id, '_OrganizationName')]");
 	By thirdPartyAddress = By.xpath("//input[contains(@id, '_Address')]");
 	By thirdPartyINN = By.xpath("//input[contains(@id, '_Inn')]");
@@ -156,10 +156,10 @@ public class InspectionPage extends CorePage {
 	By accessibleTrue = By.xpath("//*[@id = 'ControlPremicyInfo_IsAccessible' and @value ='True']/parent::label");
 	By accessibleFalse = By.xpath("//*[@id = 'ControlPremicyInfo_IsAccessible' and @value ='False']/parent::label");
 	By accessibleOther = By.xpath("//*[@id = 'ControlPremicyInfo_IsAccessible' and @value ='']/parent::label");
-	By accessDescription = By.id("ControlPremicyInfo_MiscellaneousDescription");
+	By accessDescription = By.xpath("//*[@id='ControlPremicyInfo_MiscellaneousDescription']");
 	By previousViolationsTrue = By.xpath("//*[@id = 'ControlPremicyInfo_HasPreviouslyIdentifiedViolations' and @value ='True']/parent::label");
 	By previousViolationsFalse = By.xpath("//*[@id = 'ControlPremicyInfo_HasPreviouslyIdentifiedViolations' and @value ='False']/parent::label");
-	By previousViolationDate = By.id("ControlPremicyInfo_PreviouslyIdentifiedViolationDate");
+	By previousViolationDate = By.xpath("//*[@id='ControlPremicyInfo_PreviouslyIdentifiedViolationDate']");
 	By previousReplanTrue = By.xpath("//*[@id = 'ControlPremicyInfo_IsReplanningViolation' and @value ='True']/parent::label");
 	By previousReplanFalse = By.xpath("//*[@id = 'ControlPremicyInfo_IsReplanningViolation' and @value ='False']/parent::label");
 	By previousReplanFixedTrue = By.xpath("//*[@id = 'ControlPremicyInfo_IsReplanningViolationFixed' and @value ='True']/parent::label");
@@ -175,14 +175,14 @@ public class InspectionPage extends CorePage {
 
 	// ================== ВКЛАДКА СУБЪЕКТ ================ //
 	// Вкладка [Субъект]
-	By addShdBtn = By.id("shd-catalog-btn");
+	By addShdBtn = By.xpath("//*[@id='shd-catalog-btn']");
 	// Таблица с СХД
 	By shdTable = By.xpath("//div[@id='shd-calatogs-search-result']/table");
 	By shdNames = By.xpath("//*[@id='shd-calatogs-search-result']/table/tbody/tr/td[4]");
 	By addButtons = By.xpath("//*[@id='shd-calatogs-search-result']/table/tbody/tr/td[8] //a");
 	By accept = By.xpath(
 			"//*[@aria-describedby='modalDialog6'] //div[@class='ui-dialog-buttonpane ui-widget-content ui-helper-clearfix'] //button[@class='btn btn-xs btn-success']");
-	By searchField = By.id("FullName");
+	By searchField = By.xpath("//*[@id='FullName']");
 	By searchBtn = By.xpath("//div[@id='searchFormDiv'] //button[text()='Поиск']");
 	// Вкладки СХД
 	By mainTab = By.xpath("//*[@id='tabShdSnapshot'] //a[contains(.,'Основные')]");
@@ -190,32 +190,32 @@ public class InspectionPage extends CorePage {
 	By employeeTab = By.xpath("//*[@id='tabShdSnapshot'] //a[contains(.,'Данные сотрудника')]");
 	By bankTab = By.xpath("//*[@id='tabShdSnapshot'] //a[contains(.,'Банковские')]");
 	// Вкладка [Основные]
-	By headPostTitle = By.id("HeadPostTitle");
-	By headLastName = By.id("HeadLastName");
-	By headFirstName = By.id("HeadFirstName");
+	By headPostTitle = By.xpath("//*[@id='HeadPostTitle']");
+	By headLastName = By.xpath("//*[@id='HeadLastName']");
+	By headFirstName = By.xpath("//*[@id='HeadFirstName']");
 	// Вкладка [Адреса]
 	By shdAddressTypes = By.xpath("//*[@id='address-table'] //td[8]");
 	By shdAddressChkbox = By.xpath("//*[@id='address-table'] //td[9] //input[@type='checkbox']");
 	// Вкладка [Данные сотрудника]
-	By emplLastName = By.id("ShdEmployeeM_Surname");
-	By emplFirstName = By.id("ShdEmployeeM_FirstName");
-	By emplPosition = By.id("s2id_ShdEmployeeM_PostCtId");
+	By emplLastName = By.xpath("//*[@id='ShdEmployeeM_Surname']");
+	By emplFirstName = By.xpath("//*[@id='ShdEmployeeM_FirstName']");
+	By emplPosition = By.xpath("//*[@id='s2id_ShdEmployeeM_PostCtId']");
 	By snapshot = By.xpath("//*[@id='shd-snapshot-info-container'] //label[@for='ShortName']");
 
 	// ============= ВКЛАДКА НАРУШЕНИЯ ============= //
 	// К проверке
 	By toInsp = By.xpath("//a[@title='Проверка']");
-	By warningBtn = By.id("add-perimeter-control-btn");
-	By subNumber = By.id("SubNumber");
-	By calendar = By.id("ui-datepicker-div");
-	By date = By.id("Date");
-	By koapArticle = By.id("s2id_KoApArticleCtId");
-	By inspector = By.id("s2id_InspectorId");
-	By deliveryType = By.id("s2id_DeliveryTypeCtId");
-	By violatorType = By.id("s2id_ViolatorTypeCtId");
-	By content = By.id("Content");
+	By warningBtn = By.xpath("//*[@id='add-perimeter-control-btn']");
+	By subNumber = By.xpath("//*[@id='SubNumber']");
+	By calendar = By.xpath("//*[@id='ui-datepicker-div']");
+	By date = By.xpath("//*[@id='Date']");
+	By koapArticle = By.xpath("//*[@id='s2id_KoApArticleCtId']");
+	By inspector = By.xpath("//*[@id='s2id_InspectorId']");
+	By deliveryType = By.xpath("//*[@id='s2id_DeliveryTypeCtId']");
+	By violatorType = By.xpath("//*[@id='s2id_ViolatorTypeCtId']");
+	By content = By.xpath("//*[@id='Content']");
 	// Добавить нарушение
-	By addViolBtn = By.id("add-violation-btn");
+	By addViolBtn = By.xpath("//*[@id='add-violation-btn']");
 	By violTypeDrop = By.xpath("//*[@id='table-violation-info'] //tbody/tr[last()] //div[contains(@id, '_ViolationCtId')]");
 	By apArticleDrop = By.xpath("//*[@id='table-violation-info'] //tbody/tr[last()] //div[contains(@id, '_ApArticleCtId')]");
 	By violSuccessBtn = By.xpath("//*[@id='table-violation-info'] //tbody/tr[last()] //a[contains(@class, 'btn-success')]");

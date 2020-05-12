@@ -3,14 +3,14 @@ package runner;
 import javax.swing.*;
 import java.awt.*;
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
+
+
 
 public class LogPanel extends JPanel {
     private JTextArea textArea;
     private PrintStream standardOut;
 
-    public LogPanel() throws UnsupportedEncodingException {
+    public LogPanel(){
         textArea = new JTextArea();
         textArea.setEditable(false);
 
