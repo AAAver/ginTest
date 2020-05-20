@@ -1,15 +1,18 @@
 package runner;
 
+import okhttp3.internal.concurrent.Task;
 import org.testng.TestNG;
 import pagerepository.utilities.Props;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainFrame extends JFrame {
 
-    private LogPanel textPanel;
+    private LogPanel logPanel;
     private JTextField textField;
     private JButton btn;
     private JLabel label;
@@ -18,19 +21,20 @@ public class MainFrame extends JFrame {
     private SettingsPanel settingsPanel;
     private SettingsListener formListener;
     private TestNG test;
+    private Thread testThread;
 
     public MainFrame(String title) throws UnsupportedEncodingException {
         super(title);
         setLayout(new BorderLayout());
 
         toolbar = new Toolbar();
-        textPanel = new LogPanel();
+        logPanel = new LogPanel();
         textField = new JTextField();
         settingsPanel = new SettingsPanel();
         chk = new JCheckBox();
 
-        add(textPanel, BorderLayout.CENTER);
-//        add(toolbar, BorderLayout.NORTH);
+        add(logPanel, BorderLayout.CENTER);
+        add(toolbar, BorderLayout.NORTH);
         add(settingsPanel, BorderLayout.WEST);
 
 
@@ -39,9 +43,13 @@ public class MainFrame extends JFrame {
         setVisible(true);
 
         toolbar.setToolbarListener(new ToolbarListener() {
+
             @Override
-            public void textEmitted(String text) {
-                textPanel.appendText(text);
+            public void killChrome() throws Exception {
+                String chromedriver = "chromedriver.exe";
+                if(TaskKiller.isProcessRunning(chromedriver)){
+                    TaskKiller.killProcess(chromedriver);
+                }
             }
 
         });
@@ -60,38 +68,40 @@ public class MainFrame extends JFrame {
                 Thread t = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        int testId = e.getTestToRun();
-                        switch (testId){
-                            case 0:
-                                test = new TestNG();
-                                test.setTestClasses(new Class[]{tests.runnertest.CreateUBS819Pril2.class});
-                                test.run();
-                                break;
-                            case 1:
-                                test = new TestNG();
-                                test.setTestClasses(new Class[]{tests.runnertest.CreateUBS819Pril3With2Violations.class});
-                                test.run();
-                                break;
-                            case 2:
-                                test = new TestNG();
-                                test.setTestClasses(new Class[]{tests.runnertest.Ubs234PPSignsConfirmed.class});
-                                test.run();
-                                break;
-                            case 3:
-                                test = new TestNG();
-                                test.setTestClasses(new Class[]{tests.runnertest.ActNoPrevViol.class});
-                                test.run();
-                                break;
-                        }
+                        Class[] testId = e.getTestToRun();
+                        test = new TestNG();
+                        test.setTestClasses(testId);
+                        test.run();
+
                     }
                 });
                 t.start();
 
             }
+
+            @Override
+            public void launchSuite(SettingsEvent e) {
+                testThread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        test = new TestNG();
+                        List<String> suite= new ArrayList<>();
+                        suite.add(e.getSuiteToRun());
+                        test.setTestSuites(suite);
+                        test.run();
+                    }
+                });
+                testThread.start();
+            }
+
+            @Override
+            public void suiteClicked(SettingsEvent e) {
+
+             logPanel.appendText(e.getSuiteInfo());
+            }
         });
         settingsPanel.appendDisposalZuText(Props.getProperty("disposalUrlZu"));
         settingsPanel.appendDisposalNfText(Props.getProperty("disposalUrlNf"));
+        logPanel.appendText("HELLO\n");
     }
-
-
 }

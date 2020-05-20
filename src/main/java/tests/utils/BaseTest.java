@@ -3,13 +3,9 @@ package tests.utils;
 import com.github.javafaker.Faker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import pagerepository.utilities.Catalog;
 import pagerepository.utilities.Props;
@@ -31,7 +27,7 @@ public class BaseTest {
     public String ubsListUrl = Props.UBS_LIST_URL;
 
     public String ultLogin = Props.ULT_LOGIN;
-    public String ultPassword = Props.ULT_PASSWORD;
+    public String ultPassword = Props.DEFAULT_PASSWORD;
 
     // Документы
     public String[] dgiPack = Catalog.docs.category.DGI_PACK;
@@ -57,9 +53,6 @@ public class BaseTest {
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.get(baseUrl);
-
-
-
     }
 
 //    public void takeScreenshotSuccess(String methodName) {

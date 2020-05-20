@@ -1,7 +1,7 @@
 package tests.training;
 
 import com.relevantcodes.extentreports.LogStatus;
-import pagerepository.common.DisposalPage;
+import pagerepository.inspection.DisposalPage;
 import pagerepository.common.LoginPage;
 import pagerepository.common.Save;
 import pagerepository.common.Upload;
@@ -26,7 +26,7 @@ public class ActMissAct extends BaseTest {
     private final String baseUrl = Props.BASE_URL;
     private final String disposalUrl = Props.DISPOSAL_URL_NF;
     private final String ultLogin = Props.ULT_LOGIN;
-    private final String ultPassword = Props.ULT_PASSWORD;
+    private final String ultPassword = Props.DEFAULT_PASSWORD;
 
     private final String address = fake.address().streetAddress();
     private final String companyName = "Альянс Девелопмент";

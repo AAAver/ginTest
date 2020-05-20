@@ -18,7 +18,7 @@ public class Props {
     public static final String UBS_LIST_URL = BASE_URL + "/UnauthorizedBuilding";
 
     public static final String ULT_LOGIN = "3";
-    public static final String ULT_PASSWORD = decidePassword();
+    public static final String DEFAULT_PASSWORD = decidePassword();
 
     public static final String CHROME_DRIVER = "webdriver.chrome.driver";
     public static final String CHROME_DRIVER_PATH = "./driver/chromedriver.exe";
@@ -26,17 +26,6 @@ public class Props {
     public static final String PHOTO_PATH_U = "images/ubsU.png";
     public static final String PHOTO_PATH_T = "images/ubsT.png";
     public static final String PHOTO_PATH_O = "images/ubsO.jpg";
-
-    public static WebDriver initChromeDriver() {
-        System.setProperty(Props.CHROME_DRIVER, Props.CHROME_DRIVER_PATH);
-        DesiredCapabilities dcap = new DesiredCapabilities();
-        dcap.setCapability("pageLoadStrategy", "eager");
-        ChromeOptions opt = new ChromeOptions();
-        opt.merge(dcap);
-        WebDriver driver = new ChromeDriver(opt);
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-        return driver;
-    }
 
     public static String getProperty(String key) {
         Properties prop = new Properties();

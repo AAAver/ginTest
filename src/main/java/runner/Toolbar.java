@@ -9,39 +9,44 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class Toolbar extends JPanel implements ActionListener {
+public class Toolbar extends JPanel {
 
-    private JButton inspectionNf;
+    private JButton killChromeDriver;
     private JButton ubsPril2;
     private JButton ubsPril3;
     private JButton ubs234;
-    private TestNG test;
+
 
     private ToolbarListener toolbarListener;
-    private String wait;
+
 
     public Toolbar(){
         setLayout(new FlowLayout(FlowLayout.LEFT));
         setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 
-        inspectionNf = new JButton("Проверка НФ");
+        killChromeDriver = new JButton("Убить ХромДрайвер");
         ubsPril2 = new JButton("ОСС Прил.2");
         ubsPril3 = new JButton("ОСС Прил.3");
         ubs234 = new JButton("ОСС 234-ПП");
 
-        wait = "\n Дождитесь автоматического закрытия браузера\n";
 
-        inspectionNf.addActionListener(this);
-        ubsPril2.addActionListener(this);
-        ubsPril3.addActionListener(this);
-        ubs234.addActionListener(this);
+        killChromeDriver.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(toolbarListener != null){
+                    try {
+                        toolbarListener.killChrome();
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                }
+            }
+        });
 
 
 
-        add(inspectionNf);
-        add(ubsPril2);
-        add(ubsPril3);
-        add(ubs234);
+        add(killChromeDriver);
+
 
     }
 
@@ -49,8 +54,7 @@ public class Toolbar extends JPanel implements ActionListener {
         this.toolbarListener = communicator;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        JButton clicked  = (JButton) e.getSource();
-    }
+
+
+
 }

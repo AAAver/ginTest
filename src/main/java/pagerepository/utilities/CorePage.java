@@ -211,4 +211,21 @@ public class CorePage {
 
     }
 
+    public void chooseFromDropDown(By by, String option){
+        click(by);
+        List<WebElement> options = driver.findElements(select2drop);
+        for (WebElement webElement : options) {
+            if (webElement.getText().contains(option)) {
+                click(webElement);
+                break;
+            }
+        }
+    }
+
+    public void chooseFromDropDownRandom(By by){
+        click(by);
+        List<WebElement> options = driver.findElements(select2drop);
+        click(options.get(random.nextInt(options.size())));
+    }
+
 }

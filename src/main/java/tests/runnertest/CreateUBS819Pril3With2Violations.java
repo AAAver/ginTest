@@ -1,10 +1,9 @@
 package tests.runnertest;
 
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import pagerepository.common.DisposalPage;
+import pagerepository.inspection.DisposalPage;
 import pagerepository.common.LoginPage;
 import pagerepository.common.Save;
 import pagerepository.common.Upload;
@@ -80,7 +79,11 @@ public class CreateUBS819Pril3With2Violations extends BaseTest {
         Save.saveThis(driver);
         InspectionSubjectTab subj = new InspectionSubjectTab(driver);
         subj.subjectTabSwitch();
-        subj.peekShd(shd);
+        while (!subj.isShdPresented()) {
+            subj.peekShd(shd);
+            Save.saveThis(driver);
+            subj.subjectTabSwitch();
+        }
         Save.saveThis(driver);
         InspectionViolationTab viol = new InspectionViolationTab(driver);
         viol.violTabSwitch();

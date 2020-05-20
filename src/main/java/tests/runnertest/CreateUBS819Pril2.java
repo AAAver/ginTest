@@ -1,12 +1,9 @@
 package tests.runnertest;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import pagerepository.common.DisposalPage;
+import pagerepository.inspection.DisposalPage;
 import pagerepository.common.LoginPage;
 import pagerepository.common.Save;
 import pagerepository.common.Upload;
@@ -18,7 +15,6 @@ import pagerepository.utilities.Generator;
 import tests.utils.BaseTest;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.io.File;
 
 @Listeners(tests.utils.Listeners.class)
@@ -94,6 +90,8 @@ public class CreateUBS819Pril2 extends BaseTest {
         objSquare = ubs.getObjSquare();
     }
 
+
+    // =========== ПЕРВАЯ ПРОВЕРКА =============== //
     @Test(dependsOnMethods = "populateUBS", description = "Создание проверки. Тематика и результат")
     public void setUpInspectionThemeAndResultOne() {
         driver.get(disposalUrlZu1);
@@ -140,57 +138,15 @@ public class CreateUBS819Pril2 extends BaseTest {
         viol.addPrescription("Самовольное занятие земельного участка под строительство нежилых объектов");
     }
 
-
-    @Test(dependsOnMethods = "setViolationOne", description = "Создание проверки. Тематика и результат")
-    public void setUpInspectionThemeAndResultTwo() {
-        driver.get(disposalUrlZu2);
-        d.addInspection();
-        main.populateCommonInformation();
-        main.setInspectionTheme(inspTheme2);
-        main.setInspectionResult(inspResult2);
-    }
-
-    @Test(dependsOnMethods = "setUpInspectionThemeAndResultTwo", description = "Связка с ОСС")
-    public void connectUbsTwo() {
-        main.connectUbs(fakeAddress);
-    }
-
-    @Test(dependsOnMethods = "connectUbsTwo", description = "Заполнение вкладки объект")
-    public void settingObjectInfoTwo() throws InterruptedException {
-        obj.objectTabSwitch();
-        obj.setAddress(fakeAddress);
-        obj.setObjSquare(objSquare);
-        obj.pickKadNumExist(true);
-        Save.saveThis(driver);
-        obj.objectTabSwitch();
-    }
-
-    @Test(dependsOnMethods = "settingObjectInfoTwo", description = "Заполнение вкладки объект")
-    public void settingSubjectInfoTwo() throws InterruptedException {
-        subj.subjectTabSwitch();
-        while (!subj.isShdPresented()) {
-            subj.peekShd(shd);
-            Save.saveThis(driver);
-            subj.subjectTabSwitch();
-        }
-    }
-
-    @Test(dependsOnMethods = "settingSubjectInfoTwo", description = "Добавление нарушений")
-    public void setViolationTwo() throws InterruptedException {
-        viol.violTabSwitch();
-        viol.addViolation("Самовольное занятие земельного участка под строительство нежилых объектов");
-        Save.saveThis(driver);
-        viol.violTabSwitch();
-        viol.addProtocol("Самовольное занятие земельного участка под строительство нежилых объектов");
-        viol.violTabSwitch();
-        viol.addPrescription("Самовольное занятие земельного участка под строительство нежилых объектов");
-    }
-
-    @Test(dependsOnMethods = "setViolationTwo", description = "Заполнение ЗПО")
+    @Test(dependsOnMethods = "setViolationOne", description = "Заполнение ЗПО")
     public void populateUbsZpo() {
         driver.get(ubsUrl);
         ubs.zpo(true);
         ubs.setBuildingKadastr(Generator.fakeKadastr());
-        log.warn("Ubs 819 pril.2 ID: " + ubs.getUrlTail());
+    }
+
+    @Test(dependsOnMethods = "populateUbsZpo", description = "Прикрепление пакета документов")
+    public void addDgiDocuments(){
+        ubs.uploadFile(driver, dgiPack, dgiPackPath);
     }
 }

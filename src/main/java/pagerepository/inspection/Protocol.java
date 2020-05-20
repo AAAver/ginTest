@@ -27,30 +27,25 @@ public class Protocol extends CorePage {
     By responsiblePerson = By.xpath("//*[@id='s2id_InspectorUserId']");
     By deliveryType = By.xpath("//*[@id='s2id_DeliveryTypeCtId']");
     By violatorType = By.xpath("//*[@id='s2id_ViolatorTypeCtId']");
-    By collapse = By.cssSelector(".collapse-head-line']");
+    By protocolCollapse = By.xpath("//*[@id='ProtocolContent']/../../../preceding-sibling::div[contains(@class,'collapse')]");
     By protocolContent = By.xpath("//*[@id='ProtocolContent']");
     By toInspBtn = By.xpath("//a[@title='Карточка проверки']");
 
-    public void fillCommonProtocol() throws InterruptedException {
-        writeText(subNumber, Integer.toString(random.nextInt(300)));
+    public void populateProtocol() throws InterruptedException {
+        do {
+            writeText(subNumber, Integer.toString(random.nextInt(300)));
+            click(date);
+        } while (!getAttribute(subNumber, "class").contains("valid"));
+
         setDate(date, Generator.getCurrentDate());
-        click(responsiblePerson);
-        List<WebElement> persons = getElementList(select2drop);
-        click(persons.get(random.nextInt(persons.size())));
-        click(deliveryType);
-        List<WebElement> dtypes = getElementList(select2drop);
-        click(dtypes.get(random.nextInt(dtypes.size())));
-        click(violatorType);
-        List<WebElement> vtypes = getElementList(select2drop);
-        for (WebElement webElement : vtypes) {
-            if (getText(webElement).contains("ЮЛ")) {
-                click(webElement);
-                break;
-            }
-        }
+        chooseFromDropDownRandom(responsiblePerson);
+        chooseFromDropDownRandom(deliveryType);
+        chooseFromDropDown(violatorType,"ЮЛ");
+
         if (!isDisplayed(protocolContent)) {
-            click(collapse);
+            click(protocolCollapse);
         }
+
         writeText(protocolContent, fake.animal().name());
 
         Save.saveThis(driver);

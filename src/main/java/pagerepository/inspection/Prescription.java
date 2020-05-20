@@ -23,7 +23,10 @@ public class Prescription extends CorePage {
 	By toInspBtn =By.xpath("//a[@title='Карточка проверки']");
 	
 	public void fillPrescription() {
-		writeText(subNumber, Integer.toString(random.nextInt(1000)));
+		do {
+			writeText(subNumber, Integer.toString(random.nextInt(1000)));
+			click(content);
+		} while (!getAttribute(subNumber,"class").contains("valid"));
 		writeText(issueDate, Generator.getCurrentDate());
 		writeText(issueDate, Keys.chord(Keys.ENTER));
 		if(!getAttribute(deadlineDate, "class").contains("dirty-input")) {
@@ -42,7 +45,10 @@ public class Prescription extends CorePage {
 		click(inspectors.get(random.nextInt(inspectors.size())));
 		writeText(content, fake.artist().name());
 		click(saveBtn);
-	    click(toInspBtn);
+
+		do {
+			click(toInspBtn);
+		} while (driver.getCurrentUrl().contains("ControlRequirements"));
 	}
 	
 }

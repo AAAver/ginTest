@@ -56,7 +56,7 @@ public class InspectionViolationTab extends InspectionPage {
         a.moveToElement(plusToAdd).build().perform();
         a.moveToElement(protocolToAdd).click().build().perform();
         Protocol p = new Protocol(driver);
-        p.fillCommonProtocol();
+        p.populateProtocol();
     }
 
     public void addPrescription(String violation) throws InterruptedException {

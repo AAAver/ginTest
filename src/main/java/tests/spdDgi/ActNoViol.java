@@ -1,12 +1,11 @@
 package tests.spdDgi;
 
 
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import pagerepository.common.DisposalPage;
+import pagerepository.inspection.DisposalPage;
 import pagerepository.common.LoginPage;
 import pagerepository.common.Save;
 import pagerepository.common.Upload;
@@ -32,10 +31,10 @@ public class ActNoViol  extends BaseTest {
 		setUpExtentReport("Генерация акта НФ без нарушений и без ранее выявленных. 1010 = 1, no_violations, is_done = 1");
 	}
 
-	@AfterClass
-	void tearDown() {
-		driver.quit();
-	}
+//	@AfterClass
+//	void tearDown() {
+//		driver.quit();
+//	}
 
 	LoginPage l;
 	DisposalPage d;
@@ -134,7 +133,7 @@ public class ActNoViol  extends BaseTest {
 
 	@Test(dependsOnMethods = "addWarningCard", description = "Верификация карточки")
 	void verification() throws InterruptedException {
-		insp.verify();
+//		insp.verify();
 		String inspId = insp.getUrlTail();
 		Props.setProperty("inspIdMissAct",inspId);
 		log.info("No violations whit no previous 1010_no_violations_Is_done=1. ID = " + inspId);

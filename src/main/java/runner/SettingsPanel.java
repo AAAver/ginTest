@@ -1,9 +1,10 @@
 package runner;
 
 
-
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,18 +18,20 @@ public class SettingsPanel extends JPanel {
     private JTextField disposalFieldNf;
     private JButton saveBtn;
     private JButton launchTestBtn;
+    private JButton launchSuiteBtn;
     private SettingsListener settingsListener;
     private JList testList;
+    private JList testSuites;
     private JComboBox comboBox;
 
 
-    public SettingsPanel(){
+    public SettingsPanel() {
         Dimension dim = getPreferredSize();
         dim.width = 500;
         setPreferredSize(dim);
         Border innerBorder = BorderFactory.createTitledBorder("Настройки");
-        Border outerBorder = BorderFactory.createEmptyBorder(5,5,5,5);
-        setBorder(BorderFactory.createCompoundBorder(outerBorder,innerBorder));
+        Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+        setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
         disposalLabelZu1 = new JLabel("Url Поручение ЗУ: ");
         disposalFieldZu = new JTextField(25);
@@ -37,16 +40,15 @@ public class SettingsPanel extends JPanel {
         saveBtn = new JButton("Сохранить");
 
 
-
         //============== СПИСОК ТЕСТОВ ===========//
         testPickerLabel = new JLabel("Карточка для генерации:");
 
         testList = new JList();
         DefaultListModel testListModel = new DefaultListModel();
-        testListModel.addElement(new TestCategory(0,"ОСС по 819-ПП прил.2"));
-        testListModel.addElement(new TestCategory(1,"ОСС по 819-ПП прил.3"));
-        testListModel.addElement(new TestCategory(2,"ОСС по 234-ПП"));
-        testListModel.addElement(new TestCategory(3,"Проверка НФ"));
+        testListModel.addElement(new TestCategory(0, "ОСС по 819-ПП прил.2"));
+        testListModel.addElement(new TestCategory(1, "ОСС по 819-ПП прил.3"));
+        testListModel.addElement(new TestCategory(2, "ОСС по 234-ПП"));
+        testListModel.addElement(new TestCategory(3, "Проверка НФ"));
         testList.setModel(testListModel);
         testList.setBorder(BorderFactory.createEtchedBorder());
         testList.setSelectedIndex(0);
@@ -55,12 +57,24 @@ public class SettingsPanel extends JPanel {
 
         //=============== ДРОПДАУН ==============//
         comboBox = new JComboBox();
+        comboBox.setPreferredSize(new Dimension(137, 20));
 
         DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
         comboBoxModel.addElement("Первый");
         comboBoxModel.addElement("Второй");
         comboBoxModel.addElement("Третий");
         comboBox.setModel(comboBoxModel);
+
+        // ============== СЬЮТЫ =================== //
+        testSuites = new JList();
+        DefaultListModel ds = new DefaultListModel();
+        ds.addElement(new TestCategory(101, "СПД ДГИ сьют"));
+        testSuites.setBorder(BorderFactory.createEtchedBorder());
+        testSuites.setPreferredSize(new Dimension(137, 20));
+        testSuites.setModel(ds);
+
+        launchSuiteBtn = new JButton("Запустить");
+
 
         layoutComponents();
 
@@ -76,7 +90,7 @@ public class SettingsPanel extends JPanel {
                 event.setDisposalUrlNf(disposalUrlNf);
                 event.setDisposalUrlZu(disposalUrlZu);
 
-                if(settingsListener != null){
+                if (settingsListener != null) {
                     settingsListener.urlSettingsChanged(event);
                 }
             }
@@ -90,24 +104,58 @@ public class SettingsPanel extends JPanel {
                 SettingsEvent event = new SettingsEvent(this);
                 event.setTestToRun(testToRun.getId());
 
-                if(settingsListener != null){
+                if (settingsListener != null) {
                     settingsListener.launchTest(event);
                 }
 
             }
         });
+
+        launchSuiteBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TestCategory suiteToRun = (TestCategory) testSuites.getSelectedValue();
+
+                SettingsEvent event = new SettingsEvent(this);
+                event.setSuiteToRun(suiteToRun.getId());
+
+                if (settingsListener != null) {
+                    settingsListener.launchSuite(event);
+                }
+            }
+        });
+
+        testSuites.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                JList list = (JList) e.getSource();
+                TestCategory cat = (TestCategory) list.getSelectedValue();
+                SettingsEvent event = new SettingsEvent(this);
+                event.setSuiteInfo(cat.getId());
+
+                if (settingsListener != null) {
+                    settingsListener.suiteClicked(event);
+                }
+
+            }
+        });
+
+
     }
-    public void setSettingsListener(SettingsListener settingsListener){
+
+    public void setSettingsListener(SettingsListener settingsListener) {
         this.settingsListener = settingsListener;
     }
-    public void appendDisposalZuText(String text){
+
+    public void appendDisposalZuText(String text) {
         disposalFieldZu.setText(text);
     }
-    public void appendDisposalNfText(String text){
+
+    public void appendDisposalNfText(String text) {
         disposalFieldNf.setText(text);
     }
 
-    public void layoutComponents(){
+    public void layoutComponents() {
 
         setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
@@ -121,85 +169,120 @@ public class SettingsPanel extends JPanel {
         gc.weighty = 0.1;
         gc.fill = GridBagConstraints.NONE;
         gc.anchor = GridBagConstraints.LINE_END;
-        gc.insets = new Insets(0,0,0,5);
+        gc.insets = new Insets(0, 0, 0, 5);
         add(disposalLabelZu1, gc);
 
         gc.gridx = 1;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(0, 0, 0, 0);
         gc.anchor = GridBagConstraints.LINE_START;
         add(disposalFieldZu, gc);
 
         //============ NEXT ROW ============//
-        gc.gridy ++;
+        gc.gridy++;
 
         gc.gridx = 0;
         gc.weightx = 1;
         gc.weighty = 0.1;
         gc.anchor = GridBagConstraints.LINE_END;
-        gc.insets = new Insets(0,0,0,5);
-        add(disposalLabelNf,gc);
+        gc.insets = new Insets(0, 0, 0, 5);
+        add(disposalLabelNf, gc);
 
         gc.gridx = 1;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(0, 0, 0, 0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(disposalFieldNf,gc);
+        add(disposalFieldNf, gc);
 
         //============ NEXT ROW ============//
-        gc.gridy ++;
+        gc.gridy++;
 
         gc.gridx = 1;
         gc.weightx = 1;
-        gc.weighty = 0.1;
-        gc.insets = new Insets(0,0,0,0);
+        gc.weighty = 0.3;
+        gc.insets = new Insets(0, 0, 0, 0);
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
         add(saveBtn, gc);
 
         //============ NEXT ROW ============//
-        gc.gridy ++;
+        gc.gridy++;
 
         gc.gridx = 0;
         gc.weightx = 1;
         gc.weighty = 0.1;
         gc.anchor = GridBagConstraints.FIRST_LINE_END;
-        gc.insets = new Insets(0,0,0,5);
-        add(testPickerLabel,gc);
+        gc.insets = new Insets(0, 0, 0, 5);
+        add(testPickerLabel, gc);
 
         gc.gridx = 1;
         gc.weightx = 1;
         gc.weighty = 0.1;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(0, 0, 0, 0);
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
         add(testList, gc);
 
         //============ NEXT ROW ============//
-//        gc.gridy ++;
-//
-//        gc.gridx = 1;
-//        gc.weightx = 1;
-//        gc.weighty = 0.1;
-//        gc.insets = new Insets(0,0,0,0);
-//        gc.anchor = GridBagConstraints.FIRST_LINE_START;
-//        add(comboBox, gc);
+        gc.gridy++;
+
+        gc.gridx = 1;
+        gc.weightx = 1;
+        gc.weighty = 0.1;
+        gc.insets = new Insets(0, 0, 0, 0);
+        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        add(comboBox, gc);
 
         //============ NEXT ROW ============//
-        gc.gridy ++;
+        gc.gridy++;
+
+        gc.gridx = 1;
+        gc.weightx = 1;
+        gc.weighty = 0.3;
+        gc.insets = new Insets(0, 0, 0, 0);
+        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        add(launchTestBtn, gc);
+
+        //============ NEXT ROW ============//
+        gc.gridy++;
+
+        gc.gridx = 0;
+        gc.weightx = 1;
+        gc.weighty = 0.1;
+        gc.insets = new Insets(0, 0, 0, 5);
+        gc.anchor = GridBagConstraints.FIRST_LINE_END;
+        add(new JLabel("Сьюты:"), gc);
+
+        gc.gridx = 1;
+        gc.weightx = 1;
+        gc.weighty = 0.1;
+        gc.insets = new Insets(0, 0, 0, 0);
+        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        add(testSuites, gc);
+
+        //============ NEXT ROW ============//
+        gc.gridy++;
 
         gc.gridx = 1;
         gc.weightx = 1;
         gc.weighty = 2;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(0, 0, 0, 0);
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
-        add(launchTestBtn, gc);
+        add(launchSuiteBtn, gc);
+
     }
 }
 
-class TestCategory{
+class TestCategory {
     private int id;
     private String testName;
-    public TestCategory(int id, String testName){
+
+    public TestCategory(int id, String testName) {
         this.id = id;
         this.testName = testName;
     }
-    public String toString(){return testName;}
-    public int getId(){return id;}
+
+    public String toString() {
+        return testName;
+    }
+
+    public int getId() {
+        return id;
+    }
 }

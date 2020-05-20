@@ -259,7 +259,6 @@ public class UbsScratch extends CorePage {
         setAddress(address);
         fillCommonInfo();
         setResolution(resol);
-        setBuildingKadastr(Generator.fakeKadastr());
         Save.saveThis(driver);
     }
 

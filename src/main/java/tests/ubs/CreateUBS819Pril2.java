@@ -3,12 +3,11 @@ package tests.ubs;
 import java.io.File;
 
 import pagerepository.inspection.*;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import pagerepository.common.DisposalPage;
+import pagerepository.inspection.DisposalPage;
 import pagerepository.common.LoginPage;
 import pagerepository.common.Save;
 import pagerepository.common.Upload;
@@ -187,8 +186,10 @@ public class CreateUBS819Pril2 extends BaseTest {
     @Test(dependsOnMethods = "setViolationTwo", description = "Заполнение ЗПО")
     public void populateUbsZpo() {
         driver.get(ubsUrl);
-        ubs.zpo(true);
+        ubs.actualizePril("приложение 2");
+        ubs.zpo(false);
         ubs.setBuildingKadastr(Generator.fakeKadastr());
+        ubs.uploadFile(driver, Catalog.docs.category.DGI_PACK, Catalog.docs.path.DGI_PACK);
         System.out.println(ubs.getUrlTail());
     }
 }

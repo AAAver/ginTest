@@ -1,15 +1,15 @@
 package tests.training;
 
 
-import pagerepository.common.DisposalPage;
+import org.openqa.selenium.By;
+import pagerepository.common.MainPage;
 import pagerepository.common.LoginPage;
-import pagerepository.common.Save;
-import pagerepository.common.Upload;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pagerepository.inspection.*;
 
+import pagerepository.dismantle.DismantlePage;
+import pagerepository.inspectionTask.InspectionTaskList;
+import pagerepository.inspectionTask.RaidPlanTask;
 import pagerepository.utilities.Catalog;
 import pagerepository.utilities.Generator;
 import pagerepository.utilities.Props;
@@ -26,16 +26,16 @@ public class TestFake extends BaseTest {
         setUpExtentReport("Новый тест");
     }
 
-    @AfterClass
-    void tearDown() {
-        driver.quit();
-    }
+//    @AfterClass
+//    void tearDown() {
+//        driver.quit();
+//    }
 
 
     private final String baseUrl = Props.BASE_URL;
     private final String disposalUrl = Props.DISPOSAL_URL_NF;
     private final String ultLogin = Props.ULT_LOGIN;
-    private final String ultPassword = Props.ULT_PASSWORD;
+    private final String ultPassword = Props.DEFAULT_PASSWORD;
 
     private final String address = fake.address().streetAddress();
     private final String companyName = "Альянс Девелопмент";
@@ -50,70 +50,12 @@ public class TestFake extends BaseTest {
 
     @Test(priority = 1, description = "Один из методов")
     public void missAct() throws InterruptedException {
-        driver.get(baseUrl);
-
+        driver.get("http://192.168.4.117/626/UnauthBuildingDismantle/Edit/2011#");
         LoginPage l = new LoginPage(driver);
-        l.loginAs(ultLogin, ultPassword);
-
-        driver.get(disposalUrl);
-        DisposalPage d = new DisposalPage(driver);
-        d.addInspection();
-
-        InspectionMainTab main = new InspectionMainTab(driver);
-        InspectionObjectTab obj = new InspectionObjectTab(driver);
-        InspectionSubjectTab subj = new InspectionSubjectTab(driver);
-        InspectionActNF act = new InspectionActNF(driver);
-        InspectionViolationTab viol = new InspectionViolationTab(driver);
-
-        //==== ТЕМАТИКА/РЕЗУЛЬТАТ ====//
-        main.setInspectionTheme(inspTheme);
-        main.setInspectionResult(inspResult);
-
-        //==== ОБЩАЯ ИНФА ====//
-        main.populateCommonInformation();
-
-        act.populateCommonInformation();
-
-        //==== АКТ НФ (НАРУШЕНИЯ) ====//
-        act.isActualUsage(false);
-        act.isReplanned(true);
-        act.isPremicyUsed(false);
-        act.isThirdPartyUsesBuilding(false);
-        act.previousViolations(true);
-        act.previousReplanViolation(true, false);
-        act.previousThirdPartyViolation(false, false);
-        act.previousNonPurposeUsage(true, true);
-        //==================//
-        Upload.file(driver, docCategory, docPath);
-        //==== ДАННЫЕ ОБЪЕКТА ====//
-        obj.objectTabSwitch();
-        obj.setAddress(address);
-        obj.setObjSquare(objSquare);
-        obj.pickKadNumExist(true);
-        Save.saveThis(driver);
-        //==== ДАННЫЕ СУБЪЕКТА ====//
-        subj.subjectTabSwitch();
-        subj.peekShd(companyName);
-        Save.saveThis(driver);
-        subj.subjectTabSwitch();
-
-        //==== ИНФОРМАЦИЯ О ЗДАНИИ ====//
-        obj.objectTabSwitch();
-        obj.createEgrnTable();
-        obj.createRoomInfoTable();
-        Save.saveThis(driver);
-        //==== ДОГОВОР НА ПОМЕЩЕНИЕ ====//
-        obj.objectTabSwitch();
-        obj.createContractTable(rightType);
-        //==== НАРУШЕНИЯ ====//
-        viol.violTabSwitch();
-        viol.addWarning();
-        //==== ВЕРИФИКАЦИЯ ====//
-        main.verify();
-
-        //==== ЗАПИСЫВАЕМ ИНФУ ====//
-        String inspId = main.getUrlTail();
-        Props.setProperty("inspIdMissAct", inspId);
+        l.loginAs("3");
+        DismantlePage dis = new DismantlePage(driver);
+        var s = dis.getActualValueFromDrop(By.xpath("//*[@id='s2id_ContractorId']"));
+        System.out.println("result is: " + s);
 
     }
 

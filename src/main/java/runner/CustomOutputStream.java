@@ -1,21 +1,26 @@
 package runner;
 
 import javax.swing.*;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
 public class CustomOutputStream extends OutputStream {
     private JTextArea textArea;
+    private final ByteArrayOutputStream buf = new ByteArrayOutputStream();
 
     public CustomOutputStream(JTextArea textArea) {
         this.textArea = textArea;
+
+    }
+    @Override public void flush() throws IOException {
+        textArea.append(buf.toString("UTF-8"));
+        textArea.setCaretPosition(textArea.getDocument().getLength());
+        buf.reset();
     }
 
     @Override
     public void write(int b) {
-        // redirects data to the text area
-        textArea.append(String.valueOf((char)b));
-        // scrolls the text area to the end of data
-        textArea.setCaretPosition(textArea.getDocument().getLength());
+        buf.write(b);
     }
 }

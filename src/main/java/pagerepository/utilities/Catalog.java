@@ -32,6 +32,7 @@ public class Catalog {
 					"ДГИ - Данные ЗПО", "ДГИ - Данные Мосгосстройнадзора", "ДГИ - Данные Мосгосэкспертизы",
 					"ДГИ - Данные Москомархитектуры", "ДГИ - Данные о наличии прав собственности",
 					"ДГИ - Данные о собственниках", "ДГИ - Материалы инвентарного дела", "ДГИ - Фототаблица"};
+			public static final String[] GBU_DISMANTLE_DOC_PACK = {"Акт о подтверждении демонтажа ГБУ","Уведомление в Мосгосстройнадзор о завершении сноса"};
 		}
 
 		public static class path {
@@ -45,6 +46,7 @@ public class Catalog {
 					"docfiles/ДГИ - Данные ЗПО.docx", "docfiles/ДГИ - Данные Мосгосстройнадзора.docx", "docfiles/ДГИ - Данные Мосгосэкспертизы.docx",
 					"docfiles/ДГИ - Данные Москомархитектуры.docx", "docfiles/ДГИ - Данные о наличии прав собственности.docx","docfiles/ДГИ - Данные о собственниках.docx",
 					"docfiles/ДГИ - Материалы инвентарного дела.docx", "docfiles/ДГИ - Фототаблица.docx"};
+			public static final String[] GBU_DISMANTLE_DOC_PACK = {"docfiles/Предостережение.docx","docfiles/Предостережение.docx"};
 		}
 
 	}
@@ -94,5 +96,12 @@ public class Catalog {
 	public class useRight {
 		public static final String RENT = "Договор аренды";
 		public static final String RIGHT_OF_USE = "пользования";
+	}
+
+	// ============== ВЗЫСКАНИЯ ===================== //
+	public class legalCase{
+		public class status{
+			public static final String PREPARE_CASE = "подготовка иска в суд";
+		}
 	}
 }
