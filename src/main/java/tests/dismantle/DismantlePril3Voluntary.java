@@ -38,7 +38,7 @@ public class DismantlePril3Voluntary extends BaseTest {
     @BeforeClass
     void initDriver() {
         setUpDriver();
-        setUpExtentReport("Создание ОСС по прил.3 с проверкой в которой 2 нарушения");
+        setUpExtentReport("Демонтаж по прил.3 (добровольный)");
     }
 
     @BeforeMethod
@@ -91,7 +91,7 @@ public class DismantlePril3Voluntary extends BaseTest {
 
 
     @Test(dependsOnMethods = "initPages", description = "Добавляем ОСС")
-    void addUbs819pp3() throws InterruptedException {
+    void addUbs819pp2() throws InterruptedException {
         l.loginAs(ultLogin);
         mp.toUbsList();
         ubsList.addUnauthBld();
@@ -100,11 +100,11 @@ public class DismantlePril3Voluntary extends BaseTest {
         objSquare = ubs.getObjSquare();
     }
 
-    @Test(dependsOnMethods = "addUbs819pp3", description = "Добавляем проверку")
+    @Test(dependsOnMethods = "addUbs819pp2", description = "Добавляем проверку")
     void addInspection() throws InterruptedException {
         driver.get(baseUrl);
         mp.toDisposals();
-        dlp.toInspectionZU();
+        dlp.toInspectionZuDisposal();
         d.addInspection();
         main.setInspectionTheme(inspTheme1);
         main.setInspectionResult(inspResult1);
@@ -131,9 +131,10 @@ public class DismantlePril3Voluntary extends BaseTest {
     @Test(dependsOnMethods = "addInspection", description = "Корректировка и верификация ОСС")
     void verifyUbs() throws InterruptedException {
         driver.get(ubsUrl);
-
-        ubs.zpo(true);
+        ubs.zpo(false);
         ubs.setBuildingKadastr(Generator.fakeKadastr());
+        ubs.isManualCorrection(true);
+        ubs.setUbsState(Catalog.ubs.state.INCLUDED);
         Save.saveThis(driver);
         ubs.verify();
         log.info(ubs.getUrlTail() + " Ubs ID");

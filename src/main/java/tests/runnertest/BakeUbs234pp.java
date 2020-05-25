@@ -3,6 +3,7 @@ package tests.runnertest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import pagerepository.common.MainPage;
 import pagerepository.inspection.DisposalPage;
 import pagerepository.common.LoginPage;
 import pagerepository.common.Save;
@@ -15,7 +16,7 @@ import pagerepository.utilities.Props;
 import tests.utils.BaseTest;
 
 @Listeners(tests.utils.Listeners.class)
-public class Ubs234PPSignsConfirmed extends BaseTest {
+public class BakeUbs234pp extends BaseTest {
 
 	private String ubsResol = Catalog.ubs.resolution.PP_234;
 	private String ubsState = Catalog.ubs.state.UBS_SIGNS_CONFIRMED;
@@ -49,6 +50,8 @@ public class Ubs234PPSignsConfirmed extends BaseTest {
 	InspectionSubjectTab subj;
 	UnauthBldList ubsList;
 	UbsScratch ubs;
+	MainPage mp;
+	DisposalsListPage dlp;
 
 	@Test(description = "Инициализация страниц(сервисный шаг)")
 	public void initialization() {
@@ -63,14 +66,16 @@ public class Ubs234PPSignsConfirmed extends BaseTest {
 		subj = new InspectionSubjectTab(driver);
 		ubsList = new UnauthBldList(driver);
 		ubs = new UbsScratch(driver);
+		mp = new MainPage(driver);
+		dlp = new DisposalsListPage(driver);
 		log.info("Pages initialized");
 	}
 
 
 	@Test(dependsOnMethods = "initialization", description = "Авторизация и создание ОСС")
 	public void authorization() {
-		driver.get(ubsListUrl);
-		l.loginAs(ultLogin, ultPassword);
+		l.loginAs(ultLogin);
+		mp.toUbsList();
 		ubsList.addUnauthBld();
 	}
 
@@ -83,7 +88,9 @@ public class Ubs234PPSignsConfirmed extends BaseTest {
 
 	@Test(dependsOnMethods = "populateUbs", description = "Добавляем проверку")
 	public void addControl() {
-		driver.get(disposalUrl);
+		mp.toMainPage();
+		mp.toDisposals();
+		dlp.toInspectionZuDisposal();
 		d.addInspection();
 	}
 
@@ -125,13 +132,12 @@ public class Ubs234PPSignsConfirmed extends BaseTest {
 		ubs.isManualCorrection(true);
 		ubs.setUbsState(ubsState);
 		ubs.setBuildingKadastr(Generator.fakeKadastr());
-		ubs.uploadFile(driver, dgiPack, dgiPackPath);
+		ubs.uploadFile(dgiPack, dgiPackPath);
 		Save.saveThis(driver);
 	}
 
 	@Test(dependsOnMethods = "updatingUbs", description = "Верификация")
 	public void verification() throws InterruptedException {
-		ubs.verify();
 		String ubs234PPSignsConfirmedId = ubs.getUrlTail();
 		Props.setProperty("ubs234PPIncluded", ubs234PPSignsConfirmedId);
 		log.warn("Ubs 234 PP Signs Confirmed ID: " + ubs234PPSignsConfirmedId);

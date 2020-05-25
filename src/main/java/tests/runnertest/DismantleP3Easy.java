@@ -1,10 +1,13 @@
-package tests.dismantle;
+package tests.runnertest;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import pagerepository.common.*;
+import pagerepository.common.LoginPage;
+import pagerepository.common.MainPage;
+import pagerepository.common.Save;
+import pagerepository.common.Upload;
 import pagerepository.dismantle.DismantleList;
 import pagerepository.dismantle.DismantlePage;
 import pagerepository.inspection.*;
@@ -18,7 +21,7 @@ import tests.utils.BaseTest;
 
 import java.io.File;
 
-public class DismantlePril3Easy extends BaseTest {
+public class DismantleP3Easy extends BaseTest {
     //==== РАСПОЛОЖЕНИЕ ====//
     private String ao = Catalog.area.ao.DEFAULT_AO;
     //==== ОСС РАССМАТРИВАЕТСЯ В РАМКАХ ====//
@@ -42,12 +45,6 @@ public class DismantlePril3Easy extends BaseTest {
     void initSoftAssertion() {
         softAssert = new SoftAssert();
     }
-
-//    @AfterClass
-//    void tearDown(){
-//        driver.quit();
-//    }
-
 
     private LoginPage l;
     private DisposalsListPage dlp;

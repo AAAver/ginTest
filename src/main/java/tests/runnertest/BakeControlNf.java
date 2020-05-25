@@ -1,16 +1,14 @@
-package tests.spdDgi;
+package tests.runnertest;
 
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
 import pagerepository.common.MainPage;
 import pagerepository.inspection.DisposalPage;
 import pagerepository.common.LoginPage;
 import pagerepository.common.Save;
 import pagerepository.common.Upload;
-
 import pagerepository.inspection.*;
 import pagerepository.utilities.Catalog;
 import pagerepository.utilities.Generator;
@@ -18,7 +16,7 @@ import pagerepository.utilities.Props;
 import tests.utils.BaseTest;
 
 @Listeners(tests.utils.Listeners.class)
-public class ActNoPrevViol extends BaseTest {
+public class BakeControlNf extends BaseTest {
 
     private String companyName = "Альянс Девелопмент";
     private String objSquare = Integer.toString(Generator.getRandomUpTo(5000));
@@ -31,11 +29,6 @@ public class ActNoPrevViol extends BaseTest {
         setUpDriver();
         setUpExtentReport("Генерация акта НФ c 4-мя нарушениями без ранее выявленных. 1010 = 1, 1011 = 4, is_done = 1");
     }
-
-//	@AfterClass
-//	void tearDown() {
-//		driver.quit();
-//	}
 
     LoginPage l;
     DisposalPage d;
@@ -71,7 +64,6 @@ public class ActNoPrevViol extends BaseTest {
         dlp.toInspectionNfDisposal();
         d.addInspection();
     }
-
 
     @Test(dependsOnMethods = "authorization", description = "Выбор тематики и результата")
     public void settingThemeAndResult() {
@@ -138,8 +130,7 @@ public class ActNoPrevViol extends BaseTest {
     }
 
     @Test(dependsOnMethods = "addWarningCard", description = "Верификация карточки")
-    void verification() throws InterruptedException {
-        insp.verify();
+    void finalization() {
         String inspId = insp.getUrlTail();
         Props.setProperty("inspIdMissAct", inspId);
         log.info("4 violations whit no previous 1010+1011x4_Is_done=1. ID = " + inspId);

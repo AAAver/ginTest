@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 public class Toolbar extends JPanel {
 
     private JButton killChromeDriver;
-    private JButton ubsPril2;
+    private JButton testPause;
     private JButton ubsPril3;
     private JButton ubs234;
 
@@ -25,7 +25,7 @@ public class Toolbar extends JPanel {
         setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 
         killChromeDriver = new JButton("Убить ХромДрайвер");
-        ubsPril2 = new JButton("ОСС Прил.2");
+        testPause = new JButton("Пауза");
         ubsPril3 = new JButton("ОСС Прил.3");
         ubs234 = new JButton("ОСС 234-ПП");
 
@@ -45,8 +45,10 @@ public class Toolbar extends JPanel {
 
 
 
-        add(killChromeDriver);
 
+
+        add(killChromeDriver);
+//        add(testPause);
 
     }
 

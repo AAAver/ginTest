@@ -1,5 +1,6 @@
 package tests.spdDgi;
 
+import pagerepository.common.MainPage;
 import pagerepository.inspection.DisposalPage;
 import pagerepository.common.LoginPage;
 import pagerepository.common.Save;
@@ -51,6 +52,8 @@ public class Ubs234PPSignsConfirmed extends BaseTest {
 	InspectionSubjectTab subj;
 	UnauthBldList ubsList;
 	UbsScratch ubs;
+	MainPage mp;
+	DisposalsListPage dlp;
 
 	@Test(description = "Инициализация страниц(сервисный шаг)")
 	public void initialization() {
@@ -65,15 +68,17 @@ public class Ubs234PPSignsConfirmed extends BaseTest {
 		subj = new InspectionSubjectTab(driver);
 		ubsList = new UnauthBldList(driver);
 		ubs = new UbsScratch(driver);
+		mp = new MainPage(driver);
+		dlp = new DisposalsListPage(driver);
 		log.info("Pages initialized");
 	}
 
-
-	@Test(dependsOnMethods = "initialization", description = "Авторизация и создание ОСС")
+	@Test(dependsOnMethods = "initialization", description = "Авторизация и создание проверки")
 	public void authorization() {
-		driver.get(ubsListUrl);
-		l.loginAs(ultLogin, ultPassword);
-		ubsList.addUnauthBld();
+		l.loginAs(ultLogin);
+		mp.toDisposals();
+		dlp.toInspectionNfDisposal();
+		d.addInspection();
 	}
 
 	@Test(dependsOnMethods = "authorization", description = "Первичное заполнение ОСС")
@@ -127,7 +132,7 @@ public class Ubs234PPSignsConfirmed extends BaseTest {
 		ubs.isManualCorrection(true);
 		ubs.setUbsState(ubsState);
 		ubs.setBuildingKadastr(Generator.fakeKadastr());
-		ubs.uploadFile(driver, dgiPack, dgiPackPath);
+		ubs.uploadFile(dgiPack, dgiPackPath);
 		Save.saveThis(driver);
 	}
 

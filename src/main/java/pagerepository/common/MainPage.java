@@ -17,7 +17,8 @@ public class MainPage extends CorePage {
 	By dismantleLink = By.xpath("//*[contains(@href, 'UnauthBuildingDismantle') and text()='Список объектов']");
 	By disposalLink = By.xpath("//*[contains(@href,'Disposals')]");
 	By ubsListLink = By.xpath("//*[contains(@href,'UnauthorizedBuilding')]");
-	By inspectionTaskList = By.xpath("//*[contains(@href,'InspectionTask')]");
+	By inspectionTaskList = By.xpath("//li/*[contains(@href,'InspectionTask')]");
+	By casesDgi = By.xpath("//*[contains(@href, 'DgiLegalCase')]");
 
 	
 	public void goToActiveBp() {
@@ -46,6 +47,12 @@ public class MainPage extends CorePage {
 	public void toInspectionTaskList(){
 		while(!driver.getCurrentUrl().contains("InspectionTask")) {
 			click(inspectionTaskList);
+		}
+	}
+
+	public void toDgiLegalCase(){
+		while (!driver.getCurrentUrl().contains("DgiLegalCase")){
+			click(casesDgi);
 		}
 	}
 

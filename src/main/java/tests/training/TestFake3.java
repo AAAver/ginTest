@@ -1,41 +1,31 @@
 package tests.training;
 
 
-import pagerepository.common.LoginPage;
-import pagerepository.inspection.InspectionMainTab;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import pagerepository.utilities.Props;
+import pagerepository.common.LoginPage;
+import pagerepository.legalcase.DgiLegalCase;
 import tests.utils.BaseTest;
-import tests.utils.ExtentTestManager;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class TestFake3 extends BaseTest {
-	@Test
-	private void trimBaseUrl(){
-		String untrimmedDisposalZu = Props.getProperty("disposalUrlZu");
-		String untrimmedDisposalNf = Props.getProperty("disposalUrlNf");
 
-		String[] parts;
-		String baseUrl = "";
-		if(untrimmedDisposalNf != null){
-			parts = untrimmedDisposalNf.split("/");
-			for(int i = 0; i < 4; i++){
-				baseUrl += parts[i]+"/";
-			}
-		}
-		else{
-			parts = untrimmedDisposalZu.split("/");
-			for(int i = 0; i < 4; i++){
-				baseUrl += parts[i]+"/";
-			}
-		}
-		System.out.println(baseUrl);
-
+	List<Integer> l = new ArrayList<>();
+	@BeforeClass
+	void setup(){
+		setUpDriver();
 	}
+	@Test
+	public void interd(){
+		driver.get("http://192.168.4.117/626/DgiLegalCase");
+		LoginPage l = new LoginPage(driver);
+		l.loginAs("3");
+		DgiLegalCase dlc = new DgiLegalCase(driver);
+		dlc.findLegalCaseForUbs("Махмутова 49");
+	}
+
+
 }

@@ -114,6 +114,33 @@ public class UbsScratch extends CorePage {
             .xpath("//form[contains(@action, 'UpdateActualizationNumber')] //button[@title='Сохранить']");
     By toActualizationCard = By.xpath("//*[@id='ireon-map-container']/following-sibling::div[3] //a");
 
+    // === КОРРЕКТИРОВКА ОСС ПО РЕШЕНИЮ СУДА === //
+    By f_courtDecisionCorrectionAddress = By.xpath("//*[@id='CourtDecisionCorrection_ObjectAddressM_Address']");
+    By div_courtDecisionCorrection = By.xpath("//*[@id='CourtDecisionCorrection_ObjectAddressM_Address']/../../..");
+    By courtDecisionCorrectionCollapse = By.xpath("//*[@id='CourtDecisionCorrection_ObjectAddressM_Address']/../../../../preceding-sibling::div[1]");
+    By f_courtDecisionCorrectionUbsSquare = By.xpath("//*[@id='CourtDecisionCorrection_Square']");
+    By d_courtDecisionCorrectionWallMaterial = By.xpath("//*[@id='s2id_CourtDecisionCorrection_MtrlWallCtId']");
+    By f_courtDecisionCorrectionDismantleSquare = By.xpath("//*[@id='CourtDecisionCorrection_DismantleCourtDecisionSquare']");
+    By f_courtDecisionCorrectionVoluntaryDismantleDate = By.xpath("//*[@id='CourtDecisionCorrection_VoluntaryDismantleDate']");
+    By b_finishCorrection = By.xpath("//*[@title='Завершить редактирование']");
+    By b_modalConfirm = By.xpath("//*[contains(@style,'display: block')] //button[contains(@class,'btn-success')]");
+
+    public void courtDecisionCorrection() {
+        if (!isDisplayed(div_courtDecisionCorrection)) {
+            click(courtDecisionCorrectionCollapse);
+        }
+        writeText(f_courtDecisionCorrectionUbsSquare, ubsSquare);
+        chooseFromDropDownRandom(d_courtDecisionCorrectionWallMaterial);
+        writeText(f_courtDecisionCorrectionDismantleSquare, ubsSquare);
+        setDate(f_courtDecisionCorrectionVoluntaryDismantleDate, Generator.getCurrentDatePlus5());
+    }
+
+    public void finishCourtDecisionCorrection(){
+        click(b_finishCorrection);
+        click(b_modalConfirm);
+    }
+
+
     public void actualizePril(String pril) {
         scrollIntoViewBy(btnActualize);
         click(btnActualize);
@@ -371,7 +398,7 @@ public class UbsScratch extends CorePage {
         log.info("EXIT setBuildingKadastr()");
     }
 
-    public void uploadFile(WebDriver driver, String[] docCategory, String[] docPath) {
+    public void uploadFile(String[] docCategory, String[] docPath) {
         int i = 0;
         log.info("ENTER uploadFile()");
         while (i < docCategory.length) {
@@ -384,15 +411,6 @@ public class UbsScratch extends CorePage {
             Select s = new Select(castToWebElement(dropCategory));
             s.selectByVisibleText(docCategory[i]);
             log.info("Category " + (i + 1) + " chosen");
-
-            try {
-                setDate(documentDate, Generator.getCurrentDate());
-                log.info("Date picked");
-            } catch (NoSuchElementException e) {
-                log.info("Field date is absent");
-            } catch (TimeoutException e) {
-                log.info("Field date is absent");
-            }
 
             click(btnConfirmAttachement);
             log.info("Modal closed");

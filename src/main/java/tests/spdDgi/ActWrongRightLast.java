@@ -6,6 +6,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import pagerepository.common.MainPage;
 import pagerepository.inspection.DisposalPage;
 import pagerepository.common.LoginPage;
 import pagerepository.common.Save;
@@ -46,6 +47,8 @@ public class ActWrongRightLast extends BaseTest {
 	InspectionActNF act;
 	InspectionViolationTab viol;
 	InspectionSubjectTab subj;
+	MainPage mp;
+	DisposalsListPage dlp;
 
 	@Test(description = "Инициализация страниц(сервисный шаг)")
 	public void initialization() {
@@ -58,14 +61,16 @@ public class ActWrongRightLast extends BaseTest {
 		act = new InspectionActNF(driver);
 		viol = new InspectionViolationTab(driver);
 		subj = new InspectionSubjectTab(driver);
+		mp = new MainPage(driver);
+		dlp = new DisposalsListPage(driver);
 		log.info("Pages initialized");
 	}
 
 	@Test(dependsOnMethods = "initialization", description = "Авторизация и создание проверки")
 	public void authorization() {
-		driver.get(baseUrl);
-		l.loginAs(ultLogin, ultPassword);
-		driver.get(disposalUrlNf);
+		l.loginAs(ultLogin);
+		mp.toDisposals();
+		dlp.toInspectionNfDisposal();
 		d.addInspection();
 	}
 

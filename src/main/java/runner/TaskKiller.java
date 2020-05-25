@@ -14,8 +14,6 @@ public class TaskKiller {
                 p.getInputStream()));
         String line;
         while ((line = reader.readLine()) != null) {
-
-            System.out.println(line);
             if (line.contains(serviceName)) {
                 return true;
             }
@@ -28,6 +26,7 @@ public class TaskKiller {
     public static void killProcess(String serviceName) throws Exception {
 
         Runtime.getRuntime().exec(KILL + serviceName);
+        System.out.println("Process killed");
 
     }
 }

@@ -25,7 +25,7 @@ public class RaidPlanTask extends CorePage {
             j++;
         }
         j = 0;
-        while(getActualValueFromDrop(isOpenForAdd).isBlank() && j < 3){
+        while(!getActualValueFromDrop(isOpenForAdd).contains("Да") && j < 3){
             chooseFromDropDown(isOpenForAdd, "Да");
             j++;
         }

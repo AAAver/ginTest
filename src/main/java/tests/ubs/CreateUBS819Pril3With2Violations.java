@@ -7,15 +7,12 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import pagerepository.inspection.DisposalPage;
+import pagerepository.common.MainPage;
+import pagerepository.inspection.*;
 import pagerepository.common.LoginPage;
 import pagerepository.common.Save;
 import pagerepository.common.Upload;
 
-import pagerepository.inspection.InspectionMainTab;
-import pagerepository.inspection.InspectionObjectTab;
-import pagerepository.inspection.InspectionSubjectTab;
-import pagerepository.inspection.InspectionViolationTab;
 import tests.utils.BaseTest;
 import pagerepository.utilities.Catalog;
 import pagerepository.utilities.Generator;
@@ -51,9 +48,11 @@ public class CreateUBS819Pril3With2Violations extends BaseTest {
     @Test(priority = 1, description = "Новый тест")
     public void addUbs819pp3() throws InterruptedException {
 
-        driver.get(ubsListUrl);
+
         LoginPage l = new LoginPage(driver);
-        l.loginAs(ultLogin, ultPassword);
+        l.loginAs(ultLogin);
+        MainPage mp = new MainPage(driver);
+        mp.toUbsList();
 
         // Добавляем ОСС по 819
         UnauthBldList ubsList = new UnauthBldList(driver);
@@ -65,7 +64,10 @@ public class CreateUBS819Pril3With2Violations extends BaseTest {
         String objSquare = ubs.getObjSquare();
 
         //==== ПЕРВАЯ ПРОВЕРКА (819-ПП) ====//
-        driver.get(disposalUrlZu1);
+        mp.toMainPage();
+        mp.toDisposals();
+        DisposalsListPage dlp = new DisposalsListPage(driver);
+        dlp.toInspectionZuDisposal();
         DisposalPage d = new DisposalPage(driver);
         d.addInspection();
         InspectionMainTab main = new InspectionMainTab(driver);
@@ -106,7 +108,7 @@ public class CreateUBS819Pril3With2Violations extends BaseTest {
         ubs.zpo(true);
         ubs.setBuildingKadastr(Generator.fakeKadastr());
         Save.saveThis(driver);
-        ubs.verify();
+
         log.info(ubs.getUrlTail() + " Ubs ID");
 
     }

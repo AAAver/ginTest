@@ -11,18 +11,19 @@ import java.awt.event.ActionListener;
 
 public class SettingsPanel extends JPanel {
 
-    private JLabel disposalLabelZu1;
-    private JLabel disposalLabelNf;
+    private JLabel baseUrl;
+    private JTextField baseUrlField;
+
     private JLabel testPickerLabel;
-    private JTextField disposalFieldZu;
-    private JTextField disposalFieldNf;
     private JButton saveBtn;
     private JButton launchTestBtn;
     private JButton launchSuiteBtn;
     private SettingsListener settingsListener;
     private JList testList;
+    private JScrollPane testScroll;
     private JList testSuites;
     private JComboBox comboBox;
+
 
 
     public SettingsPanel() {
@@ -33,22 +34,26 @@ public class SettingsPanel extends JPanel {
         Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
         setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
-        disposalLabelZu1 = new JLabel("Url Поручение ЗУ: ");
-        disposalFieldZu = new JTextField(25);
-        disposalLabelNf = new JLabel("Url Поручение НФ: ");
-        disposalFieldNf = new JTextField(25);
+        baseUrl = new JLabel("BaseURL: ");
+        baseUrlField = new JTextField(25);
+
         saveBtn = new JButton("Сохранить");
 
 
         //============== СПИСОК ТЕСТОВ ===========//
-        testPickerLabel = new JLabel("Карточка для генерации:");
+        testPickerLabel = new JLabel("Что будем выпекать:");
 
         testList = new JList();
+        testScroll = new JScrollPane(testList);
+        testScroll.setPreferredSize(new Dimension(250,130));
+
         DefaultListModel testListModel = new DefaultListModel();
-        testListModel.addElement(new TestCategory(0, "ОСС по 819-ПП прил.2"));
-        testListModel.addElement(new TestCategory(1, "ОСС по 819-ПП прил.3"));
+        testListModel.addElement(new TestCategory(0, "ОСС по прил.2"));
+        testListModel.addElement(new TestCategory(1, "ОСС по прил.3"));
         testListModel.addElement(new TestCategory(2, "ОСС по 234-ПП"));
         testListModel.addElement(new TestCategory(3, "Проверка НФ"));
+        testListModel.addElement(new TestCategory(4, "Демонтаж прил.3(простой)"));
+        testListModel.addElement(new TestCategory(5, "Демонтаж прил.3(добровольный)"));
         testList.setModel(testListModel);
         testList.setBorder(BorderFactory.createEtchedBorder());
         testList.setSelectedIndex(0);
@@ -59,11 +64,11 @@ public class SettingsPanel extends JPanel {
         comboBox = new JComboBox();
         comboBox.setPreferredSize(new Dimension(137, 20));
 
-        DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
-        comboBoxModel.addElement("Первый");
-        comboBoxModel.addElement("Второй");
-        comboBoxModel.addElement("Третий");
-        comboBox.setModel(comboBoxModel);
+//        DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
+//        comboBoxModel.addElement("Первый");
+//        comboBoxModel.addElement("Второй");
+//        comboBoxModel.addElement("Третий");
+//        comboBox.setModel(comboBoxModel);
 
         // ============== СЬЮТЫ =================== //
         testSuites = new JList();
@@ -83,13 +88,11 @@ public class SettingsPanel extends JPanel {
         saveBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String disposalUrlZu = disposalFieldZu.getText();
-                String disposalUrlNf = disposalFieldNf.getText();
+                String disposalUrlZu = baseUrlField.getText();
 
                 SettingsEvent event = new SettingsEvent(this);
-                event.setDisposalUrlNf(disposalUrlNf);
-                event.setDisposalUrlZu(disposalUrlZu);
 
+                event.setBaseUrl(disposalUrlZu);
                 if (settingsListener != null) {
                     settingsListener.urlSettingsChanged(event);
                 }
@@ -100,7 +103,6 @@ public class SettingsPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 TestCategory testToRun = (TestCategory) testList.getSelectedValue();
-
                 SettingsEvent event = new SettingsEvent(this);
                 event.setTestToRun(testToRun.getId());
 
@@ -148,11 +150,7 @@ public class SettingsPanel extends JPanel {
     }
 
     public void appendDisposalZuText(String text) {
-        disposalFieldZu.setText(text);
-    }
-
-    public void appendDisposalNfText(String text) {
-        disposalFieldNf.setText(text);
+        baseUrlField.setText(text);
     }
 
     public void layoutComponents() {
@@ -170,27 +168,12 @@ public class SettingsPanel extends JPanel {
         gc.fill = GridBagConstraints.NONE;
         gc.anchor = GridBagConstraints.LINE_END;
         gc.insets = new Insets(0, 0, 0, 5);
-        add(disposalLabelZu1, gc);
+        add(baseUrl, gc);
 
         gc.gridx = 1;
         gc.insets = new Insets(0, 0, 0, 0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(disposalFieldZu, gc);
-
-        //============ NEXT ROW ============//
-        gc.gridy++;
-
-        gc.gridx = 0;
-        gc.weightx = 1;
-        gc.weighty = 0.1;
-        gc.anchor = GridBagConstraints.LINE_END;
-        gc.insets = new Insets(0, 0, 0, 5);
-        add(disposalLabelNf, gc);
-
-        gc.gridx = 1;
-        gc.insets = new Insets(0, 0, 0, 0);
-        gc.anchor = GridBagConstraints.LINE_START;
-        add(disposalFieldNf, gc);
+        add(baseUrlField, gc);
 
         //============ NEXT ROW ============//
         gc.gridy++;
@@ -217,17 +200,17 @@ public class SettingsPanel extends JPanel {
         gc.weighty = 0.1;
         gc.insets = new Insets(0, 0, 0, 0);
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
-        add(testList, gc);
+        add(testScroll, gc);
 
         //============ NEXT ROW ============//
-        gc.gridy++;
-
-        gc.gridx = 1;
-        gc.weightx = 1;
-        gc.weighty = 0.1;
-        gc.insets = new Insets(0, 0, 0, 0);
-        gc.anchor = GridBagConstraints.FIRST_LINE_START;
-        add(comboBox, gc);
+//        gc.gridy++;
+//
+//        gc.gridx = 1;
+//        gc.weightx = 1;
+//        gc.weighty = 0.1;
+//        gc.insets = new Insets(0, 0, 0, 0);
+//        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+//        add(comboBox, gc);
 
         //============ NEXT ROW ============//
         gc.gridy++;

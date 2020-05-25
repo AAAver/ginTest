@@ -4,12 +4,16 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import pagerepository.common.*;
+import pagerepository.common.LoginPage;
+import pagerepository.common.MainPage;
+import pagerepository.common.Save;
+import pagerepository.common.Upload;
 import pagerepository.dismantle.DismantleList;
 import pagerepository.dismantle.DismantlePage;
 import pagerepository.inspection.*;
 import pagerepository.inspectionTask.InspectionTaskList;
 import pagerepository.inspectionTask.RaidPlanTask;
+import pagerepository.legalcase.DgiLegalCase;
 import pagerepository.ubs.UbsScratch;
 import pagerepository.ubs.UnauthBldList;
 import pagerepository.utilities.Catalog;
@@ -18,7 +22,7 @@ import tests.utils.BaseTest;
 
 import java.io.File;
 
-public class DismantlePril3Easy extends BaseTest {
+public class DismantlePril2Difficult extends BaseTest {
     //==== РАСПОЛОЖЕНИЕ ====//
     private String ao = Catalog.area.ao.DEFAULT_AO;
     //==== ОСС РАССМАТРИВАЕТСЯ В РАМКАХ ====//
@@ -27,15 +31,18 @@ public class DismantlePril3Easy extends BaseTest {
     private String shd = Catalog.shd.DEFAULT_SHD;
     //==== ПЕРВАЯ ПРОВЕРКА (819-ПП) ====//
     private String inspTheme1 = Catalog.inspection.theme.UBS_819_IDENT;
-    private String inspResult1 = Catalog.inspection.result.PRIL_3;
-    private String docCategory1 = Catalog.docs.category.ACT_PRIL_3;
-    private String docPath1 = (new File(Catalog.docs.path.ACT_PRIL_3)).getAbsolutePath();
+    private String inspResult1 = Catalog.inspection.result.PRIL_2;
+    private String docCategory1 = Catalog.docs.category.ACT_PRIL_2;
+    private String docPath1 = (new File(Catalog.docs.path.ACT_PRIL_2)).getAbsolutePath();
+    private String ubsState = Catalog.ubs.state.INCLUDED;
+    private String[] dgiDocPack = Catalog.docs.category.DGI_PACK;
+    private String[] dgiDocPackPath = Catalog.docs.path.DGI_PACK;
     private SoftAssert softAssert;
 
     @BeforeClass
     void initDriver() {
         setUpDriver();
-        setUpExtentReport("Демонтаж по прил.3 (простой)");
+        setUpExtentReport("Демонтаж по прил.2 (сложный)");
     }
 
     @BeforeMethod
@@ -63,6 +70,7 @@ public class DismantlePril3Easy extends BaseTest {
     private DismantlePage dis;
     private InspectionTaskList itl;
     private RaidPlanTask raid;
+    private DgiLegalCase dlc;
 
     private String ubsUrl;
     private String objSquare;
@@ -84,6 +92,7 @@ public class DismantlePril3Easy extends BaseTest {
         dis = new DismantlePage(driver);
         itl = new InspectionTaskList(driver);
         raid = new RaidPlanTask(driver);
+        dlc = new DgiLegalCase(driver);
     }
 
 
@@ -129,17 +138,32 @@ public class DismantlePril3Easy extends BaseTest {
     }
 
     @Test(dependsOnMethods = "addInspection", description = "Корректировка и верификация ОСС")
-    void verifyUbs() throws InterruptedException {
+    void correctUBS() throws InterruptedException {
         driver.get(ubsUrl);
-
-        ubs.zpo(true);
+        ubs.isManualCorrection(true);
+        ubs.setUbsState(ubsState);
+        ubs.zpo(false);
         ubs.setBuildingKadastr(Generator.fakeKadastr());
+        ubs.courtDecisionCorrection();
         Save.saveThis(driver);
-        ubs.verify();
+        ubs.uploadFile(dgiDocPack, dgiDocPackPath);
+        Save.saveThis(driver);
         log.info(ubs.getUrlTail() + " Ubs ID");
     }
 
-    @Test(dependsOnMethods = "verifyUbs", description = "Работа с карточкой демонтажа")
+    @Test(dependsOnMethods = "correctUBS", description = "Ищем судебное дело ДГИ")
+    void caseDgiSearch() throws InterruptedException {
+        mp.toMainPage();
+        mp.toDgiLegalCase();
+        dlc.findLegalCaseForUbs(fakeAddress);
+        dlc.setLegalForceDate();
+        dlc.save();
+        driver.get(ubsUrl);
+        ubs.finishCourtDecisionCorrection();
+        ubs.verify();
+    }
+
+    @Test(dependsOnMethods = "caseDgiSearch", description = "Работа с карточкой демонтажа")
     void dismantle() throws InterruptedException {
         mp.toMainPage();
         mp.toDismantle();

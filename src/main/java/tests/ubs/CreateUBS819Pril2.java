@@ -2,6 +2,7 @@ package tests.ubs;
 
 import java.io.File;
 
+import pagerepository.common.MainPage;
 import pagerepository.inspection.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
@@ -60,6 +61,8 @@ public class CreateUBS819Pril2 extends BaseTest {
     InspectionSubjectTab subj;
     UnauthBldList ubsList;
     UbsScratch ubs;
+    MainPage mp;
+    DisposalsListPage dlp;
 
     @Test(description = "Инициализация страниц(сервисный шаг)")
     public void initialization() {
@@ -74,13 +77,15 @@ public class CreateUBS819Pril2 extends BaseTest {
         subj = new InspectionSubjectTab(driver);
         ubsList = new UnauthBldList(driver);
         ubs = new UbsScratch(driver);
+        mp = new MainPage(driver);
+        dlp = new DisposalsListPage(driver);
         log.info("Pages initialized");
     }
 
     @Test(dependsOnMethods = "initialization", description = "Авторизация и создание карточки ОСС")
     public void authorization() throws InterruptedException {
-        driver.get(ubsListUrl);
-        l.loginAs(ultLogin, ultPassword);
+        l.loginAs(ultLogin);
+        mp.toUbsList();
         ubsList.addUnauthBld();
     }
 
@@ -93,7 +98,9 @@ public class CreateUBS819Pril2 extends BaseTest {
 
     @Test(dependsOnMethods = "populateUBS", description = "Создание проверки. Тематика и результат")
     public void setUpInspectionThemeAndResultOne() {
-        driver.get(disposalUrlZu1);
+        mp.toMainPage();
+        mp.toDisposals();
+        dlp.toInspectionNfDisposal();
         d.addInspection();
         main.populateCommonInformation();
         main.setInspectionTheme(inspTheme1);
@@ -140,7 +147,9 @@ public class CreateUBS819Pril2 extends BaseTest {
 
     @Test(dependsOnMethods = "setViolationOne", description = "Создание проверки. Тематика и результат")
     public void setUpInspectionThemeAndResultTwo() {
-        driver.get(disposalUrlZu2);
+        mp.toMainPage();
+        mp.toDisposals();
+        dlp.toInspectionZuDisposal();
         d.addInspection();
         main.populateCommonInformation();
         main.setInspectionTheme(inspTheme2);
@@ -189,7 +198,7 @@ public class CreateUBS819Pril2 extends BaseTest {
         ubs.actualizePril("приложение 2");
         ubs.zpo(false);
         ubs.setBuildingKadastr(Generator.fakeKadastr());
-        ubs.uploadFile(driver, Catalog.docs.category.DGI_PACK, Catalog.docs.path.DGI_PACK);
+        ubs.uploadFile(Catalog.docs.category.DGI_PACK, Catalog.docs.path.DGI_PACK);
         System.out.println(ubs.getUrlTail());
     }
 }

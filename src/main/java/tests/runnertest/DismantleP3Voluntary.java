@@ -1,10 +1,13 @@
-package tests.dismantle;
+package tests.runnertest;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import pagerepository.common.*;
+import pagerepository.common.LoginPage;
+import pagerepository.common.MainPage;
+import pagerepository.common.Save;
+import pagerepository.common.Upload;
 import pagerepository.dismantle.DismantleList;
 import pagerepository.dismantle.DismantlePage;
 import pagerepository.inspection.*;
@@ -18,7 +21,7 @@ import tests.utils.BaseTest;
 
 import java.io.File;
 
-public class DismantlePril3Easy extends BaseTest {
+public class DismantleP3Voluntary extends BaseTest {
     //==== РАСПОЛОЖЕНИЕ ====//
     private String ao = Catalog.area.ao.DEFAULT_AO;
     //==== ОСС РАССМАТРИВАЕТСЯ В РАМКАХ ====//
@@ -35,19 +38,13 @@ public class DismantlePril3Easy extends BaseTest {
     @BeforeClass
     void initDriver() {
         setUpDriver();
-        setUpExtentReport("Демонтаж по прил.3 (простой)");
+        setUpExtentReport("Демонтаж по прил.3 (добровольный)");
     }
 
     @BeforeMethod
     void initSoftAssertion() {
         softAssert = new SoftAssert();
     }
-
-//    @AfterClass
-//    void tearDown(){
-//        driver.quit();
-//    }
-
 
     private LoginPage l;
     private DisposalsListPage dlp;
@@ -61,8 +58,8 @@ public class DismantlePril3Easy extends BaseTest {
     private MainPage mp;
     private DismantleList dl;
     private DismantlePage dis;
-    private InspectionTaskList itl;
     private RaidPlanTask raid;
+    private InspectionTaskList itl;
 
     private String ubsUrl;
     private String objSquare;
@@ -82,13 +79,13 @@ public class DismantlePril3Easy extends BaseTest {
         viol = new InspectionViolationTab(driver);
         dl = new DismantleList(driver);
         dis = new DismantlePage(driver);
-        itl = new InspectionTaskList(driver);
         raid = new RaidPlanTask(driver);
+        itl = new InspectionTaskList(driver);
     }
 
 
     @Test(dependsOnMethods = "initPages", description = "Добавляем ОСС")
-    void addUbs819pp3() throws InterruptedException {
+    void addUbs819pp2() throws InterruptedException {
         l.loginAs(ultLogin);
         mp.toUbsList();
         ubsList.addUnauthBld();
@@ -97,7 +94,7 @@ public class DismantlePril3Easy extends BaseTest {
         objSquare = ubs.getObjSquare();
     }
 
-    @Test(dependsOnMethods = "addUbs819pp3", description = "Добавляем проверку")
+    @Test(dependsOnMethods = "addUbs819pp2", description = "Добавляем проверку")
     void addInspection() throws InterruptedException {
         driver.get(baseUrl);
         mp.toDisposals();
@@ -114,11 +111,8 @@ public class DismantlePril3Easy extends BaseTest {
         obj.pickKadNumExist(true);
         Save.saveThis(driver);
         subj.subjectTabSwitch();
-        while (!subj.isShdPresented()) {
-            subj.peekShd(shd);
-            Save.saveThis(driver);
-            subj.subjectTabSwitch();
-        }
+        subj.peekShd(shd);
+        Save.saveThis(driver);
         viol.violTabSwitch();
         viol.addViolation("Самовольное занятие земельного участка под строительство нежилых объектов");
         Save.saveThis(driver);
@@ -131,9 +125,10 @@ public class DismantlePril3Easy extends BaseTest {
     @Test(dependsOnMethods = "addInspection", description = "Корректировка и верификация ОСС")
     void verifyUbs() throws InterruptedException {
         driver.get(ubsUrl);
-
-        ubs.zpo(true);
+        ubs.zpo(false);
         ubs.setBuildingKadastr(Generator.fakeKadastr());
+        ubs.isManualCorrection(true);
+        ubs.setUbsState(Catalog.ubs.state.INCLUDED);
         Save.saveThis(driver);
         ubs.verify();
         log.info(ubs.getUrlTail() + " Ubs ID");
@@ -141,7 +136,7 @@ public class DismantlePril3Easy extends BaseTest {
 
     @Test(dependsOnMethods = "verifyUbs", description = "Работа с карточкой демонтажа")
     void dismantle() throws InterruptedException {
-        mp.toMainPage();
+        driver.get(baseUrl);
         mp.toDismantle();
         dl.filterAndOpen(fakeAddress);
         softAssert.assertTrue(dis.getStatus().contains("Требуется обследование территории"));
@@ -149,22 +144,12 @@ public class DismantlePril3Easy extends BaseTest {
         dis.stageGbuInitial();
         softAssert.assertTrue(dis.getStatus().contains("Ожидается добровольный демонтаж"));
 
-        dis.stageVoluntaryDismantle(false);
-        softAssert.assertTrue(dis.getStatus().contains("Определение сложности демонтажа"));
-
-        dis.stageDismantleComplexity(false);
-        softAssert.assertTrue(dis.getStatus().contains("Демонтаж"));
-
-        dis.dismantleByContractor();
-        softAssert.assertTrue(dis.getStatus().contains("Приёмка демонтажа (ГБУ)"));
-
-        dis.stageGbuAcceptance();
-
+        dis.stageVoluntaryDismantle(true);
     }
 
     @Test(dependsOnMethods = "dismantle", description = "Создание задачи на осмотр")
-    void inspectionTask() {
-        dis.toMainPage();
+    void inspectionTask(){
+        driver.get(baseUrl);
         mp.toInspectionTaskList();
         itl.toRaidList();
         raid.createRaidTask();

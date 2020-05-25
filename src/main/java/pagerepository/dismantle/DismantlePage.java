@@ -66,9 +66,7 @@ public class DismantlePage extends CorePage {
 
 
     public void stageGbuInitial() {
-        while (!getAttribute(f_notificationDate,"class").contains("dirty-input")) {
-            setDate(f_notificationDate, Generator.getCurrentDate());
-        }
+        setDate(f_notificationDate, Generator.getCurrentDate());
         driver.findElement(initialReviewPhoto).sendKeys(new File(Props.PHOTO_PATH_A).getAbsolutePath());
         save();
         while (!isDisplayed(b_confirm)) {
@@ -137,7 +135,9 @@ public class DismantlePage extends CorePage {
     public void attachGbuDocs(String[] docCategory, String[] docPath) {
         int i = 0;
         while (i < docCategory.length) {
-            click(b_attachGbuDocs);
+            while(!isDisplayed(f_inputGbuDocs)) {
+                click(b_attachGbuDocs);
+            }
             String path = (new File(docPath[i])).getAbsolutePath();
             writeText(f_inputGbuDocs, path);
 
@@ -167,7 +167,9 @@ public class DismantlePage extends CorePage {
         click(dismantleConfirmTab);
         driver.findElement(f_dismantleConfirmPhoto).sendKeys(new File(Props.PHOTO_PATH_U).getAbsolutePath());
         save();
-        click(b_acceptDismantleGbu);
+        while(!isDisplayed(b_confirm)) {
+            click(b_acceptDismantleGbu);
+        }
         click(b_confirm);
     }
 

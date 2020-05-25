@@ -1,14 +1,10 @@
 package runner;
 
-import okhttp3.internal.concurrent.Task;
-import org.testng.TestNG;
 import pagerepository.utilities.Props;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainFrame extends JFrame {
 
@@ -20,8 +16,8 @@ public class MainFrame extends JFrame {
     private Toolbar toolbar;
     private SettingsPanel settingsPanel;
     private SettingsListener formListener;
-    private TestNG test;
-    private Thread testThread;
+    private SuiteThread suiteThread;
+    private TestThread testThread;
 
     public MainFrame(String title) throws UnsupportedEncodingException {
         super(title);
@@ -38,7 +34,7 @@ public class MainFrame extends JFrame {
         add(settingsPanel, BorderLayout.WEST);
 
 
-        setSize(1000,500);
+        setSize(1000, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
@@ -47,61 +43,40 @@ public class MainFrame extends JFrame {
             @Override
             public void killChrome() throws Exception {
                 String chromedriver = "chromedriver.exe";
-                if(TaskKiller.isProcessRunning(chromedriver)){
+                if (TaskKiller.isProcessRunning(chromedriver)) {
                     TaskKiller.killProcess(chromedriver);
+                    System.out.println("ChromeDriver is dead");
+                } else {
+                    System.out.println("No ChromeDriver running");
                 }
             }
 
         });
 
-        settingsPanel.setSettingsListener(new SettingsListener(){
-            public void urlSettingsChanged(SettingsEvent e){
-                String disposalUrlZu = e.getDisposalUrlZu();
-                String disposalUrlNf = e.getDisposalUrlNf();
-
-                Props.setProperty("disposalUrlZu", disposalUrlZu);
-                Props.setProperty("disposalUrlNf", disposalUrlNf);
+        settingsPanel.setSettingsListener(new SettingsListener() {
+            public void urlSettingsChanged(SettingsEvent e) {
+                String baseUrl = e.getBaseUrl();
+                Props.setProperty("baseUrl", baseUrl);
             }
 
             @Override
             public void launchTest(SettingsEvent e) {
-                Thread t = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Class[] testId = e.getTestToRun();
-                        test = new TestNG();
-                        test.setTestClasses(testId);
-                        test.run();
-
-                    }
-                });
-                t.start();
-
-            }
-
-            @Override
-            public void launchSuite(SettingsEvent e) {
-                testThread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        test = new TestNG();
-                        List<String> suite= new ArrayList<>();
-                        suite.add(e.getSuiteToRun());
-                        test.setTestSuites(suite);
-                        test.run();
-                    }
-                });
+                testThread = new TestThread(e.getTestToRun());
                 testThread.start();
             }
 
             @Override
-            public void suiteClicked(SettingsEvent e) {
+            public void launchSuite(SettingsEvent e) {
+                suiteThread = new SuiteThread(e.getSuiteToRun());
+                suiteThread.start();
+            }
 
-             logPanel.appendText(e.getSuiteInfo());
+            @Override
+            public void suiteClicked(SettingsEvent e) {
+                logPanel.appendText(e.getSuiteInfo());
             }
         });
-        settingsPanel.appendDisposalZuText(Props.getProperty("disposalUrlZu"));
-        settingsPanel.appendDisposalNfText(Props.getProperty("disposalUrlNf"));
+        settingsPanel.appendDisposalZuText(Props.getProperty("baseUrl"));
         logPanel.appendText("HELLO\n");
     }
 }

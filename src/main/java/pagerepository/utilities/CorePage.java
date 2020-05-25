@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
+import java.security.Key;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,8 @@ public class CorePage {
 
     //===== Все или почти все справочники =====//
     public static final By select2drop = By.xpath("//div[@id='select2-drop'] //ul/li/div");
+    By toMainPage = By.xpath("//a[text()='Главная']");
+    By instrumentalPanel = By.xpath("//*[text()='Инструментальная панель']");
 
 
     public void click(By by) {
@@ -84,9 +87,7 @@ public class CorePage {
     }
 
     public void scrollIntoViewBy(By elementLocator) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(elementLocator));
-        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,-200)");
-
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", driver.findElement(elementLocator));
     }
 
     public void scrollXY(int x, int y){
@@ -96,9 +97,7 @@ public class CorePage {
     }
 
     public void scrollIntoViewBy(WebElement element) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
-        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,-200)");
-
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
     }
 
     public void scrollToBottom() {
@@ -132,13 +131,21 @@ public class CorePage {
     }
 
     public String getAttribute(By by, String attribute) {
-        waitVisibility(by);
-        return driver.findElement(by).getAttribute(attribute);
+        try {
+            waitVisibility(by);
+            return driver.findElement(by).getAttribute(attribute);
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     public String getAttribute(WebElement element, String attribute) {
-        waitVisibility(element);
-        return element.getAttribute(attribute);
+        try {
+            waitVisibility(element);
+            return element.getAttribute(attribute);
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     public void clearField(By by) {
@@ -171,7 +178,7 @@ public class CorePage {
 
     public void setDate(By by, String date) {
         waitVisibility(by);
-        driver.findElement(by).sendKeys(date);
+        ((JavascriptExecutor) driver).executeScript( "arguments[0].setAttribute('value','"+date+"')", driver.findElement(by));
         driver.findElement(by).sendKeys(Keys.chord(Keys.ENTER));
     }
 
@@ -226,6 +233,12 @@ public class CorePage {
         click(by);
         List<WebElement> options = driver.findElements(select2drop);
         click(options.get(random.nextInt(options.size())));
+    }
+
+    public void toMainPage (){
+        while (!isDisplayed(instrumentalPanel)) {
+            click(toMainPage);
+        }
     }
 
 }

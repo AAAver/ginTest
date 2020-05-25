@@ -11,7 +11,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class Props {
     private static final String PROP_PATH = "./cfg.properties";
-    public static final String BASE_URL = trimBaseUrl();
+    public static final String BASE_URL = getProperty("baseUrl");
     public static final String DISPOSAL_URL_NF = getProperty("disposalUrlNf");
     public static final String DISPOSAL_URL_ZU_1 = getProperty("disposalUrlZu");
     public static final String DISPOSAL_URL_ZU_2 = getProperty("disposalUrlZu");
