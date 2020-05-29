@@ -150,8 +150,11 @@ public class InspectionMainTab extends InspectionPage {
     public void populateCommonInformation() {
         scrollIntoViewBy(controlSubNumber);
         writeText(controlSubNumber, fake.number().digits(4));
-        writeText(controlDate, currentDate);
-        writeText(actDate, currentDate);
+        while(!getAttribute(controlDate, "class").contains("dirty-input")) {
+            writeText(controlDate, currentDate);
+            writeText(actDate, currentDate);
+        }
+        click(controlSubNumber);
         writeText(durationHours, Integer.toString(Generator.getRandomUpTo(4)));
         writeText(controlTime, Generator.randomInspTime());
         addInspectors();

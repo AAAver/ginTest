@@ -1,17 +1,24 @@
 package runner;
 
-import org.testng.TestNG;
-import tests.training.TestFake;
+import javax.swing.*;
+import java.io.UnsupportedEncodingException;
 
 public class TestRunner {
-	static TestNG test;
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		test = new TestNG();
-		test.setTestClasses(new Class[]{tests.spdDgi.ActMissAct.class});
-		test.run();
-		System.out.println("Hello World");
+
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					new MainFrame("GIN Automation");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
+
 	}
 
 }

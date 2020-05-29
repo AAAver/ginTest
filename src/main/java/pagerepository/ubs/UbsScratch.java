@@ -37,59 +37,59 @@ public class UbsScratch extends CorePage {
     // Фотографии
     By photos = By.xpath("//ul/li[last()] //input[contains(@id, 'UploadPhotos')]");
     // Округ Район
-    By dropAo = By.id("s2id_AoId");
+    By dropAo = By.xpath("//*[@id='s2id_AoId']");
     By dropAoCross = By.xpath("//*[@id='s2id_AoId'] //abbr[@class='select2-search-choice-close']");
-    By dropDistrict = By.id("s2id_DistrictId");
+    By dropDistrict = By.xpath("//*[@id='s2id_DistrictId']");
     // Проверяющее подразделение
-    By chkDepartment = By.id("s2id_DepartmentIdM");
+    By chkDepartment = By.xpath("//*[@id='s2id_DepartmentIdM']");
     // ++++ Ручная корректировка состояния* ++++//
-    By dropManualCorrection = By.id("s2id_IsStateHandControlM");
-    By fieldManualCorrectionComments = By.id("StateHandControlCommentsM");
+    By dropManualCorrection = By.xpath("//*[@id='s2id_IsStateHandControlM']");
+    By fieldManualCorrectionComments = By.xpath("//*[@id='StateHandControlCommentsM']");
     // ++++ Состояние ОСС* ++++//
     By dropState = By.xpath("//*[@id = 's2id_StateM']");
     By dropStateActualState = By.xpath("//*[@id='s2id_StateM'] //span");
     // ++++ Рассматривается в рамках ++++//
-    By resol = By.id("s2id_ResolutionNumberId");
+    By resol = By.xpath("//*[@id='s2id_ResolutionNumberId']");
     // Адрес
-    By addressZU = By.id("LandAddressM_Address");
-    By address = By.id("ObjectAddressM_Address");
+    By addressZU = By.xpath("//*[@id='LandAddressM_Address']");
+    By address = By.xpath("//*[@id='ObjectAddressM_Address']");
     // Тип объекта
-    By objType = By.id("s2id_ObjectTypeCtId");
+    By objType = By.xpath("//*[@id='s2id_ObjectTypeCtId']");
     // Рассматривается в рамках
 
     // Площадь самостроя/объекта
-    By fieldUbsSquare = By.id("Square");
-    By fieldObjSquare = By.id("ObjectSquare");
+    By fieldUbsSquare = By.xpath("//*[@id='Square']");
+    By fieldObjSquare = By.xpath("//*[@id='ObjectSquare']");
 
     // Материал стен/конструктив
-    By wallMat = By.id("s2id_MtrlWallCtId");
-    By constructiv = By.id("s2id_ConstructiveCtId");
+    By wallMat = By.xpath("//*[@id='s2id_MtrlWallCtId']");
+    By constructiv = By.xpath("//*[@id='s2id_ConstructiveCtId']");
 
     // Фактическое использование/пользователь
-    By factUsage = By.id("s2id_ActivityTypeCtIds");
-    By actualUser = By.id("ActualUserName");
+    By factUsage = By.xpath("//*[@id='s2id_ActivityTypeCtIds']");
+    By actualUser = By.xpath("//*[@id='ActualUserName']");
 
     // ++++ Информация о здании ++++//
-    By collapseBldInfo = By.xpath("//*[@id='documentsTableContainer']/following-sibling::div[17]");
-    By fieldBldInfoKadastr = By.id("KadastrBld");
+    By collapseBldInfo = By.xpath("//*[@id='KadastrBld']/../../../preceding-sibling::div");
+    By fieldBldInfoKadastr = By.xpath("//*[@id='KadastrBld']");
 
     // Дополнительные комментарии
-    By addComments = By.id("AdditionalComments");
+    By addComments = By.xpath("//*[@id='AdditionalComments']");
 
     By validationErrors = By.xpath("//div[@class='validation-summary-errors'] //li");
 
     By zpoTrue = By.xpath("//*[@id = 'Zpo_ZpoExist' and @value = 'True']/parent::label");
     By zpoFalse = By.xpath("//*[@id = 'Zpo_ZpoExist' and @value = 'False']/parent::label");
     By zpoNoData = By.xpath("//*[@id = 'Zpo_ZpoExist' and @value = '']/parent::label");
-    By rentContractZPO = By.id("Zpo_ZpoRentContract");
-    By contractStartDateZPO = By.id("Zpo_ZpoContractStartDate");
-    By contractEndDateZPO = By.id("Zpo_ZpoContractEndDate");
-    By usageTypeZPO = By.id("Zpo_ZpoUsageType");
+    By rentContractZPO = By.xpath("//*[@id='Zpo_ZpoRentContract']");
+    By contractStartDateZPO = By.xpath("//*[@id='Zpo_ZpoContractStartDate']");
+    By contractEndDateZPO = By.xpath("//*[@id='Zpo_ZpoContractEndDate']");
+    By usageTypeZPO = By.xpath("//*[@id='Zpo_ZpoUsageType']");
 
     By btnAttachDocs = By.xpath("//*[@title='Добавить документ (Ctrl+D)']");
     By inputFileField = By.xpath(
             "//div[@class!='hdn']/div/div/*[contains(text(), 'Выберите файл')]/following-sibling::input[contains(@name, 'UploadDocuments')]");
-    By dropCategory = By.id("dumpName");
+    By dropCategory = By.xpath("//*[@id='dumpName']");
     @SuppressWarnings("unused")
     By commentaries = By.xpath("//div[@class='comment-block'] //textarea");
     By btnConfirmAttachement = By
@@ -99,20 +99,47 @@ public class UbsScratch extends CorePage {
     By dropVerification = By.xpath("//*[@class='btn-group']/*[@data-toggle='dropdown']");
     By btnToVerification = By.xpath("//a[contains(text(),'Отправить на верификацию')]");
     By btnAcceptInSendToVerDialog = By.xpath(
-            "//div[contains(@class, 'ui-dialog')]//*[@id='send-to-verification-dialog']/following-sibling::div //button[@class='btn btn-xs btn-success']");
-    By btnVerifyUKON = By.id("verify-btn");
+            "//div[contains(@class, 'ui-dialog')]//*[@id='send-to-verification-dialog']/following-sibling::div //button[contains(@class, 'btn-success')]");
+    By btnVerifyUKON = By.xpath("//*[@id='verify-btn']");
     By btnAcceptInVerUkonDialog = By
             .xpath("//*[@id='verify-dialog']/following-sibling::div //button[@class='btn btn-xs btn-success']");
 
     By btnActualize = By.xpath("//a[text()='Добавить в актуализацию']");
-    By actualize819Pril = By.id("s2id_PP819CtId");
+    By actualize819Pril = By.xpath("//*[@id='s2id_PP819CtId']");
     By btnSaveActualization819Pril = By
             .xpath("//form[contains(@action, 'EditUbActualization')] //button[@title='Сохранить']");
     By btnActualizationToUbs = By.xpath("//a[@title='Карточка объекта']");
-    By PP819NumberM = By.id("PP819NumberM");
+    By PP819NumberM = By.xpath("//*[@id='PP819NumberM']");
     By btnSavePP819Number = By
             .xpath("//form[contains(@action, 'UpdateActualizationNumber')] //button[@title='Сохранить']");
     By toActualizationCard = By.xpath("//*[@id='ireon-map-container']/following-sibling::div[3] //a");
+
+    // === КОРРЕКТИРОВКА ОСС ПО РЕШЕНИЮ СУДА === //
+    By f_courtDecisionCorrectionAddress = By.xpath("//*[@id='CourtDecisionCorrection_ObjectAddressM_Address']");
+    By div_courtDecisionCorrection = By.xpath("//*[@id='CourtDecisionCorrection_ObjectAddressM_Address']/../../..");
+    By courtDecisionCorrectionCollapse = By.xpath("//*[@id='CourtDecisionCorrection_ObjectAddressM_Address']/../../../../preceding-sibling::div[1]");
+    By f_courtDecisionCorrectionUbsSquare = By.xpath("//*[@id='CourtDecisionCorrection_Square']");
+    By d_courtDecisionCorrectionWallMaterial = By.xpath("//*[@id='s2id_CourtDecisionCorrection_MtrlWallCtId']");
+    By f_courtDecisionCorrectionDismantleSquare = By.xpath("//*[@id='CourtDecisionCorrection_DismantleCourtDecisionSquare']");
+    By f_courtDecisionCorrectionVoluntaryDismantleDate = By.xpath("//*[@id='CourtDecisionCorrection_VoluntaryDismantleDate']");
+    By b_finishCorrection = By.xpath("//*[@title='Завершить редактирование']");
+    By b_modalConfirm = By.xpath("//*[contains(@style,'display: block')] //button[contains(@class,'btn-success')]");
+
+    public void courtDecisionCorrection() {
+        if (!isDisplayed(div_courtDecisionCorrection)) {
+            click(courtDecisionCorrectionCollapse);
+        }
+        writeText(f_courtDecisionCorrectionUbsSquare, ubsSquare);
+        chooseFromDropDownRandom(d_courtDecisionCorrectionWallMaterial);
+        writeText(f_courtDecisionCorrectionDismantleSquare, ubsSquare);
+        setDate(f_courtDecisionCorrectionVoluntaryDismantleDate, Generator.getCurrentDatePlus5());
+    }
+
+    public void finishCourtDecisionCorrection(){
+        click(b_finishCorrection);
+        click(b_modalConfirm);
+    }
+
 
     public void actualizePril(String pril) {
         scrollIntoViewBy(btnActualize);
@@ -371,7 +398,7 @@ public class UbsScratch extends CorePage {
         log.info("EXIT setBuildingKadastr()");
     }
 
-    public void uploadFile(WebDriver driver, String[] docCategory, String[] docPath) {
+    public void uploadFile(String[] docCategory, String[] docPath) {
         int i = 0;
         log.info("ENTER uploadFile()");
         while (i < docCategory.length) {
@@ -384,15 +411,6 @@ public class UbsScratch extends CorePage {
             Select s = new Select(castToWebElement(dropCategory));
             s.selectByVisibleText(docCategory[i]);
             log.info("Category " + (i + 1) + " chosen");
-
-            try {
-                setDate(documentDate, Generator.getCurrentDate());
-                log.info("Date picked");
-            } catch (NoSuchElementException e) {
-                log.info("Field date is absent");
-            } catch (TimeoutException e) {
-                log.info("Field date is absent");
-            }
 
             click(btnConfirmAttachement);
             log.info("Modal closed");

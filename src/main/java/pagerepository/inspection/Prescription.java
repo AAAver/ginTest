@@ -12,18 +12,21 @@ public class Prescription extends CorePage {
 		super(driver);
 	}
 
-	By subNumber = By.id("RequirementSubNumber");
-	By issueDate = By.id("IssueDate");
-	By deadlineDate = By.id("DeadLineDateM");
-	By type = By.id("s2id_RequirementTypeM");
-	By responsibleInspector = By.id("s2id_InspectorUserId");
-	By deliveryType = By.id("s2id_DeliveryTypeCtId");
-	By content = By.id("Contents");
-	By saveBtn = By.id("submit-form-btn");
+	By subNumber = By.xpath("//*[@id='RequirementSubNumber']");
+	By issueDate = By.xpath("//*[@id='IssueDate']");
+	By deadlineDate = By.xpath("//*[@id='DeadLineDateM']");
+	By type = By.xpath("//*[@id='s2id_RequirementTypeM']");
+	By responsibleInspector = By.xpath("//*[@id='s2id_InspectorUserId']");
+	By deliveryType = By.xpath("//*[@id='s2id_DeliveryTypeCtId']");
+	By content = By.xpath("//*[@id='Contents']");
+	By saveBtn = By.xpath("//*[@id='submit-form-btn']");
 	By toInspBtn =By.xpath("//a[@title='Карточка проверки']");
 	
 	public void fillPrescription() {
-		writeText(subNumber, Integer.toString(random.nextInt(1000)));
+		do {
+			writeText(subNumber, Integer.toString(random.nextInt(1000)));
+			click(content);
+		} while (!getAttribute(subNumber,"class").contains("valid"));
 		writeText(issueDate, Generator.getCurrentDate());
 		writeText(issueDate, Keys.chord(Keys.ENTER));
 		if(!getAttribute(deadlineDate, "class").contains("dirty-input")) {
@@ -42,7 +45,10 @@ public class Prescription extends CorePage {
 		click(inspectors.get(random.nextInt(inspectors.size())));
 		writeText(content, fake.artist().name());
 		click(saveBtn);
-	    click(toInspBtn);
+
+		do {
+			click(toInspBtn);
+		} while (driver.getCurrentUrl().contains("ControlRequirements"));
 	}
 	
 }

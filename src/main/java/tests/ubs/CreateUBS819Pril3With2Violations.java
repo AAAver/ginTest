@@ -7,32 +7,22 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import pagerepository.common.DisposalPage;
+import pagerepository.common.MainPage;
+import pagerepository.inspection.*;
 import pagerepository.common.LoginPage;
 import pagerepository.common.Save;
 import pagerepository.common.Upload;
 
-import pagerepository.inspection.InspectionMainTab;
-import pagerepository.inspection.InspectionObjectTab;
-import pagerepository.inspection.InspectionSubjectTab;
-import pagerepository.inspection.InspectionViolationTab;
 import tests.utils.BaseTest;
 import pagerepository.utilities.Catalog;
 import pagerepository.utilities.Generator;
-import pagerepository.utilities.Props;
 import pagerepository.ubs.UbsScratch;
 import pagerepository.ubs.UnauthBldList;
 
 @Listeners(tests.utils.Listeners.class)
 public class CreateUBS819Pril3With2Violations extends BaseTest {
 
-    private String ubsListUrl = Props.UBS_LIST_URL;
-    private String ultLogin = Props.ULT_LOGIN;
-    private String ultPassword = Props.ULT_PASSWORD;
-    private String disposalUrlZu1 = Props.DISPOSAL_URL_ZU_1;
-    private String disposalUrlZu2 = Props.DISPOSAL_URL_ZU_2;
     //==== РАСПОЛОЖЕНИЕ ====//
-    private String address = fake.address().streetAddress();
     private String ao = Catalog.area.ao.DEFAULT_AO;
     //==== ОСС РАССМАТРИВАЕТСЯ В РАМКАХ ====//
     private String ubsResolution = Catalog.ubs.resolution.PP_819;
@@ -50,40 +40,45 @@ public class CreateUBS819Pril3With2Violations extends BaseTest {
         setUpExtentReport("Создание ОСС по прил.3 с проверкой в которой 2 нарушения");
     }
 
-    @AfterClass
-    void tearDown(){
-        driver.quit();
-    }
+//    @AfterClass
+//    void tearDown(){
+//        driver.quit();
+//    }
 
     @Test(priority = 1, description = "Новый тест")
     public void addUbs819pp3() throws InterruptedException {
 
-        driver.get(ubsListUrl);
+
         LoginPage l = new LoginPage(driver);
-        l.loginAs(ultLogin, ultPassword);
+        l.loginAs(ultLogin);
+        MainPage mp = new MainPage(driver);
+        mp.toUbsList();
 
         // Добавляем ОСС по 819
         UnauthBldList ubsList = new UnauthBldList(driver);
         ubsList.addUnauthBld();
 
         UbsScratch ubs = new UbsScratch(driver);
-        ubs.generateUBS(address, ao, ubsResolution);
+        ubs.generateUBS(fakeAddress, ao, ubsResolution);
         String ubsUrl = driver.getCurrentUrl();
         String objSquare = ubs.getObjSquare();
 
         //==== ПЕРВАЯ ПРОВЕРКА (819-ПП) ====//
-        driver.get(disposalUrlZu1);
+        mp.toMainPage();
+        mp.toDisposals();
+        DisposalsListPage dlp = new DisposalsListPage(driver);
+        dlp.toInspectionZuDisposal();
         DisposalPage d = new DisposalPage(driver);
         d.addInspection();
         InspectionMainTab main = new InspectionMainTab(driver);
         main.setInspectionTheme(inspTheme1);
         main.setInspectionResult(inspResult1);
         main.populateCommonInformation();
-        main.connectUbs(address);
+        main.connectUbs(fakeAddress);
         Upload.file(driver, docCategory1, docPath1);
         InspectionObjectTab obj = new InspectionObjectTab(driver);
         obj.objectTabSwitch();
-        obj.setAddress(address);
+        obj.setAddress(fakeAddress);
         obj.setObjSquare(objSquare);
         obj.pickKadNumExist(true);
         Save.saveThis(driver);
@@ -113,7 +108,7 @@ public class CreateUBS819Pril3With2Violations extends BaseTest {
         ubs.zpo(true);
         ubs.setBuildingKadastr(Generator.fakeKadastr());
         Save.saveThis(driver);
-        ubs.verify();
+
         log.info(ubs.getUrlTail() + " Ubs ID");
 
     }

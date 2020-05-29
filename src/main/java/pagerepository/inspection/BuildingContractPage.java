@@ -17,23 +17,23 @@ public class BuildingContractPage extends CorePage {
     By toInspBtn = By.xpath("//a[@title='Проверка']");
 
     // Информация о договорах
-    By bldAddress = By.id("s2id_BtiAddressStr");
+    By bldAddress = By.xpath("//*[@id='s2id_BtiAddressStr']");
     By btiAddrText = By.xpath("//*[@id='s2id_BtiAddressStr'] //span");
-    By autogenInput = By.id("s2id_autogen5_search");
-    By contractNum = By.id("Number");
-    By contractDate = By.id("ContractDate");
-    By subjectType = By.id("s2id_SubjectTypeCtId");
-    By rightType = By.id("s2id_RightTypeCtId");
-    By contractValidity = By.id("s2id_ContractValidityCtId");
-    By startDate = By.id("StartDate");
-    By endDate = By.id("EndDate");
-    By isPerpetual = By.id("s2id_IsPerpetual");
-    By subjectName = By.id("SubjectName");
+    By autogenInput = By.xpath("//*[@id='s2id_autogen5_search']");
+    By contractNum = By.xpath("//*[@id='Number']");
+    By contractDate = By.xpath("//*[@id='ContractDate']");
+    By subjectType = By.xpath("//*[@id='s2id_SubjectTypeCtId']");
+    By rightType = By.xpath("//*[@id='s2id_RightTypeCtId']");
+    By contractValidity = By.xpath("//*[@id='s2id_ContractValidityCtId']");
+    By startDate = By.xpath("//*[@id='StartDate']");
+    By endDate = By.xpath("//*[@id='EndDate']");
+    By isPerpetual = By.xpath("//*[@id='s2id_IsPerpetual']");
+    By subjectName = By.xpath("//*[@id='SubjectName']");
     By legalForm = By.xpath("//input[@id='LegalForm']");
-    By subjectInn = By.id("SubjectInn");
-    By square = By.id("Square");
-    By kadastrNumber = By.id("KadastrBld");
-    By usePurpose = By.id("UsagePurposes");
+    By subjectInn = By.xpath("//*[@id='SubjectInn']");
+    By square = By.xpath("//*[@id='Square']");
+    By kadastrNumber = By.xpath("//*[@id='KadastrBld']");
+    By usePurpose = By.xpath("//*[@id='UsagePurposes']");
     By contractSaveBtn = By.xpath("//a[@title='Сохранить']");
 
     public void fillIn(String contractRight) throws InterruptedException {

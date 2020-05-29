@@ -15,7 +15,7 @@ public class Upload {
 	@SuppressWarnings("unused")
 	private static final By btnAttachFile = By.xpath("//a[@title='Добавить документ (Ctrl+D)']");
 	private static final By inputFileField = By.xpath("//div[contains(text(), 'Выберите файл')]/following-sibling::input");
-	private static final By dropCategory = By.id("dumpName");
+	private static final By dropCategory = By.xpath("//*[@id='dumpName']");
 	private static final By commentaries = By.xpath("//div[@aria-describedby='ui-id-1'] //div[@class='comment-block'] //textarea");
 	private static final By btnConfirmAttachement = By
 			.xpath("//div[contains(@class,'ui-dialog-buttonset')]/button[@class = 'btn btn-primary btn-xs']");

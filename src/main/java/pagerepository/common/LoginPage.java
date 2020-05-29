@@ -15,9 +15,21 @@ public class LoginPage extends CorePage {
     By passwordField = By.id("Password");
     By loginBtn = By.cssSelector("button.btn.btn-primary.btn-block");
 
+    By validationError = By.xpath("//*[contains(@class, 'validation')]/ul/li");
+
     public void loginAs(String login, String password) {
         writeText(loginField, login);
         writeText(passwordField, password);
         click(loginBtn);
+    }
+
+    public void loginAs(String login) {
+        writeText(loginField, login);
+        writeText(passwordField, "password");
+        click(loginBtn);
+        if(isDisplayed(validationError)){
+            writeText(passwordField, "password123");
+            click(loginBtn);
+        }
     }
 }

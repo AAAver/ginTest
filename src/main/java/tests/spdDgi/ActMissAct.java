@@ -4,7 +4,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import pagerepository.common.DisposalPage;
+import pagerepository.common.MainPage;
+import pagerepository.inspection.DisposalPage;
 import pagerepository.common.LoginPage;
 import pagerepository.common.Save;
 import pagerepository.common.Upload;
@@ -14,27 +15,16 @@ import pagerepository.utilities.Generator;
 import pagerepository.utilities.Props;
 import tests.utils.BaseTest;
 
-
-import java.io.File;
-
 @Listeners(tests.utils.Listeners.class)
 public class ActMissAct extends BaseTest {
 
-    private final String baseUrl = Props.BASE_URL;
-    private final String disposalUrl = Props.DISPOSAL_URL_NF;
-    private final String ultLogin = Props.ULT_LOGIN;
-    private final String ultPassword = Props.ULT_PASSWORD;
 
-    private final String address = fake.address().streetAddress();
     private final String companyName = "Альянс Девелопмент";
     private final String objSquare = Integer.toString(Generator.getRandomUpTo(5000));
     //==== ТЕМАТИКА/РЕЗУЛЬТАТ/ДОГОВОР ====//
     private final String inspTheme = Catalog.inspection.theme.ONF;
     private final String inspResult = Catalog.inspection.result.VIOL_SIGNS_IDENT;
     private final String rightType = Catalog.useRight.RENT;
-    private final String docCategory = Catalog.docs.category.RAPORT;
-    private final String docPath = (new File(Catalog.docs.path.RAPORT)).getAbsolutePath();
-
 
     @BeforeClass
     void setDriver() {
@@ -55,6 +45,8 @@ public class ActMissAct extends BaseTest {
     InspectionActNF act;
     InspectionViolationTab viol;
     InspectionSubjectTab subj;
+    MainPage mp;
+    DisposalsListPage dlp;
 
     @Test(description = "Инициализация страниц(сервисный шаг)")
     public void initialization() {
@@ -67,14 +59,16 @@ public class ActMissAct extends BaseTest {
         act = new InspectionActNF(driver);
         viol = new InspectionViolationTab(driver);
         subj = new InspectionSubjectTab(driver);
+        mp = new MainPage(driver);
+        dlp = new DisposalsListPage(driver);
         log.info("Pages initialized");
     }
 
     @Test(dependsOnMethods = "initialization", description = "Авторизация и создание проверки")
     public void authorization() {
-        driver.get(baseUrl);
-        l.loginAs(ultLogin, ultPassword);
-        driver.get(disposalUrl);
+        l.loginAs(ultLogin);
+        mp.toDisposals();
+        dlp.toInspectionNfDisposal();
         d.addInspection();
     }
 
@@ -97,14 +91,14 @@ public class ActMissAct extends BaseTest {
 
     @Test(dependsOnMethods = "setUpViolations", description = "Загрузка документа(не Акт НФ)")
     public void uploadDocuments() {
-        Upload.file(driver, docCategory, docPath);
+        Upload.file(driver, raport, raportPath);
         act.scrollToBottom();
     }
 
     @Test(dependsOnMethods = "uploadDocuments", description = "Заполнение данных на вкладке объект")
     public void setObjectInformation() {
         obj.objectTabSwitch();
-        obj.setAddress(address);
+        obj.setAddress(fakeAddress);
         obj.setObjSquare(objSquare);
         obj.pickKadNumExist(true);
     }

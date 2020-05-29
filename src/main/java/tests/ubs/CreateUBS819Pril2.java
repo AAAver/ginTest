@@ -2,13 +2,13 @@ package tests.ubs;
 
 import java.io.File;
 
+import pagerepository.common.MainPage;
 import pagerepository.inspection.*;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import pagerepository.common.DisposalPage;
+import pagerepository.inspection.DisposalPage;
 import pagerepository.common.LoginPage;
 import pagerepository.common.Save;
 import pagerepository.common.Upload;
@@ -16,20 +16,13 @@ import pagerepository.common.Upload;
 import tests.utils.BaseTest;
 import pagerepository.utilities.Catalog;
 import pagerepository.utilities.Generator;
-import pagerepository.utilities.Props;
 import pagerepository.ubs.UbsScratch;
 import pagerepository.ubs.UnauthBldList;
 
 @Listeners(tests.utils.Listeners.class)
 public class CreateUBS819Pril2 extends BaseTest {
 
-    private String ubsListUrl = Props.UBS_LIST_URL;
-    private String ultLogin = Props.ULT_LOGIN;
-    private String ultPassword = Props.ULT_PASSWORD;
-    private String disposalUrlZu1 = Props.DISPOSAL_URL_ZU_1;
-    private String disposalUrlZu2 = Props.DISPOSAL_URL_ZU_2;
     //==== РАСПОЛОЖЕНИЕ ====//
-    private String address = fake.address().streetAddress();
     private String ao = Catalog.area.ao.DEFAULT_AO;
     //==== ОСС РАССМАТРИВАЕТСЯ В РАМКАХ ====//
     private String ubsResolution = Catalog.ubs.resolution.PP_819;
@@ -53,10 +46,10 @@ public class CreateUBS819Pril2 extends BaseTest {
     }
 
 
-    @AfterClass
-    void tearDown() {
-        driver.quit();
-    }
+//    @AfterClass
+//    void tearDown() {
+//        driver.quit();
+//    }
 
     LoginPage l;
     DisposalPage d;
@@ -68,6 +61,8 @@ public class CreateUBS819Pril2 extends BaseTest {
     InspectionSubjectTab subj;
     UnauthBldList ubsList;
     UbsScratch ubs;
+    MainPage mp;
+    DisposalsListPage dlp;
 
     @Test(description = "Инициализация страниц(сервисный шаг)")
     public void initialization() {
@@ -82,26 +77,30 @@ public class CreateUBS819Pril2 extends BaseTest {
         subj = new InspectionSubjectTab(driver);
         ubsList = new UnauthBldList(driver);
         ubs = new UbsScratch(driver);
+        mp = new MainPage(driver);
+        dlp = new DisposalsListPage(driver);
         log.info("Pages initialized");
     }
 
     @Test(dependsOnMethods = "initialization", description = "Авторизация и создание карточки ОСС")
     public void authorization() throws InterruptedException {
-        driver.get(ubsListUrl);
-        l.loginAs(ultLogin, ultPassword);
+        l.loginAs(ultLogin);
+        mp.toUbsList();
         ubsList.addUnauthBld();
     }
 
     @Test(dependsOnMethods = "authorization", description = "Заполнение карточки ОСС")
     public void populateUBS() throws InterruptedException {
-        ubs.generateUBS(address, ao, ubsResolution);
+        ubs.generateUBS(fakeAddress, ao, ubsResolution);
         ubsUrl = driver.getCurrentUrl();
         objSquare = ubs.getObjSquare();
     }
 
     @Test(dependsOnMethods = "populateUBS", description = "Создание проверки. Тематика и результат")
     public void setUpInspectionThemeAndResultOne() {
-        driver.get(disposalUrlZu1);
+        mp.toMainPage();
+        mp.toDisposals();
+        dlp.toInspectionNfDisposal();
         d.addInspection();
         main.populateCommonInformation();
         main.setInspectionTheme(inspTheme1);
@@ -110,14 +109,14 @@ public class CreateUBS819Pril2 extends BaseTest {
 
     @Test(dependsOnMethods = "setUpInspectionThemeAndResultOne", description = "Связка с ОСС")
     public void connectUbsOne() {
-        main.connectUbs(address);
+        main.connectUbs(fakeAddress);
         Upload.file(driver, docCategory1, docPath1);
     }
 
     @Test(dependsOnMethods = "connectUbsOne", description = "Заполнение вкладки объект")
     public void settingObjectInfoOne() throws InterruptedException {
         obj.objectTabSwitch();
-        obj.setAddress(address);
+        obj.setAddress(fakeAddress);
         obj.setObjSquare(objSquare);
         obj.pickKadNumExist(true);
         Save.saveThis(driver);
@@ -148,7 +147,9 @@ public class CreateUBS819Pril2 extends BaseTest {
 
     @Test(dependsOnMethods = "setViolationOne", description = "Создание проверки. Тематика и результат")
     public void setUpInspectionThemeAndResultTwo() {
-        driver.get(disposalUrlZu2);
+        mp.toMainPage();
+        mp.toDisposals();
+        dlp.toInspectionZuDisposal();
         d.addInspection();
         main.populateCommonInformation();
         main.setInspectionTheme(inspTheme2);
@@ -157,14 +158,13 @@ public class CreateUBS819Pril2 extends BaseTest {
 
     @Test(dependsOnMethods = "setUpInspectionThemeAndResultTwo", description = "Связка с ОСС")
     public void connectUbsTwo() {
-        main.connectUbs(address);
-        Upload.file(driver, docCategory1, docPath1);
+        main.connectUbs(fakeAddress);
     }
 
     @Test(dependsOnMethods = "connectUbsTwo", description = "Заполнение вкладки объект")
     public void settingObjectInfoTwo() throws InterruptedException {
         obj.objectTabSwitch();
-        obj.setAddress(address);
+        obj.setAddress(fakeAddress);
         obj.setObjSquare(objSquare);
         obj.pickKadNumExist(true);
         Save.saveThis(driver);
@@ -195,8 +195,10 @@ public class CreateUBS819Pril2 extends BaseTest {
     @Test(dependsOnMethods = "setViolationTwo", description = "Заполнение ЗПО")
     public void populateUbsZpo() {
         driver.get(ubsUrl);
-        ubs.zpo(true);
+        ubs.actualizePril("приложение 2");
+        ubs.zpo(false);
         ubs.setBuildingKadastr(Generator.fakeKadastr());
+        ubs.uploadFile(Catalog.docs.category.DGI_PACK, Catalog.docs.path.DGI_PACK);
         System.out.println(ubs.getUrlTail());
     }
 }

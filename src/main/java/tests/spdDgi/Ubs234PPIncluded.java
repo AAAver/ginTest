@@ -1,6 +1,7 @@
 package tests.spdDgi;
 
-import pagerepository.common.DisposalPage;
+import pagerepository.common.MainPage;
+import pagerepository.inspection.DisposalPage;
 import pagerepository.common.LoginPage;
 import pagerepository.common.Save;
 
@@ -20,19 +21,14 @@ import tests.utils.BaseTest;
 @Listeners(tests.utils.Listeners.class)
 public class Ubs234PPIncluded extends BaseTest {
 
-    private String login = Props.ULT_LOGIN;
-    private String password = Props.ULT_PASSWORD;
-    private String ubsListUrl = Props.UBS_LIST_URL;
     private String ubsResol = Catalog.ubs.resolution.PP_234;
     private String ubsState = Catalog.ubs.state.INCLUDED;
-    private String address = fake.address().streetAddress();
     private String ao = Catalog.area.ao.DEFAULT_AO;
     private String disposalUrl = Props.DISPOSAL_URL_ZU_1;
     private String inspTheme = Catalog.inspection.theme.UBS_819_IDENT;
     private String inspResult = Catalog.inspection.result.FED_PROPERTY;
     private String shd = Catalog.shd.DEFAULT_SHD;
-    private String[] dgiDocs = Catalog.docs.category.DGI_PACK;
-    private String[] dgiDocsPath = Catalog.docs.path.DGI_PACK;
+
     String ubsUrl;
     String objSquare;
 
@@ -58,6 +54,9 @@ public class Ubs234PPIncluded extends BaseTest {
     InspectionSubjectTab subj;
     UnauthBldList ubsList;
     UbsScratch ubs;
+    MainPage mp;
+    DisposalsListPage dlp;
+
 
     @Test(description = "Инициализация страниц(сервисный шаг)")
     public void initialization() {
@@ -72,20 +71,22 @@ public class Ubs234PPIncluded extends BaseTest {
         subj = new InspectionSubjectTab(driver);
         ubsList = new UnauthBldList(driver);
         ubs = new UbsScratch(driver);
+        mp = new MainPage(driver);
+        dlp = new DisposalsListPage(driver);
         log.info("Pages initialized");
     }
 
-
-    @Test(dependsOnMethods = "initialization", description = "Авторизация и создание ОСС")
+    @Test(dependsOnMethods = "initialization", description = "Авторизация и создание проверки")
     public void authorization() {
-        driver.get(ubsListUrl);
-        l.loginAs(login, password);
-        ubsList.addUnauthBld();
+        l.loginAs(ultLogin);
+        mp.toDisposals();
+        dlp.toInspectionNfDisposal();
+        d.addInspection();
     }
 
     @Test(dependsOnMethods = "authorization", description = "Первичное заполнение ОСС")
     public void populateUbs() throws InterruptedException {
-        ubs.generateUBS(address, ao, ubsResol);
+        ubs.generateUBS(fakeAddress, ao, ubsResol);
         objSquare = ubs.getObjSquare();
         ubsUrl = driver.getCurrentUrl();
     }
@@ -105,13 +106,13 @@ public class Ubs234PPIncluded extends BaseTest {
     @Test(dependsOnMethods = "controlThemeAndResult", description = "Связка с ОСС")
     public void connectUbs() {
         main.populateCommonInformation();
-        main.connectUbs(address);
+        main.connectUbs(fakeAddress);
     }
 
     @Test(dependsOnMethods = "connectUbs", description = "Информация об объекте")
     public void settingObjectInfo() throws InterruptedException {
         obj.objectTabSwitch();
-        obj.setAddress(address);
+        obj.setAddress(fakeAddress);
         obj.setObjSquare(objSquare);
         obj.pickKadNumExist(true);
         Save.saveThis(driver);
@@ -134,7 +135,7 @@ public class Ubs234PPIncluded extends BaseTest {
         ubs.isManualCorrection(true);
         ubs.setUbsState(ubsState);
         ubs.setBuildingKadastr(Generator.fakeKadastr());
-        ubs.uploadFile(driver, dgiDocs, dgiDocsPath);
+        ubs.uploadFile(dgiPack, dgiPackPath);
         Save.saveThis(driver);
     }
 

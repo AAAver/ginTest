@@ -1,9 +1,11 @@
 package pagerepository.inspection;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class InspectionSubjectTab extends InspectionPage {
 
+	By f_shdINN = By.xpath("//*[@id='Inn']");
 
 	public InspectionSubjectTab(WebDriver driver) {
 		super(driver);
@@ -14,8 +16,10 @@ public class InspectionSubjectTab extends InspectionPage {
 
 	public void peekShd(String companyName) throws InterruptedException {
 		click(addShdBtn);
+		clearField(f_shdINN);
 		writeText(searchField, companyName);
 		click(searchBtn);
+		Thread.sleep(3000);
 		var shdNamesList = getElementList(shdNames);
 		for (int i = 0; i < shdNamesList.size(); i++) {
 			if (getText(shdNamesList.get(i)).contains(companyName)) {
