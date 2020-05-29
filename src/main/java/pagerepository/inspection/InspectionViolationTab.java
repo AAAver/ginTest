@@ -84,7 +84,7 @@ public class InspectionViolationTab extends InspectionPage {
         scrollIntoViewBy(warningBtn);
         click(warningBtn);
         writeText(subNumber, fake.number().digits(5));
-        writeText(date, today);
+        setDate(date, today);
         click(subNumber);
         click(koapArticle);
         List<WebElement> articles = getElementList(select2drop);

@@ -138,7 +138,7 @@ public class ActMissContract extends BaseTest {
 
 	@Test(dependsOnMethods = "addWarningCard", description = "Верификация карточки")
 	void verification() throws InterruptedException {
-		insp.verify();
+//		insp.verify();
 		String inspId = insp.getUrlTail();
 		Props.setProperty("inspIdMissAct",inspId);
 		log.info("Inspection with NO CONTRACT created. ID = " + inspId);

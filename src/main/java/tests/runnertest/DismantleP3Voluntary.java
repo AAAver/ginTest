@@ -111,8 +111,11 @@ public class DismantleP3Voluntary extends BaseTest {
         obj.pickKadNumExist(true);
         Save.saveThis(driver);
         subj.subjectTabSwitch();
-        subj.peekShd(shd);
-        Save.saveThis(driver);
+        while (!subj.isShdPresented()) {
+            subj.peekShd(shd);
+            Save.saveThis(driver);
+            subj.subjectTabSwitch();
+        }
         viol.violTabSwitch();
         viol.addViolation("Самовольное занятие земельного участка под строительство нежилых объектов");
         Save.saveThis(driver);

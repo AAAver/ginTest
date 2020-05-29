@@ -78,6 +78,11 @@ public class DismantlePage extends CorePage {
     public void stageVoluntaryDismantle(boolean voluntarily) throws InterruptedException {
         driver.findElement(voluntaryDismantlePhoto).sendKeys(new File(Props.PHOTO_PATH_O).getAbsolutePath());
         save();
+        if(driver.findElement(b_voluntaryDismantleConfirmed).isEnabled()){
+            log.fatal("Button 'Demontazh Podtverzhden' enabled, but should be disabled");
+        }
+        driver.findElement(voluntaryDismantlePhoto).sendKeys(new File(Props.PHOTO_PATH_T).getAbsolutePath());
+        save();
         scrollToTop();
         Thread.sleep(1000);
         click(b_voluntaryDismantleTimeEnded);

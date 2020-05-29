@@ -111,6 +111,7 @@ public class BakeUbsPril2 extends BaseTest {
         viol.addPrescription("Самовольное занятие земельного участка под строительство нежилых объектов");
     }
 
+
     @Test(dependsOnMethods = "addInspection", description = "Корректировка и верификация ОСС")
     void correctUBS() throws InterruptedException {
         driver.get(ubsUrl);
