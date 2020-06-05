@@ -1,7 +1,7 @@
-package pagerepository.common;
+package pagerepository.utilities;
 
 import java.io.File;
-import pagerepository.utilities.Generator;
+import miscelaneous.Generator;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;

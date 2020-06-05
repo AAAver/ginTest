@@ -1,6 +1,6 @@
 package runner;
 
-import pagerepository.utilities.Props;
+import miscelaneous.Props;
 
 import javax.swing.*;
 import java.awt.*;

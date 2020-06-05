@@ -4,20 +4,20 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
-import pagerepository.common.Save;
+import pagerepository.utilities.Save;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import pagerepository.utilities.Catalog;
+import miscelaneous.Catalog;
 import pagerepository.utilities.CorePage;
-import pagerepository.utilities.Generator;
-import pagerepository.utilities.Props;
+import miscelaneous.Generator;
+import miscelaneous.Props;
 
-public class UbsScratch extends CorePage {
+public class UnauthorizedBuilding extends CorePage {
 
-    public UbsScratch(WebDriver driver) {
+    public UnauthorizedBuilding(WebDriver driver) {
         super(driver);
     }
 
@@ -109,7 +109,7 @@ public class UbsScratch extends CorePage {
     By btnSaveActualization819Pril = By
             .xpath("//form[contains(@action, 'EditUbActualization')] //button[@title='Сохранить']");
     By btnActualizationToUbs = By.xpath("//a[@title='Карточка объекта']");
-    By PP819NumberM = By.xpath("//*[@id='PP819NumberM']");
+    By PP819NumberM = By.xpath("//*[@id='PP819NumberM' and not (@readonly)]");
     By btnSavePP819Number = By
             .xpath("//form[contains(@action, 'UpdateActualizationNumber')] //button[@title='Сохранить']");
     By toActualizationCard = By.xpath("//*[@id='ireon-map-container']/following-sibling::div[3] //a");
@@ -135,27 +135,38 @@ public class UbsScratch extends CorePage {
         setDate(f_courtDecisionCorrectionVoluntaryDismantleDate, Generator.getCurrentDatePlus5());
     }
 
-    public void finishCourtDecisionCorrection(){
+    public void finishCourtDecisionCorrection() {
         click(b_finishCorrection);
         click(b_modalConfirm);
     }
 
 
-    public void actualizePril(String pril) {
+    public void addActualization(int prilNumber) {
         scrollIntoViewBy(btnActualize);
         click(btnActualize);
         click(actualize819Pril);
         List<WebElement> prils = getElementList(select2drop);
         for (WebElement webElement : prils) {
-            if (getText(webElement).contains(pril)) {
-                click(webElement);
-                break;
+            if (prilNumber == 2) {
+                if (getText(webElement).contains("приложение 2")) {
+                    click(webElement);
+                    break;
+                }
+            }
+            else if(prilNumber == 3){
+                if (getText(webElement).contains("приложение 3")) {
+                    click(webElement);
+                    break;
+                }
             }
         }
         click(btnSaveActualization819Pril);
         writeText(PP819NumberM, Integer.toString(random.nextInt(100)));
         click(btnSavePP819Number);
-        click(btnSaveActualization819Pril);
+        if(getAttribute(PP819NumberM, "value").isBlank()){
+            writeText(PP819NumberM, Integer.toString(random.nextInt(100)));
+            click(btnSavePP819Number);
+        }
         click(btnActualizationToUbs);
     }
 
@@ -165,23 +176,23 @@ public class UbsScratch extends CorePage {
         Actions a = new Actions(driver);
 
         while (!isDisplayed(btnToVerification)) {
-            click(dropVerification);
+            clickJS(dropVerification);
         }
-        click(btnToVerification);
+        clickJS(btnToVerification);
         a.moveToElement(castToWebElement(btnAcceptInSendToVerDialog)).click().build().perform();
         log.info("Sent to verification");
 
         while (!isDisplayed(btnVerifyUKON)) {
-            click(dropVerification);
+            clickJS(dropVerification);
         }
-        click(btnVerifyUKON);
+        clickJS(btnVerifyUKON);
         a.moveToElement(castToWebElement(btnAcceptInVerUkonDialog)).click().build().perform();
         log.info("Verified by UKON");
 
         while (!isDisplayed(btnVerifyUKON)) {
-            click(dropVerification);
+            clickJS(dropVerification);
         }
-        click(btnVerifyUKON);
+        clickJS(btnVerifyUKON);
         a.moveToElement(castToWebElement(btnAcceptInVerUkonDialog)).click().build().perform();
         log.info("Verified");
         log.info("EXIT verify()");

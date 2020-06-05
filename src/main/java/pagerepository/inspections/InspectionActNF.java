@@ -1,9 +1,9 @@
-package pagerepository.inspection;
+package pagerepository.inspections;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
-import pagerepository.utilities.Generator;
+import miscelaneous.Generator;
 
 public class InspectionActNF extends InspectionPage {
 

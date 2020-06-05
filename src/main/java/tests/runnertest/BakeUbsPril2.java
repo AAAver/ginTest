@@ -2,16 +2,16 @@ package tests.runnertest;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pagerepository.common.LoginPage;
-import pagerepository.common.MainPage;
-import pagerepository.common.Save;
-import pagerepository.common.Upload;
-import pagerepository.inspection.*;
+import pagerepository.main.LoginPage;
+import pagerepository.main.MainPage;
+import pagerepository.utilities.Save;
+import pagerepository.utilities.Upload;
+import pagerepository.inspections.*;
 import pagerepository.legalcase.DgiLegalCase;
-import pagerepository.ubs.UbsScratch;
-import pagerepository.ubs.UnauthBldList;
-import pagerepository.utilities.Catalog;
-import pagerepository.utilities.Generator;
+import pagerepository.ubs.UnauthorizedBuilding;
+import pagerepository.ubs.UnauthorizedBuildingList;
+import miscelaneous.Catalog;
+import miscelaneous.Generator;
 import tests.utils.BaseTest;
 
 import java.io.File;
@@ -40,10 +40,10 @@ public class BakeUbsPril2 extends BaseTest {
 
     private LoginPage lp;
     private MainPage mp;
-    private DisposalsListPage dlp;
-    private DisposalPage dp;
-    private UnauthBldList ubsList;
-    private UbsScratch ubs;
+    private DisposalsList dlp;
+    private Disposal dp;
+    private UnauthorizedBuildingList ubsList;
+    private UnauthorizedBuilding ubs;
     private InspectionMainTab main;
     private InspectionObjectTab obj;
     private InspectionSubjectTab subj;
@@ -58,10 +58,10 @@ public class BakeUbsPril2 extends BaseTest {
     void initPages() {
         lp = new LoginPage(driver);
         mp = new MainPage(driver);
-        dlp = new DisposalsListPage(driver);
-        dp = new DisposalPage(driver);
-        ubsList = new UnauthBldList(driver);
-        ubs = new UbsScratch(driver);
+        dlp = new DisposalsList(driver);
+        dp = new Disposal(driver);
+        ubsList = new UnauthorizedBuildingList(driver);
+        ubs = new UnauthorizedBuilding(driver);
         main = new InspectionMainTab(driver);
         obj = new InspectionObjectTab(driver);
         subj = new InspectionSubjectTab(driver);
@@ -120,13 +120,16 @@ public class BakeUbsPril2 extends BaseTest {
         ubs.zpo(false);
         ubs.setBuildingKadastr(Generator.fakeKadastr());
         ubs.courtDecisionCorrection();
+
         Save.saveThis(driver);
+        ubs.addActualization(2);
         ubs.uploadFile(dgiDocPack, dgiDocPackPath);
+
         Save.saveThis(driver);
     }
 
     @Test(dependsOnMethods = "correctUBS", description = "Ищем судебное дело ДГИ")
-    void caseDgiSearch() {
+    void caseDgiSearch() throws InterruptedException {
         mp.toMainPage();
         mp.toDgiLegalCase();
         dlc.findLegalCaseForUbs(fakeAddress);

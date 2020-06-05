@@ -1,8 +1,11 @@
 package pagerepository.legalcase;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import pagerepository.utilities.CorePage;
-import pagerepository.utilities.Generator;
+import miscelaneous.Generator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,11 +56,11 @@ public class DgiLegalCase extends CorePage {
         chooseFromDropDown(d_ubsBinding, "Нет");
         chooseFromDropDown(d_courtDecision, filter);
         chooseFromDropDown(d_impossibleToBind, "Нет");
-        click(b_searchSubmit);
+        clickJS(b_searchSubmit);
         waitVisibilityMultipleElements(searchTableRows);
     }
 
-    public void findLegalCaseForUbs(String ubsAddress) {
+    public void findLegalCaseForUbs(String ubsAddress) throws InterruptedException {
         filter("УДОВЛЕТВОРЕНО В ТРЕБОВАНИЯХ");
         int pagesCount = Integer.parseInt(getAttribute(gridTablePagesNumber, "innerHTML"));
         List<String> pages = new ArrayList<>();
@@ -72,18 +75,20 @@ public class DgiLegalCase extends CorePage {
                 pages.remove(pageToShow);
                 goToPage(pageToShow);
 
+                if(isStale(goToCaseBtn)){driver.get(driver.getCurrentUrl());}
+
                 int caseNumber = getElementList(goToCaseBtn).size();
                 for (int j = 0; j < caseNumber; j++) {
                     List<WebElement> cases = getElementList(goToCaseBtn);
                     while (!driver.getCurrentUrl().contains("Edit")) {
-                        click(cases.get(j));
+                        clickJS(cases.get(j));
                     }
                     if (getAttribute(legalCaseForceDate, "value").isEmpty() && getAttribute(legalCaseForceDate, "readonly") == null) {
                         caseFound = true;
                         connectUbs(ubsAddress);
                         break;
                     } else {
-                        click(toListBtn);
+                        clickJS(toListBtn);
                     }
                 }
                 if (caseFound) {

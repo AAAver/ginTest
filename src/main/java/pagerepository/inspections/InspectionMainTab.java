@@ -1,7 +1,7 @@
-package pagerepository.inspection;
+package pagerepository.inspections;
 
 import org.openqa.selenium.WebElement;
-import pagerepository.utilities.Generator;
+import miscelaneous.Generator;
 import org.openqa.selenium.WebDriver;
 
 public class InspectionMainTab extends InspectionPage {

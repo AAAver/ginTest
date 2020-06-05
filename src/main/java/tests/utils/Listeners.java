@@ -22,6 +22,7 @@ public class Listeners extends BaseTest implements ITestListener {
     @Override
     public void onTestStart(ITestResult result) {
 
+
     }
 
     @Override
@@ -36,10 +37,9 @@ public class Listeners extends BaseTest implements ITestListener {
         //Take base64Screenshot screenshot.
         String base64Screenshot = "data:image/png;base64," + ((TakesScreenshot) webDriver).
                 getScreenshotAs(OutputType.BASE64);
-
+//        takeScreenshotFail("test");
         ExtentTestManager.getTest().log(LogStatus.PASS, result.getMethod().getDescription(),
                 ExtentTestManager.getTest().addBase64ScreenShot(base64Screenshot));
-
 
 
     }

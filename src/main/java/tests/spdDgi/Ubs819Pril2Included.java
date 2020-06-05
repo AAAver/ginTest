@@ -1,21 +1,21 @@
 package tests.spdDgi;
 
-import pagerepository.common.MainPage;
-import pagerepository.inspection.DisposalPage;
-import pagerepository.common.LoginPage;
-import pagerepository.common.Save;
+import pagerepository.main.MainPage;
+import pagerepository.inspections.Disposal;
+import pagerepository.main.LoginPage;
+import pagerepository.utilities.Save;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import pagerepository.inspection.*;
+import pagerepository.inspections.*;
 
-import pagerepository.ubs.UbsScratch;
-import pagerepository.ubs.UnauthBldList;
-import pagerepository.utilities.Catalog;
-import pagerepository.utilities.Generator;
-import pagerepository.utilities.Props;
+import pagerepository.ubs.UnauthorizedBuilding;
+import pagerepository.ubs.UnauthorizedBuildingList;
+import miscelaneous.Catalog;
+import miscelaneous.Generator;
+import miscelaneous.Props;
 import tests.utils.BaseTest;
 
 @Listeners(tests.utils.Listeners.class)
@@ -43,33 +43,33 @@ public class Ubs819Pril2Included extends BaseTest {
 	}
 
 	LoginPage l;
-	DisposalPage d;
+	Disposal d;
 	InspectionPage insp;
 	InspectionMainTab main;
 	InspectionObjectTab obj;
 	InspectionActNF act;
 	InspectionViolationTab viol;
 	InspectionSubjectTab subj;
-	UnauthBldList ubsList;
-	UbsScratch ubs;
+	UnauthorizedBuildingList ubsList;
+	UnauthorizedBuilding ubs;
 	MainPage mp;
-	DisposalsListPage dlp;
+	DisposalsList dlp;
 
 	@Test(description = "Инициализация страниц(сервисный шаг)")
 	public void initialization() {
 		log.info("Initializing pages");
 		l = new LoginPage(driver);
-		d = new DisposalPage(driver);
+		d = new Disposal(driver);
 		insp = new InspectionPage(driver);
 		main = new InspectionMainTab(driver);
 		obj = new InspectionObjectTab(driver);
 		act = new InspectionActNF(driver);
 		viol = new InspectionViolationTab(driver);
 		subj = new InspectionSubjectTab(driver);
-		ubsList = new UnauthBldList(driver);
-		ubs = new UbsScratch(driver);
+		ubsList = new UnauthorizedBuildingList(driver);
+		ubs = new UnauthorizedBuilding(driver);
 		mp = new MainPage(driver);
-		dlp = new DisposalsListPage(driver);
+		dlp = new DisposalsList(driver);
 		log.info("Pages initialized");
 	}
 

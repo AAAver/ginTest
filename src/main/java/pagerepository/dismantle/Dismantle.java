@@ -5,16 +5,16 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
-import pagerepository.utilities.Catalog;
+import miscelaneous.Catalog;
 import pagerepository.utilities.CorePage;
-import pagerepository.utilities.Generator;
-import pagerepository.utilities.Props;
+import miscelaneous.Generator;
+import miscelaneous.Props;
 
 import java.io.File;
 
-public class DismantlePage extends CorePage {
+public class Dismantle extends CorePage {
 
-    public DismantlePage(WebDriver driver) {
+    public Dismantle(WebDriver driver) {
         super(driver);
     }
 
@@ -46,10 +46,10 @@ public class DismantlePage extends CorePage {
     By objectRevealTab = By.xpath("//a[text()='Выявление объекта']");
     By dismantleProcessTabParent = By.xpath("//a[text()='Ход демонтажа']/parent::li");
     By dismantleProcessTab = By.xpath("//a[text()='Ход демонтажа']");
-    By f_dismantleProcessPhoto = By.xpath("//*[contains(@id,'UploadPhotos_DismantleProgress')]");
+    By f_dismantleProcessPhoto = By.xpath("//*[contains(@id,'UploadPhotos_DismantleProgress')][last()]");
     By dismantleConfirmTabParent = By.xpath("//a[text()='Подтверждение демонтажа']/parent::li");
     By dismantleConfirmTab = By.xpath("//a[text()='Подтверждение демонтажа']");
-    By f_dismantleConfirmPhoto = By.xpath("//*[contains(@id,'UploadPhotos_DismantleApproval')]");
+    By f_dismantleConfirmPhoto = By.xpath("//*[contains(@id,'UploadPhotos_DismantleApproval')][last()]");
 
     // ====== Блок [Документация подрядчика] ====== //
     By contractorDocumentsCollapse = By.xpath("//*[contains(@id,'DismanteledDoc_Contractor')]/parent::div/preceding-sibling::div");
@@ -78,16 +78,18 @@ public class DismantlePage extends CorePage {
     public void stageVoluntaryDismantle(boolean voluntarily) throws InterruptedException {
         driver.findElement(voluntaryDismantlePhoto).sendKeys(new File(Props.PHOTO_PATH_O).getAbsolutePath());
         save();
-        if(driver.findElement(b_voluntaryDismantleConfirmed).isEnabled()){
-            log.fatal("Button 'Demontazh Podtverzhden' enabled, but should be disabled");
-        }
-        driver.findElement(voluntaryDismantlePhoto).sendKeys(new File(Props.PHOTO_PATH_T).getAbsolutePath());
-        save();
         scrollToTop();
         Thread.sleep(1000);
         click(b_voluntaryDismantleTimeEnded);
         Thread.sleep(1000);
         click(b_confirm);
+        if(driver.findElement(b_voluntaryDismantleConfirmed).isEnabled()){
+            log.fatal("Button 'Demontazh Podtverzhden' enabled, but should be disabled");
+        }
+        else{log.info("Button 'Demontazh Podtverzhden' disabled as expected");}
+        driver.findElement(voluntaryDismantlePhoto).sendKeys(new File(Props.PHOTO_PATH_T).getAbsolutePath());
+        save();
+
         while (!isDisplayed(b_confirm)) {
             if (voluntarily) {
                 click(b_voluntaryDismantleConfirmed);
@@ -127,6 +129,8 @@ public class DismantlePage extends CorePage {
 
     public void dismantleByContractor() {
         click(dismantleProcessTab);
+        driver.findElement(f_dismantleProcessPhoto).sendKeys(new File(Props.PHOTO_PATH_O).getAbsolutePath());
+        save();
         driver.findElement(f_dismantleProcessPhoto).sendKeys(new File(Props.PHOTO_PATH_O).getAbsolutePath());
         while (!isDisplayed(contractorDocumentsSection)) {
             click(contractorDocumentsCollapse);
@@ -171,6 +175,12 @@ public class DismantlePage extends CorePage {
         }
         click(dismantleConfirmTab);
         driver.findElement(f_dismantleConfirmPhoto).sendKeys(new File(Props.PHOTO_PATH_U).getAbsolutePath());
+        save();
+        while(!isDisplayed(dismantleSection)) {
+            click(dismantleBlockCollapse);
+        }
+        click(dismantleConfirmTab);
+        driver.findElement(f_dismantleConfirmPhoto).sendKeys(new File(Props.PHOTO_PATH_A).getAbsolutePath());
         save();
         while(!isDisplayed(b_confirm)) {
             click(b_acceptDismantleGbu);

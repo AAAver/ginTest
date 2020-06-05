@@ -1,4 +1,4 @@
-package pagerepository.inspectionTask;
+package pagerepository.plan;
 
 import oracle.sql.CharacterSetWithConverter;
 import org.openqa.selenium.By;

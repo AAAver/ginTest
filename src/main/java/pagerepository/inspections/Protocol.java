@@ -1,17 +1,15 @@
-package pagerepository.inspection;
+package pagerepository.inspections;
 
 import java.io.File;
-import java.util.List;
 
-import pagerepository.common.Save;
-import pagerepository.common.Upload;
-import pagerepository.utilities.Catalog;
+import pagerepository.utilities.Save;
+import pagerepository.utilities.Upload;
+import miscelaneous.Catalog;
 import pagerepository.utilities.CorePage;
-import pagerepository.utilities.Generator;
+import miscelaneous.Generator;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 public class Protocol extends CorePage {
 

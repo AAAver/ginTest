@@ -6,16 +6,16 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import pagerepository.common.MainPage;
-import pagerepository.inspection.DisposalPage;
-import pagerepository.common.LoginPage;
-import pagerepository.common.Save;
-import pagerepository.common.Upload;
-import pagerepository.inspection.*;
+import pagerepository.main.MainPage;
+import pagerepository.inspections.Disposal;
+import pagerepository.main.LoginPage;
+import pagerepository.utilities.Save;
+import pagerepository.utilities.Upload;
+import pagerepository.inspections.*;
 
-import pagerepository.utilities.Catalog;
-import pagerepository.utilities.Generator;
-import pagerepository.utilities.Props;
+import miscelaneous.Catalog;
+import miscelaneous.Generator;
+import miscelaneous.Props;
 import tests.utils.BaseTest;
 
 @Listeners(tests.utils.Listeners.class)
@@ -40,7 +40,7 @@ public class ActWrongRightFirst extends BaseTest {
 	}
 
 	LoginPage l;
-	DisposalPage d;
+	Disposal d;
 	InspectionPage insp;
 	InspectionMainTab main;
 	InspectionObjectTab obj;
@@ -48,13 +48,13 @@ public class ActWrongRightFirst extends BaseTest {
 	InspectionViolationTab viol;
 	InspectionSubjectTab subj;
 	MainPage mp;
-	DisposalsListPage dlp;
+	DisposalsList dlp;
 
 	@Test(description = "Инициализация страниц(сервисный шаг)")
 	public void initialization() {
 		log.info("Initializing pages");
 		l = new LoginPage(driver);
-		d = new DisposalPage(driver);
+		d = new Disposal(driver);
 		insp = new InspectionPage(driver);
 		main = new InspectionMainTab(driver);
 		obj = new InspectionObjectTab(driver);
@@ -62,7 +62,7 @@ public class ActWrongRightFirst extends BaseTest {
 		viol = new InspectionViolationTab(driver);
 		subj = new InspectionSubjectTab(driver);
 		mp = new MainPage(driver);
-		dlp = new DisposalsListPage(driver);
+		dlp = new DisposalsList(driver);
 		log.info("Pages initialized");
 	}
 

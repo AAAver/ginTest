@@ -2,17 +2,14 @@ package tests.training;
 
 
 import org.openqa.selenium.By;
-import pagerepository.common.MainPage;
-import pagerepository.common.LoginPage;
+import pagerepository.main.LoginPage;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import pagerepository.dismantle.DismantlePage;
-import pagerepository.inspectionTask.InspectionTaskList;
-import pagerepository.inspectionTask.RaidPlanTask;
-import pagerepository.utilities.Catalog;
-import pagerepository.utilities.Generator;
-import pagerepository.utilities.Props;
+import pagerepository.dismantle.Dismantle;
+import miscelaneous.Catalog;
+import miscelaneous.Generator;
+import miscelaneous.Props;
 import tests.utils.BaseTest;
 
 import java.io.File;
@@ -53,7 +50,7 @@ public class TestFake extends BaseTest {
         driver.get("http://192.168.4.117/626/UnauthBuildingDismantle/Edit/2011#");
         LoginPage l = new LoginPage(driver);
         l.loginAs("3");
-        DismantlePage dis = new DismantlePage(driver);
+        Dismantle dis = new Dismantle(driver);
         var s = dis.getActualValueFromDrop(By.xpath("//*[@id='s2id_ContractorId']"));
         System.out.println("result is: " + s);
 

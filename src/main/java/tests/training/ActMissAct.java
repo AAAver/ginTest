@@ -1,19 +1,19 @@
 package tests.training;
 
 import com.relevantcodes.extentreports.LogStatus;
-import pagerepository.inspection.DisposalPage;
-import pagerepository.common.LoginPage;
-import pagerepository.common.Save;
-import pagerepository.common.Upload;
+import pagerepository.inspections.Disposal;
+import pagerepository.main.LoginPage;
+import pagerepository.utilities.Save;
+import pagerepository.utilities.Upload;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import pagerepository.inspection.*;
+import pagerepository.inspections.*;
 
-import pagerepository.utilities.Catalog;
-import pagerepository.utilities.Generator;
-import pagerepository.utilities.Props;
+import miscelaneous.Catalog;
+import miscelaneous.Generator;
+import miscelaneous.Props;
 import tests.utils.BaseTest;
 import tests.utils.ExtentTestManager;
 
@@ -51,7 +51,7 @@ public class ActMissAct extends BaseTest {
     }
 
     LoginPage l;
-    DisposalPage d;
+    Disposal d;
     InspectionPage insp;
     InspectionMainTab main;
     InspectionObjectTab obj;
@@ -62,7 +62,7 @@ public class ActMissAct extends BaseTest {
     @Test(description = "Инициализация страниц(сервисный шаг)")
     public void initialization() {
         l = new LoginPage(driver);
-        d = new DisposalPage(driver);
+        d = new Disposal(driver);
         insp = new InspectionPage(driver);
         main = new InspectionMainTab(driver);
         obj = new InspectionObjectTab(driver);

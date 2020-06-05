@@ -1,12 +1,12 @@
-package pagerepository.inspection;
+package pagerepository.inspections;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import pagerepository.common.Upload;
-import pagerepository.utilities.Catalog;
+import pagerepository.utilities.Upload;
+import miscelaneous.Catalog;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,7 +19,7 @@ public class InspectionViolationTab extends InspectionPage {
     }
 
     String warnContent = "Здесь могло быть ваше нарушение";
-    String today = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+    String today = new SimpleDateFormat("dd.MM.yyyy").format(new Date());
     String warnCategory = Catalog.docs.category.WARNING;
     String warnPath = (new File(Catalog.docs.path.WARNING)).getAbsolutePath();
 
@@ -83,12 +83,9 @@ public class InspectionViolationTab extends InspectionPage {
     public void addWarning() throws InterruptedException {
         scrollIntoViewBy(warningBtn);
         click(warningBtn);
-        writeText(subNumber, fake.number().digits(5));
         setDate(date, today);
-        click(subNumber);
-        click(koapArticle);
-        List<WebElement> articles = getElementList(select2drop);
-        click(articles.get(random.nextInt(articles.size())));
+        writeText(subNumber, fake.number().digits(5));
+        chooseFromDropDownRandom(koapArticle);
         click(inspector);
         List<WebElement> inspectors = getElementList(select2drop);
         click(inspectors.get(random.nextInt(inspectors.size())));

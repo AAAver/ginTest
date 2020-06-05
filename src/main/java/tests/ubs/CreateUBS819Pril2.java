@@ -2,22 +2,22 @@ package tests.ubs;
 
 import java.io.File;
 
-import pagerepository.common.MainPage;
-import pagerepository.inspection.*;
+import pagerepository.main.MainPage;
+import pagerepository.inspections.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import pagerepository.inspection.DisposalPage;
-import pagerepository.common.LoginPage;
-import pagerepository.common.Save;
-import pagerepository.common.Upload;
+import pagerepository.inspections.Disposal;
+import pagerepository.main.LoginPage;
+import pagerepository.utilities.Save;
+import pagerepository.utilities.Upload;
 
 import tests.utils.BaseTest;
-import pagerepository.utilities.Catalog;
-import pagerepository.utilities.Generator;
-import pagerepository.ubs.UbsScratch;
-import pagerepository.ubs.UnauthBldList;
+import miscelaneous.Catalog;
+import miscelaneous.Generator;
+import pagerepository.ubs.UnauthorizedBuilding;
+import pagerepository.ubs.UnauthorizedBuildingList;
 
 @Listeners(tests.utils.Listeners.class)
 public class CreateUBS819Pril2 extends BaseTest {
@@ -52,33 +52,33 @@ public class CreateUBS819Pril2 extends BaseTest {
 //    }
 
     LoginPage l;
-    DisposalPage d;
+    Disposal d;
     InspectionPage insp;
     InspectionMainTab main;
     InspectionObjectTab obj;
     InspectionActNF act;
     InspectionViolationTab viol;
     InspectionSubjectTab subj;
-    UnauthBldList ubsList;
-    UbsScratch ubs;
+    UnauthorizedBuildingList ubsList;
+    UnauthorizedBuilding ubs;
     MainPage mp;
-    DisposalsListPage dlp;
+    DisposalsList dlp;
 
     @Test(description = "Инициализация страниц(сервисный шаг)")
     public void initialization() {
         log.info("Initializing pages");
         l = new LoginPage(driver);
-        d = new DisposalPage(driver);
+        d = new Disposal(driver);
         insp = new InspectionPage(driver);
         main = new InspectionMainTab(driver);
         obj = new InspectionObjectTab(driver);
         act = new InspectionActNF(driver);
         viol = new InspectionViolationTab(driver);
         subj = new InspectionSubjectTab(driver);
-        ubsList = new UnauthBldList(driver);
-        ubs = new UbsScratch(driver);
+        ubsList = new UnauthorizedBuildingList(driver);
+        ubs = new UnauthorizedBuilding(driver);
         mp = new MainPage(driver);
-        dlp = new DisposalsListPage(driver);
+        dlp = new DisposalsList(driver);
         log.info("Pages initialized");
     }
 
@@ -195,7 +195,7 @@ public class CreateUBS819Pril2 extends BaseTest {
     @Test(dependsOnMethods = "setViolationTwo", description = "Заполнение ЗПО")
     public void populateUbsZpo() {
         driver.get(ubsUrl);
-        ubs.actualizePril("приложение 2");
+        ubs.addActualization(2);
         ubs.zpo(false);
         ubs.setBuildingKadastr(Generator.fakeKadastr());
         ubs.uploadFile(Catalog.docs.category.DGI_PACK, Catalog.docs.path.DGI_PACK);

@@ -1,4 +1,4 @@
-package pagerepository.utilities;
+package miscelaneous;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +16,7 @@ public class Compare {
 	      || one != null && two == null
 	      || one.size() != two.size()){
 	        return false;
-	    }
+	    }	    
 	    one = new ArrayList<String>(one); 
 	    two = new ArrayList<String>(two); 
 	    Collections.sort(one);

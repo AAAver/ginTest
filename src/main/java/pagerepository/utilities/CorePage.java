@@ -32,6 +32,8 @@ public class CorePage {
 
     //===== Все или почти все справочники =====//
     public static final By select2drop = By.xpath("//div[@id='select2-drop'] //ul/li/div");
+    public static final By select2dropDiv = By.xpath("//div[@id='select2-drop']");
+    public static final By select2dropMask = By.xpath("//div[@id='select2-drop-mask']");
     By toMainPage = By.xpath("//a[text()='Главная']");
     By instrumentalPanel = By.xpath("//*[text()='Инструментальная панель']");
 
@@ -64,6 +66,14 @@ public class CorePage {
                 element.click();
             }
         }
+    }
+
+    public void clickJS(By by){
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(by));
+    }
+
+    public void clickJS(WebElement element){
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
     }
 
     public void writeText(By elementLocation, String text) {
@@ -220,6 +230,9 @@ public class CorePage {
 
     public void chooseFromDropDown(By by, String option){
         click(by);
+        if (!isDisplayed(select2dropDiv)){
+            click(by);
+        }
         List<WebElement> options = driver.findElements(select2drop);
         for (WebElement webElement : options) {
             if (webElement.getText().contains(option)) {
@@ -231,6 +244,9 @@ public class CorePage {
 
     public void chooseFromDropDownRandom(By by){
         click(by);
+        if (!isDisplayed(select2dropDiv)){
+            click(by);
+        }
         List<WebElement> options = driver.findElements(select2drop);
         click(options.get(random.nextInt(options.size())));
     }
@@ -239,6 +255,30 @@ public class CorePage {
         while (!isDisplayed(instrumentalPanel)) {
             click(toMainPage);
         }
+    }
+
+    public boolean isStale(By by){
+        try{
+            driver.findElement(by).isEnabled();
+            return false;
+        }
+        catch (StaleElementReferenceException e){
+            return true;
+        }
+    }
+
+    public List<String> getAllPossibleValues(By by){
+        click(by);
+        if (!isDisplayed(select2dropDiv)){
+            click(by);
+        }
+        List<WebElement> elements = getElementList(select2drop);
+        List<String> values = new ArrayList<>();
+        for (int i = 0; i < elements.size(); i++) {
+            values.add(elements.get(i).getText());
+        }
+        click(select2dropMask);
+        return values;
     }
 
 }

@@ -4,16 +4,19 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import pagerepository.common.*;
 import pagerepository.dismantle.DismantleList;
-import pagerepository.dismantle.DismantlePage;
-import pagerepository.inspection.*;
-import pagerepository.inspectionTask.InspectionTaskList;
-import pagerepository.inspectionTask.RaidPlanTask;
-import pagerepository.ubs.UbsScratch;
-import pagerepository.ubs.UnauthBldList;
-import pagerepository.utilities.Catalog;
-import pagerepository.utilities.Generator;
+import pagerepository.dismantle.Dismantle;
+import pagerepository.inspections.*;
+import pagerepository.main.LoginPage;
+import pagerepository.main.MainPage;
+import pagerepository.plan.InspectionTaskList;
+import pagerepository.plan.RaidPlanTask;
+import pagerepository.ubs.UnauthorizedBuilding;
+import pagerepository.ubs.UnauthorizedBuildingList;
+import miscelaneous.Catalog;
+import miscelaneous.Generator;
+import pagerepository.utilities.Save;
+import pagerepository.utilities.Upload;
 import tests.utils.BaseTest;
 
 import java.io.File;
@@ -50,17 +53,17 @@ public class DismantlePril3Easy extends BaseTest {
 
 
     private LoginPage l;
-    private DisposalsListPage dlp;
-    private UnauthBldList ubsList;
-    private UbsScratch ubs;
-    private DisposalPage d;
+    private DisposalsList dlp;
+    private UnauthorizedBuildingList ubsList;
+    private UnauthorizedBuilding ubs;
+    private Disposal d;
     private InspectionMainTab main;
     private InspectionObjectTab obj;
     private InspectionSubjectTab subj;
     private InspectionViolationTab viol;
     private MainPage mp;
     private DismantleList dl;
-    private DismantlePage dis;
+    private Dismantle dis;
     private InspectionTaskList itl;
     private RaidPlanTask raid;
 
@@ -72,16 +75,16 @@ public class DismantlePril3Easy extends BaseTest {
     void initPages() {
         l = new LoginPage(driver);
         mp = new MainPage(driver);
-        dlp = new DisposalsListPage(driver);
-        ubsList = new UnauthBldList(driver);
-        ubs = new UbsScratch(driver);
-        d = new DisposalPage(driver);
+        dlp = new DisposalsList(driver);
+        ubsList = new UnauthorizedBuildingList(driver);
+        ubs = new UnauthorizedBuilding(driver);
+        d = new Disposal(driver);
         main = new InspectionMainTab(driver);
         obj = new InspectionObjectTab(driver);
         subj = new InspectionSubjectTab(driver);
         viol = new InspectionViolationTab(driver);
         dl = new DismantleList(driver);
-        dis = new DismantlePage(driver);
+        dis = new Dismantle(driver);
         itl = new InspectionTaskList(driver);
         raid = new RaidPlanTask(driver);
     }

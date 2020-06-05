@@ -1,4 +1,4 @@
-package pagerepository.common;
+package pagerepository.utilities;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;

@@ -1,8 +1,8 @@
-package pagerepository.inspection;
+package pagerepository.inspections;
 
 import org.openqa.selenium.*;
 
-import pagerepository.utilities.Generator;
+import miscelaneous.Generator;
 
 public class InspectionObjectTab extends InspectionPage {
 
@@ -91,14 +91,14 @@ public class InspectionObjectTab extends InspectionPage {
     public void createContractTable(String contractRight) throws InterruptedException {
         scrollIntoViewBy(BtnContract);
         click(BtnContract);
-        BuildingContractPage bcp = new BuildingContractPage(driver);
+        BuildingContract bcp = new BuildingContract(driver);
         bcp.fillIn(contractRight);
     }
 
     public void createContractTable(String contractRight, String date) throws InterruptedException {
         scrollIntoViewBy(BtnContract);
         click(BtnContract);
-        BuildingContractPage bcp = new BuildingContractPage(driver);
+        BuildingContract bcp = new BuildingContract(driver);
         bcp.fillIn(contractRight, date);
     }
 

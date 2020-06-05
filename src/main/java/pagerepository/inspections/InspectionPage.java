@@ -1,4 +1,4 @@
-package pagerepository.inspection;
+package pagerepository.inspections;
 
 import pagerepository.utilities.CorePage;
 import org.openqa.selenium.By;

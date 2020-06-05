@@ -1,4 +1,4 @@
-package pagerepository.inspection;
+package pagerepository.inspections;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

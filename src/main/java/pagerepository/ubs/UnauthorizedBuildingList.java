@@ -4,9 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import pagerepository.utilities.CorePage;
 
-public class UnauthBldList extends CorePage {
+public class UnauthorizedBuildingList extends CorePage {
 
-		public UnauthBldList(WebDriver driver) {
+		public UnauthorizedBuildingList(WebDriver driver) {
 				super(driver);
 			}
 	

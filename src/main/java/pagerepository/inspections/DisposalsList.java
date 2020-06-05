@@ -1,11 +1,11 @@
-package pagerepository.inspection;
+package pagerepository.inspections;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import pagerepository.utilities.CorePage;
 
-public class DisposalsListPage extends CorePage {
-    public DisposalsListPage(WebDriver driver) {
+public class DisposalsList extends CorePage {
+    public DisposalsList(WebDriver driver) {
         super(driver);
     }
 

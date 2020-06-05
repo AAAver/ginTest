@@ -1,4 +1,4 @@
-package pagerepository.common;
+package pagerepository.main;
 
 import java.util.List;
 import pagerepository.utilities.CorePage;

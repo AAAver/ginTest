@@ -1,9 +1,9 @@
-package pagerepository.inspectionTask;
+package pagerepository.plan;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import pagerepository.utilities.CorePage;
-import pagerepository.utilities.Generator;
+import miscelaneous.Generator;
 
 public class RaidPlanTask extends CorePage {
     public RaidPlanTask(WebDriver driver) {

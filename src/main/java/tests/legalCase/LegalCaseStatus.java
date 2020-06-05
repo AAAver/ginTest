@@ -4,12 +4,11 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import pagerepository.common.LoginPage;
+import pagerepository.main.LoginPage;
 import pagerepository.legalcase.LegalCase;
-import pagerepository.legalcase.LegalCase;
-import pagerepository.utilities.Catalog;
+import miscelaneous.Catalog;
 
-import pagerepository.utilities.Props;
+import miscelaneous.Props;
 import tests.utils.BaseTest;
 
 

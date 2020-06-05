@@ -1,15 +1,15 @@
-package pagerepository.inspection;
+package pagerepository.inspections;
 
 import pagerepository.utilities.CorePage;
-import pagerepository.utilities.Generator;
+import miscelaneous.Generator;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class BuildingContractPage extends CorePage {
+public class BuildingContract extends CorePage {
 
-    public BuildingContractPage(WebDriver driver) {
+    public BuildingContract(WebDriver driver) {
         super(driver);
     }
 
@@ -86,8 +86,8 @@ public class BuildingContractPage extends CorePage {
             writeText(kadastrNumber, Generator.fakeKadastr());
         }
         writeText(usePurpose, "Сбор пушнины, мёда, рыболовство.");
-        click(contractSaveBtn);
-        click(toInspBtn);
+        clickJS(contractSaveBtn);
+        clickJS(toInspBtn);
     }
 
     public void fillIn(String contractRight, String date) throws InterruptedException {

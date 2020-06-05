@@ -1,18 +1,17 @@
 package tests.runnertest;
 
-import com.mifmif.common.regex.Main;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import pagerepository.common.MainPage;
-import pagerepository.inspection.*;
-import pagerepository.common.LoginPage;
-import pagerepository.common.Save;
-import pagerepository.common.Upload;
-import pagerepository.ubs.UbsScratch;
-import pagerepository.ubs.UnauthBldList;
-import pagerepository.utilities.Catalog;
-import pagerepository.utilities.Generator;
+import pagerepository.main.MainPage;
+import pagerepository.inspections.*;
+import pagerepository.main.LoginPage;
+import pagerepository.utilities.Save;
+import pagerepository.utilities.Upload;
+import pagerepository.ubs.UnauthorizedBuilding;
+import pagerepository.ubs.UnauthorizedBuildingList;
+import miscelaneous.Catalog;
+import miscelaneous.Generator;
 import tests.utils.BaseTest;
 
 import java.io.File;
@@ -46,10 +45,10 @@ public class BakeUbsPril3 extends BaseTest {
         mp.toUbsList();
 
         // Добавляем ОСС по 819
-        UnauthBldList ubsList = new UnauthBldList(driver);
+        UnauthorizedBuildingList ubsList = new UnauthorizedBuildingList(driver);
         ubsList.addUnauthBld();
 
-        UbsScratch ubs = new UbsScratch(driver);
+        UnauthorizedBuilding ubs = new UnauthorizedBuilding(driver);
         ubs.generateUBS(fakeAddress, ao, ubsResolution);
         String ubsUrl = driver.getCurrentUrl();
         String objSquare = ubs.getObjSquare();
@@ -57,9 +56,9 @@ public class BakeUbsPril3 extends BaseTest {
         //==== ПЕРВАЯ ПРОВЕРКА (819-ПП) ====//
         mp.toMainPage();
         mp.toDisposals();
-        DisposalsListPage dlp = new DisposalsListPage(driver);
+        DisposalsList dlp = new DisposalsList(driver);
         dlp.toInspectionZuDisposal();
-        DisposalPage d = new DisposalPage(driver);
+        Disposal d = new Disposal(driver);
         d.addInspection();
         InspectionMainTab main = new InspectionMainTab(driver);
         main.setInspectionTheme(inspTheme1);
