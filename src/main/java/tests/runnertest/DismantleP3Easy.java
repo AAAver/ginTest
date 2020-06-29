@@ -1,7 +1,9 @@
 package tests.runnertest;
 
+import miscelaneous.Api;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pagerepository.main.LoginPage;
@@ -20,10 +22,12 @@ import miscelaneous.Generator;
 import tests.utils.BaseTest;
 
 import java.io.File;
+import java.io.IOException;
 
+@Listeners(tests.utils.Listeners.class)
 public class DismantleP3Easy extends BaseTest {
     //==== РАСПОЛОЖЕНИЕ ====//
-    private String ao = Catalog.area.ao.DEFAULT_AO;
+    private String ao = Catalog.area.ao.CAO;
     //==== ОСС РАССМАТРИВАЕТСЯ В РАМКАХ ====//
     private String ubsResolution = Catalog.ubs.resolution.PP_819;
     //==== СХД ====//
@@ -36,9 +40,10 @@ public class DismantleP3Easy extends BaseTest {
     private SoftAssert softAssert;
 
     @BeforeClass
-    void initDriver() {
+    void initDriver() throws IOException, InterruptedException {
         setUpDriver();
         setUpExtentReport("Демонтаж по прил.3 (простой)");
+        Api.featureControllerDisable("SetlUnauthBldPolygon");
     }
 
     @BeforeMethod
@@ -140,22 +145,22 @@ public class DismantleP3Easy extends BaseTest {
     void dismantle() throws InterruptedException {
         mp.toMainPage();
         mp.toDismantle();
-        dl.filterAndOpen(fakeAddress);
+        dl.openDismantle(fakeAddress);
+
         softAssert.assertTrue(dis.getStatus().contains("Требуется обследование территории"));
-
         dis.stageGbuInitial();
+
         softAssert.assertTrue(dis.getStatus().contains("Ожидается добровольный демонтаж"));
-
         dis.stageVoluntaryDismantle(false);
+
         softAssert.assertTrue(dis.getStatus().contains("Определение сложности демонтажа"));
-
         dis.stageDismantleComplexity(false);
+
         softAssert.assertTrue(dis.getStatus().contains("Демонтаж"));
-
         dis.dismantleByContractor();
-        softAssert.assertTrue(dis.getStatus().contains("Приёмка демонтажа (ГБУ)"));
 
-        dis.stageGbuAcceptance();
+        softAssert.assertTrue(dis.getStatus().contains("Приёмка демонтажа (ГБУ)"));
+        dis.stageGbuAcceptance(Catalog.docs.category.GBU_DISMANTLE_DOC_PACK, Catalog.docs.path.GBU_DISMANTLE_DOC_PACK);
 
     }
 
@@ -164,6 +169,6 @@ public class DismantleP3Easy extends BaseTest {
         dis.toMainPage();
         mp.toInspectionTaskList();
         itl.toRaidList();
-        raid.createRaidTask();
+        raid.createRaidTask("Горбунов");
     }
 }

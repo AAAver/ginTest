@@ -2,6 +2,7 @@ package pagerepository.main;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import pagerepository.plan.InspectionTaskList;
 import pagerepository.utilities.CorePage;
 
 public class MainPage extends CorePage {
@@ -10,7 +11,7 @@ public class MainPage extends CorePage {
 		super(driver);
 	}
 	
-	By bell = By.xpath("//li[@id='navbar-notification'] //a[@class='dropdown-toggle']");
+
 	By notificationBp = By.xpath("//li[@id='navbar-notification']/ul/li[2]");
 
 	// ===== ССЫЛКИ ====== //
@@ -20,6 +21,9 @@ public class MainPage extends CorePage {
 	By inspectionTaskList = By.xpath("//li/*[contains(@href,'InspectionTask')]");
 	By casesDgi = By.xpath("//*[contains(@href, 'DgiLegalCase')]");
 
+	By bell = By.xpath("//*[@id='navbar-notification']/a");
+	By docToSign = By.xpath("//a[contains(@href, 'DocumentSigning')]");
+
 	
 	public void goToActiveBp() {
 		click(bell);
@@ -28,33 +32,39 @@ public class MainPage extends CorePage {
 
 	public void toDismantle(){
 		while(!driver.getCurrentUrl().contains("UnauthBuildingDismantle")) {
-			click(dismantleLink);
+			clickJS(dismantleLink);
 		}
 	}
 
 	public void toDisposals(){
 		while(!driver.getCurrentUrl().contains("Disposals")) {
-			click(disposalLink);
+			clickJS(disposalLink);
 		}
 	}
 
 	public void toUbsList(){
 		while(!driver.getCurrentUrl().contains("UnauthorizedBuilding")) {
-			click(ubsListLink);
+			clickJS(ubsListLink);
 		}
 	}
 
-	public void toInspectionTaskList(){
+	public InspectionTaskList toInspectionTaskList(){
 		while(!driver.getCurrentUrl().contains("InspectionTask")) {
-			click(inspectionTaskList);
+			clickJS(inspectionTaskList);
 		}
+		log.info("On InspectionTaskList page");
+		return new InspectionTaskList(driver);
 	}
 
 	public void toDgiLegalCase(){
 		while (!driver.getCurrentUrl().contains("DgiLegalCase")){
-			click(casesDgi);
+			clickJS(casesDgi);
 		}
 	}
 
 
+    public void toDocumentsForSigning() {
+		click(bell);
+		click(docToSign);
+    }
 }

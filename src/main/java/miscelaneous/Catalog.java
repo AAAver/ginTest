@@ -2,7 +2,7 @@ package miscelaneous;
 
 public class Catalog {
 //======================== ПРОВЕРКИ ============================//
-	public class inspection {
+	public static class inspection {
 		public class theme {
 			public static final String UBS_819_IDENT = "самострой";
 			public static final String TERRITORY_MONITORING = "Мониторинг закрепленных";
@@ -16,6 +16,22 @@ public class Catalog {
 			public static final String FED_PROPERTY = "Федеральная собственность";
 			public static final String PRIV_PROPERTY = "Частная собственность";
 			public static final String VIOL_SIGNS_IDENT = "Выявлены признаки";
+		}
+
+		public enum Reason {
+			Proposal("Поручение"),
+			Anyс("любая хрень");
+
+			private String reason;
+
+			Reason(String reason) {
+				this.reason = reason;
+			}
+
+			public String get(){
+				return reason;
+			}
+
 		}
 	}
 
@@ -88,7 +104,7 @@ public class Catalog {
 
 	public class area {
 		public class ao {
-			public static final String DEFAULT_AO = "ЦАО";
+			public static final String CAO = "ЦАО";
 		}
 	}
 
@@ -103,5 +119,32 @@ public class Catalog {
 		public class status{
 			public static final String PREPARE_CASE = "подготовка иска в суд";
 		}
+	}
+
+	public enum Array{;
+
+		public enum NestedArray1{
+			Variant1("Bom"),
+			Variant2("Bam");
+			String variant;
+			NestedArray1(String variant) {
+				this.variant = variant;
+			}
+			public String toString(){
+				return variant;
+			}
+		}
+		public enum NestedArray2{
+			Variant3("Bim"),
+			Variant4("Bum");
+			String variant;
+			NestedArray2(String variant) {
+				this.variant = variant;
+			}
+			public String toString(){
+				return variant;
+			}
+		}
+
 	}
 }

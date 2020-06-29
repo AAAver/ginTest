@@ -23,7 +23,7 @@ import pagerepository.ubs.UnauthorizedBuildingList;
 public class CreateUBS819Pril2 extends BaseTest {
 
     //==== РАСПОЛОЖЕНИЕ ====//
-    private String ao = Catalog.area.ao.DEFAULT_AO;
+    private String ao = Catalog.area.ao.CAO;
     //==== ОСС РАССМАТРИВАЕТСЯ В РАМКАХ ====//
     private String ubsResolution = Catalog.ubs.resolution.PP_819;
     //==== СХД ====//

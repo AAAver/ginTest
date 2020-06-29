@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="SMOKE">
+  <test thread-count="3" name="SMOKE TEST">
+    <classes>
+<!--      <class name="gin.spdDgi.ActMissAct"/>-->
+      <class name="tests.runnertest.BakeFullControlNf"/>
+      <class name="tests.runnertest.BakeUbs234pp"/>
+      <class name="tests.runnertest.BakeUbsPril2"/>
+      <class name="tests.runnertest.DismantleP3Easy"/>
+      <class name="tests.runnertest.DismantleP3Voluntary"/>
+    </classes>
+  </test> <!-- EXPORT_QUEUES TEST -->
+</suite> <!-- SPD_DGI -->

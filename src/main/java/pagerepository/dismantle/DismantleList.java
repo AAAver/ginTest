@@ -28,7 +28,7 @@ public class DismantleList extends CorePage {
     By filterBlock = By.xpath("//*[@id='searchFormDiv']");
 
 
-    public void filterAndOpen(String address) {
+    public void openDismantle(String address) {
         while (!getAttribute(filterBlock,"style").contains("display: block")) {
             click(b_filterBtn);
         }

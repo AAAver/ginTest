@@ -128,8 +128,6 @@ public class CorePage {
 
     public void waitVisibility(WebElement element) {
         wait.until(ExpectedConditions.visibilityOf(element));
-
-
     }
 
     public void waitVisibilityMultipleElements(By by) {
@@ -255,6 +253,7 @@ public class CorePage {
         while (!isDisplayed(instrumentalPanel)) {
             click(toMainPage);
         }
+        log.info("On main page");
     }
 
     public boolean isStale(By by){
@@ -280,5 +279,10 @@ public class CorePage {
         click(select2dropMask);
         return values;
     }
+
+    public boolean isOnMainPage(){
+        return isDisplayed(instrumentalPanel);
+    }
+
 
 }

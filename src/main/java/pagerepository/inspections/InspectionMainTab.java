@@ -1,5 +1,6 @@
 package pagerepository.inspections;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import miscelaneous.Generator;
 import org.openqa.selenium.WebDriver;
@@ -10,7 +11,9 @@ public class InspectionMainTab extends InspectionPage {
         super(driver);
     }
 
-    //=================== ТЕМАТИКА / РЕЗУЛЬТАТ ================//
+    By representativeExistTrue =  By.xpath("//*[@id='HasRepresentative' and @value='True']");
+
+
 
     public void setInspectionTheme(String theme) {
         scrollIntoViewBy(inspectionTheme);
@@ -85,30 +88,25 @@ public class InspectionMainTab extends InspectionPage {
 
     }
 
-    public void factUsage() {
-        scrollIntoViewBy(factUsage);
-        do {
-            click(factUsage);
-            var usages = getElementList(select2drop);
-            click(usages.get(random.nextInt(usages.size())));
-        } while (getActualValuesFromField(factUsage).contains("навесы - укрытия"));
+    public void setFactUsageRandom() {
+       chooseFromDropDownRandom(factUsage);
     }
 
     //=================== ПРЕДСТАВИТЕЛЬ ПРОВЕРЯЕМОГО ЛИЦА ================//
 
     public void addRepresentative(boolean refusedToSign) {
-        scrollIntoViewBy(representativeLastName);
+        if(!isDisplayed(representativeLastName)){
+            clickJS(representativeExistTrue);
+        }
+
         writeText(representativeLastName, fake.name().firstName());
         writeText(representativeFirstName, fake.name().lastName());
-        click(representativePosition);
-        var positions = getElementList(select2drop);
-        click(positions.get(random.nextInt(positions.size())));
-        click(representativeRefuse);
-        var decisions = getElementList(select2drop);
+        chooseFromDropDownRandom(representativePosition);
+
         if (refusedToSign) {
-            click(decisions.get(0));
+            chooseFromDropDown(representativeRefuse, "Да");
         } else {
-            click(decisions.get(1));
+            chooseFromDropDown(representativeRefuse, "Нет");
         }
     }
 
@@ -151,15 +149,15 @@ public class InspectionMainTab extends InspectionPage {
         scrollIntoViewBy(controlSubNumber);
         writeText(controlSubNumber, fake.number().digits(4));
         while(!getAttribute(controlDate, "class").contains("dirty-input")) {
-            writeText(controlDate, currentDate);
-            writeText(actDate, currentDate);
+            setDate(controlDate, currentDate);
+            setDate(actDate, currentDate);
         }
         click(controlSubNumber);
         writeText(durationHours, Integer.toString(Generator.getRandomUpTo(4)));
         writeText(controlTime, Generator.randomInspTime());
         addInspectors();
         objectConstructionStage();
-        factUsage();
+        setFactUsageRandom();
         addRepresentative(false);
         dangerSignal(false);
     }

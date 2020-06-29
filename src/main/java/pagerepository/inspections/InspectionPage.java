@@ -1,5 +1,6 @@
 package pagerepository.inspections;
 
+import pagerepository.main.LoginPage;
 import pagerepository.utilities.CorePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -37,7 +38,7 @@ public class InspectionPage extends CorePage {
 
 	// Кнопка СОХРАНИТЬ
 	By saveBtn = By.xpath("//a[@title='Сохранить (Ctrl+S)']");
-	By saveWarning = By.xpath("//a[@title='Сохранить']");
+
 
 	// Все(ну почти все) справочники в дропдаунах
 
@@ -203,17 +204,8 @@ public class InspectionPage extends CorePage {
 	By snapshot = By.xpath("//*[@id='shd-snapshot-info-container'] //label[@for='ShortName']");
 
 	// ============= ВКЛАДКА НАРУШЕНИЯ ============= //
-	// К проверке
-	By toInsp = By.xpath("//a[@title='Проверка']");
-	By warningBtn = By.xpath("//*[@id='add-perimeter-control-btn']");
-	By subNumber = By.xpath("//*[@id='SubNumber']");
-	By calendar = By.xpath("//*[@id='ui-datepicker-div']");
-	By date = By.xpath("//*[@id='Date']");
-	By koapArticle = By.xpath("//*[@id='s2id_KoApArticleCtId']");
-	By inspector = By.xpath("//*[@id='s2id_InspectorId']");
-	By deliveryType = By.xpath("//*[@id='s2id_DeliveryTypeCtId']");
-	By violatorType = By.xpath("//*[@id='s2id_ViolatorTypeCtId']");
-	By content = By.xpath("//*[@id='Content']");
+
+
 	// Добавить нарушение
 	By addViolBtn = By.xpath("//*[@id='add-violation-btn']");
 	By violTypeDrop = By.xpath("//*[@id='table-violation-info'] //tbody/tr[last()] //div[contains(@id, '_ViolationCtId')]");
@@ -224,16 +216,23 @@ public class InspectionPage extends CorePage {
 	By addProtocol = By.xpath("//*[@id='table-violation-info'] //tbody/tr //a[@title='Добавить протокол']");
 	By addPrescription = By.xpath("//*[@id='table-violation-info'] //tbody/tr //a[@title='Добавить предписание/уведомление']");
 	By violationLabel = By.xpath("//label[contains(@for, '_ViolationCtId')]");
+	By verificationStatus = By.xpath("//*[text()='Состояние верификации:']/following-sibling::span[1]");
 
 	public void verify() throws InterruptedException {
 		scrollToTop();
-		click(toVer);
-		click(sendVerBtn);
-		click(sendVerModal);
-		Thread.sleep(3000);
-		click(toVer);
-		click(verify);
-		click(verModal);
+		clickJS(toVer);
+		clickJS(sendVerBtn);
+		clickJS(sendVerModal);
+		String inspectionUrl = driver.getCurrentUrl();
+		LoginPage l = new LoginPage(driver);
+		if(getText(verificationStatus).contains("Отправлено на верификацию")){
+			l.logout();
+			l.loginAs("ЕлшинЕБ");
+		}
+		driver.get(inspectionUrl);
+		clickJS(toVer);
+		clickJS(verify);
+		clickJS(verModal);
 	}
 
 	public void mainTabSwitch(){

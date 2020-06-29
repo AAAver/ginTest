@@ -23,7 +23,7 @@ import java.io.File;
 
 public class DismantlePril3Easy extends BaseTest {
     //==== РАСПОЛОЖЕНИЕ ====//
-    private String ao = Catalog.area.ao.DEFAULT_AO;
+    private String ao = Catalog.area.ao.CAO;
     //==== ОСС РАССМАТРИВАЕТСЯ В РАМКАХ ====//
     private String ubsResolution = Catalog.ubs.resolution.PP_819;
     //==== СХД ====//
@@ -146,7 +146,7 @@ public class DismantlePril3Easy extends BaseTest {
     void dismantle() throws InterruptedException {
         mp.toMainPage();
         mp.toDismantle();
-        dl.filterAndOpen(fakeAddress);
+        dl.openDismantle(fakeAddress);
         softAssert.assertTrue(dis.getStatus().contains("Требуется обследование территории"));
 
         dis.stageGbuInitial();
@@ -161,7 +161,7 @@ public class DismantlePril3Easy extends BaseTest {
         dis.dismantleByContractor();
         softAssert.assertTrue(dis.getStatus().contains("Приёмка демонтажа (ГБУ)"));
 
-        dis.stageGbuAcceptance();
+        dis.stageGbuAcceptance(Catalog.docs.category.GBU_DISMANTLE_DOC_PACK, Catalog.docs.path.GBU_DISMANTLE_DOC_PACK);
 
     }
 
@@ -170,6 +170,6 @@ public class DismantlePril3Easy extends BaseTest {
         dis.toMainPage();
         mp.toInspectionTaskList();
         itl.toRaidList();
-        raid.createRaidTask();
+        raid.createRaidTask("Горбунов");
     }
 }

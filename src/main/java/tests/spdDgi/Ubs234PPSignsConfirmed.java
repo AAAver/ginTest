@@ -22,7 +22,7 @@ public class Ubs234PPSignsConfirmed extends BaseTest {
 
 	private String ubsResol = Catalog.ubs.resolution.PP_234;
 	private String ubsState = Catalog.ubs.state.UBS_SIGNS_CONFIRMED;
-	private String ao = Catalog.area.ao.DEFAULT_AO;
+	private String ao = Catalog.area.ao.CAO;
 	private String disposalUrl = Props.DISPOSAL_URL_ZU_1;
 	private String inspTheme = Catalog.inspection.theme.UBS_819_IDENT;
 	private String inspResult = Catalog.inspection.result.FED_PROPERTY;

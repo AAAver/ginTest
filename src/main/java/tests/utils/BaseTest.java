@@ -53,11 +53,12 @@ public class BaseTest {
         dcap.setCapability("pageLoadStrategy", "eager");
 
         ChromeOptions opt = new ChromeOptions();
+        opt.addExtensions(new File("./extensions/cades.crx"));
+        opt.addArguments("start-maximized");
         opt.merge(dcap);
 
         driver = new ChromeDriver(opt);
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
         driver.get(baseUrl);
     }
 
@@ -71,8 +72,8 @@ public class BaseTest {
 //        }
 //    }
 //
-    public void takeScreenshotFail(String methodName) {
-        File screenShotFile =  ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+    public void takeScreenshotFail(String methodName, WebDriver webDriver) {
+        File screenShotFile =  ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
         String time = new SimpleDateFormat("yyyy_MM_dd_HH_mm").format(new Date());
         try {
             FileHandler.copy(screenShotFile, new File("./logs/screenshots_fail/"+methodName+"_"+time+"_.png"));
@@ -87,6 +88,20 @@ public class BaseTest {
 
     public void setUpExtentReport(String description) {
         ExtentTestManager.startTest(getClass().getName(), description);
+    }
+
+    public String trimLoginName(String name){
+        String[] parts1 = name.split(" ");
+        String noSpace = "";
+        for (int i = 0; i < parts1.length; i++) {
+            noSpace += parts1[i];
+        }
+        String[] parts2 = noSpace.split("\\.");
+        String trimmedLogin = "";
+        for (int i = 0; i < parts2.length; i++) {
+            trimmedLogin += parts2[i];
+        }
+        return trimmedLogin;
     }
 
 }

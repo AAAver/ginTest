@@ -23,7 +23,7 @@ import java.io.File;
 
 public class DismantlePril3Voluntary extends BaseTest {
     //==== РАСПОЛОЖЕНИЕ ====//
-    private String ao = Catalog.area.ao.DEFAULT_AO;
+    private String ao = Catalog.area.ao.CAO;
     //==== ОСС РАССМАТРИВАЕТСЯ В РАМКАХ ====//
     private String ubsResolution = Catalog.ubs.resolution.PP_819;
     //==== СХД ====//
@@ -144,7 +144,7 @@ public class DismantlePril3Voluntary extends BaseTest {
     void dismantle() throws InterruptedException {
         driver.get(baseUrl);
         mp.toDismantle();
-        dl.filterAndOpen(fakeAddress);
+        dl.openDismantle(fakeAddress);
         softAssert.assertTrue(dis.getStatus().contains("Требуется обследование территории"));
 
         dis.stageGbuInitial();
@@ -158,6 +158,6 @@ public class DismantlePril3Voluntary extends BaseTest {
         driver.get(baseUrl);
         mp.toInspectionTaskList();
         itl.toRaidList();
-        raid.createRaidTask();
+        raid.createRaidTask("Горбунов");
     }
 }

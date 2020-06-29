@@ -6,6 +6,9 @@ import miscelaneous.Generator;
 
 public class InspectionObjectTab extends InspectionPage {
 
+    By zuContractTrue = By.xpath("//*[@id = 'IsExistsZUContract' and @value ='True']/parent::label");
+    By zuContractFalse = By.xpath("//*[@id = 'IsExistsZUContract' and @value ='False']/parent::label");
+
     public InspectionObjectTab(WebDriver driver) {
         super(driver);
     }
@@ -103,4 +106,11 @@ public class InspectionObjectTab extends InspectionPage {
     }
 
 
+    public void setContractZU(boolean b) {
+        if (b) {
+            clickJS(zuContractTrue);
+        } else {
+            clickJS(zuContractFalse);
+        }
+    }
 }

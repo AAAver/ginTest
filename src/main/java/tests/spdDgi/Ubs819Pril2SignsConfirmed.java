@@ -27,7 +27,7 @@ public class Ubs819Pril2SignsConfirmed extends BaseTest {
     private String inspResult = Catalog.inspection.result.PRIL_2;
 
 
-    private String ao = Catalog.area.ao.DEFAULT_AO;
+    private String ao = Catalog.area.ao.CAO;
     private String disposalUrl = Props.DISPOSAL_URL_ZU_1;
     private String shd = Catalog.shd.DEFAULT_SHD;
     String ubsUrl;

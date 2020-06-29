@@ -1,29 +1,33 @@
 package tests.runnertest;
 
 
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
-import pagerepository.main.MainPage;
-import pagerepository.inspections.Disposal;
-import pagerepository.main.LoginPage;
-import pagerepository.utilities.Save;
-import pagerepository.utilities.Upload;
-import pagerepository.inspections.*;
 import miscelaneous.Catalog;
 import miscelaneous.Generator;
 import miscelaneous.Props;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
+import pagerepository.inspections.*;
+import pagerepository.main.LoginPage;
+import pagerepository.main.MainPage;
+import pagerepository.plan.InspectionTask;
+import pagerepository.plan.InspectionTaskAddress;
+import pagerepository.plan.InspectionTaskList;
+import pagerepository.utilities.Save;
+import pagerepository.utilities.Upload;
 import tests.utils.BaseTest;
 
+import java.util.List;
+
 @Listeners(tests.utils.Listeners.class)
-public class BakeControlNf extends BaseTest {
+public class BakeFullControlNf extends BaseTest {
 
     private String companyName = "Альянс Девелопмент";
     private String objSquare = Integer.toString(Generator.getRandomUpTo(5000));
     private String inspTheme = Catalog.inspection.theme.ONF;
     private String inspResult = Catalog.inspection.result.VIOL_SIGNS_IDENT;
     private String rightType = Catalog.useRight.RENT;
+    private String departmentAo = Catalog.area.ao.CAO;
 
     @BeforeClass
     void setDriver() {
@@ -46,7 +50,6 @@ public class BakeControlNf extends BaseTest {
     public void initialization() {
         log.info("Initializing pages");
         l = new LoginPage(driver);
-        d = new Disposal(driver);
         insp = new InspectionPage(driver);
         main = new InspectionMainTab(driver);
         obj = new InspectionObjectTab(driver);
@@ -61,9 +64,38 @@ public class BakeControlNf extends BaseTest {
     @Test(dependsOnMethods = "initialization", description = "Авторизация и создание проверки")
     public void authorization() {
         l.loginAs(ultLogin);
-        mp.toDisposals();
-        dlp.toInspectionNfDisposal();
+        mp.toInspectionTaskList();
 
+        InspectionTaskList itl = new InspectionTaskList(driver);
+        itl.addTaskNf();
+
+        InspectionTask it = new InspectionTask(driver);
+        it.setTaskSource("Поручение");
+        it.setInspectionTheme(inspTheme);
+        it.setInspectionDepartment(departmentAo);
+        it.setEndDate(Generator.getCurrentDatePlus5());
+        it.save();
+
+        InspectionTaskAddress ita = it.addAddress();
+        ita.save();
+        ita.setAddress(fakeAddress);
+        ita.setAo(departmentAo);
+        ita.setDistrictRandom();
+        ita.setInspectionDepartment(departmentAo);
+        ita.setInspectorsRandom(2);
+        ita.save();
+        String itaUrl = driver.getCurrentUrl();
+        List<String> inspectors = ita.getInspectorsList();
+        String inspName = inspectors.get(Generator.getRandomUpTo(inspectors.size()));
+        String responsibleInspector = trimLoginName(inspName);
+
+        l.logout();
+        l.loginAs(responsibleInspector);
+        driver.get(itaUrl);
+        d = ita.addDisposal();
+        d.setIssueDate();
+        d.setReasonRandom();
+        d.save();
         d.addInspection();
     }
 
@@ -129,7 +161,8 @@ public class BakeControlNf extends BaseTest {
         viol.violTabSwitch();
         viol.addWarning();
         viol.violTabSwitch();
-//        insp.verify();
+        insp.verify();
+
     }
 
     @Test(dependsOnMethods = "addWarningCard", description = "Верификация карточки")

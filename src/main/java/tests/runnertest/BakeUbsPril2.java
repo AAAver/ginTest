@@ -1,6 +1,8 @@
 package tests.runnertest;
 
+import miscelaneous.Api;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pagerepository.main.LoginPage;
 import pagerepository.main.MainPage;
@@ -15,10 +17,12 @@ import miscelaneous.Generator;
 import tests.utils.BaseTest;
 
 import java.io.File;
+import java.io.IOException;
 
+@Listeners(tests.utils.Listeners.class)
 public class BakeUbsPril2 extends BaseTest {
     //==== РАСПОЛОЖЕНИЕ ====//
-    private String ao = Catalog.area.ao.DEFAULT_AO;
+    private String ao = Catalog.area.ao.CAO;
     //==== ОСС РАССМАТРИВАЕТСЯ В РАМКАХ ====//
     private String ubsResolution = Catalog.ubs.resolution.PP_819;
     //==== СХД ====//
@@ -55,7 +59,7 @@ public class BakeUbsPril2 extends BaseTest {
 
 
     @Test(description = "Page initialization")
-    void initPages() {
+    void initPages() throws IOException, InterruptedException {
         lp = new LoginPage(driver);
         mp = new MainPage(driver);
         dlp = new DisposalsList(driver);
@@ -67,6 +71,7 @@ public class BakeUbsPril2 extends BaseTest {
         subj = new InspectionSubjectTab(driver);
         viol = new InspectionViolationTab(driver);
         dlc = new DgiLegalCase(driver);
+        Api.featureControllerDisable("SetlUnauthBldPolygon");
     }
 
 

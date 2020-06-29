@@ -1,5 +1,6 @@
 package tests.runnertest;
 
+import miscelaneous.Api;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -15,12 +16,13 @@ import miscelaneous.Generator;
 import tests.utils.BaseTest;
 
 import java.io.File;
+import java.io.IOException;
 
 @Listeners(tests.utils.Listeners.class)
 public class BakeUbsPril3 extends BaseTest {
 
     //==== РАСПОЛОЖЕНИЕ ====//
-    private String ao = Catalog.area.ao.DEFAULT_AO;
+    private String ao = Catalog.area.ao.CAO;
     //==== ОСС РАССМАТРИВАЕТСЯ В РАМКАХ ====//
     private String ubsResolution = Catalog.ubs.resolution.PP_819;
     //==== СХД ====//
@@ -32,9 +34,10 @@ public class BakeUbsPril3 extends BaseTest {
     private String docPath1 = (new File(Catalog.docs.path.ACT_PRIL_3)).getAbsolutePath();
 
     @BeforeClass
-    void initDriver(){
+    void initDriver() throws IOException, InterruptedException {
         setUpDriver();
         setUpExtentReport("Создание ОСС по прил.3 с проверкой в которой 2 нарушения");
+        Api.featureControllerDisable("SetlUnauthBldPolygon");
     }
 
     @Test(priority = 1, description = "Новый тест")

@@ -64,6 +64,8 @@ public class Dismantle extends CorePage {
     By b_confirmDocAttachment = By.xpath("//*[contains(@style,'display: block')]  //button[contains(@class,'btn-primary')]");
     By b_acceptDismantleGbu = By.xpath("//*[contains(@id,'Contractor_FHU_GBU')]/following-sibling::div[1] //a[@title='Принять']");
 
+    By ks2ActNumber = By.xpath("//*[@placeholder = 'Введите номер акта']");
+
 
     public void stageGbuInitial() {
         setDate(f_notificationDate, Generator.getCurrentDate());
@@ -152,24 +154,19 @@ public class Dismantle extends CorePage {
 
             Select s = new Select(castToWebElement(d_gbuDocCategory));
             s.selectByVisibleText(docCategory[i]);
+            setDate(f_gbuDocDate, Generator.getCurrentDate());
 
-
-            try {
-                setDate(f_gbuDocDate, Generator.getCurrentDate());
-            } catch (NoSuchElementException e) {
-
-            } catch (TimeoutException e) {
-
+            if(docCategory[i].contains("КС-2")){
+                writeText(ks2ActNumber, fake.regexify("[1-9]-[0-9]{3}"));
             }
 
             click(b_confirmDocAttachment);
-            log.info("Modal closed");
             i++;
         }
     }
 
-    public void stageGbuAcceptance() {
-        attachGbuDocs(Catalog.docs.category.GBU_DISMANTLE_DOC_PACK, Catalog.docs.path.GBU_DISMANTLE_DOC_PACK);
+    public void stageGbuAcceptance(String[] docsCategory, String[] docsPath) {
+        attachGbuDocs(docsCategory, docsPath);
         while(!isDisplayed(dismantleSection)) {
             click(dismantleBlockCollapse);
         }

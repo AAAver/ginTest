@@ -27,32 +27,30 @@ public class Listeners extends BaseTest implements ITestListener {
 
     @Override
     public void onTestSuccess(ITestResult result) {
-//        // ДЕФОЛТНЫЙ СКРИНШОТ И ЛОГИРОВАНИЕ
-//        takeScreenshotSuccess(result.getMethod().getMethodName());
-//        log.debug("TEST " + result.getMethod().getMethodName() + " SUCCEEDED.");
-
-        // EXTENT ОТЧЁТ И СКРИНШОТ
         Object testClass = result.getInstance();
         WebDriver webDriver = ((BaseTest) testClass).getDriver();
+
+        // ДЕФОЛТНЫЙ СКРИНШОТ И ЛОГИРОВАНИЕ
+        log.debug("TEST " + result.getMethod().getMethodName() + " SUCCEEDED.");
+
+        // EXTENT ОТЧЁТ И СКРИНШОТ
         //Take base64Screenshot screenshot.
         String base64Screenshot = "data:image/png;base64," + ((TakesScreenshot) webDriver).
                 getScreenshotAs(OutputType.BASE64);
-//        takeScreenshotFail("test");
         ExtentTestManager.getTest().log(LogStatus.PASS, result.getMethod().getDescription(),
                 ExtentTestManager.getTest().addBase64ScreenShot(base64Screenshot));
-
-
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
-        // ДЕФОЛТНЫЙ СКРИНШОТ И ЛОГИРОВАНИЕ
-//        takeScreenshotFail(result.getMethod().getMethodName());
-//        log.error("TEST " + result.getMethod().getMethodName() + " FAILED. Trace follows: ", result.getThrowable());
-
-        // EXTENT ОТЧЁТ И СКРИНШОТ
         Object testClass = result.getInstance();
         WebDriver webDriver = ((BaseTest) testClass).getDriver();
+
+        // ДЕФОЛТНЫЙ СКРИНШОТ И ЛОГИРОВАНИЕ
+        log.fatal("TEST " + result.getMethod().getMethodName() + " FAILED. Trace follows: ", result.getThrowable());
+//        takeScreenshotFail(result.getMethod().getMethodName(), webDriver);
+
+        // EXTENT ОТЧЁТ И СКРИНШОТ
         //Take base64Screenshot screenshot.
         String base64Screenshot = "data:image/png;base64," + ((TakesScreenshot) webDriver).
                 getScreenshotAs(OutputType.BASE64);
@@ -60,8 +58,6 @@ public class Listeners extends BaseTest implements ITestListener {
         ExtentTestManager.getTest().log(LogStatus.FAIL, result.getMethod().getDescription(),
                 ExtentTestManager.getTest().addBase64ScreenShot(base64Screenshot));
         ExtentTestManager.getTest().log(LogStatus.FAIL, result.getThrowable());
-
-
     }
 
     @Override
@@ -79,7 +75,7 @@ public class Listeners extends BaseTest implements ITestListener {
     @Override
     public void onTestFailedWithTimeout(ITestResult result) {
         // ДЕФОЛТНЫЙ СКРИНШОТ И ЛОГИРОВАНИЕ
-//        takeScreenshotFail(result.getMethod().getMethodName());
+
 //        log.error("TEST " + result.getMethod().getMethodName() + " FAILED. Trace follows: ", result.getThrowable());
 
         // EXTENT ОТЧЁТ И СКРИНШОТ
@@ -92,7 +88,7 @@ public class Listeners extends BaseTest implements ITestListener {
         ExtentTestManager.getTest().log(LogStatus.FAIL, result.getMethod().getDescription(),
                 ExtentTestManager.getTest().addBase64ScreenShot(base64Screenshot));
         ExtentTestManager.getTest().log(LogStatus.FAIL, result.getThrowable());
-
+        takeScreenshotFail(result.getMethod().getMethodName(), webDriver);
 
     }
 

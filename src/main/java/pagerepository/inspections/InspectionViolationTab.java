@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import pagerepository.utilities.Upload;
 import miscelaneous.Catalog;
 
@@ -18,10 +19,7 @@ public class InspectionViolationTab extends InspectionPage {
         super(driver);
     }
 
-    String warnContent = "Здесь могло быть ваше нарушение";
-    String today = new SimpleDateFormat("dd.MM.yyyy").format(new Date());
-    String warnCategory = Catalog.docs.category.WARNING;
-    String warnPath = (new File(Catalog.docs.path.WARNING)).getAbsolutePath();
+    By warningBtn = By.xpath("//*[@id='add-perimeter-control-btn']");
 
     public void addViolation(String violation) throws InterruptedException {
         scrollIntoViewBy(addViolBtn);
@@ -82,25 +80,12 @@ public class InspectionViolationTab extends InspectionPage {
     //================== ПРЕДОСТЕРЕЖЕНИЕ ================//
     public void addWarning() throws InterruptedException {
         scrollIntoViewBy(warningBtn);
-        click(warningBtn);
-        setDate(date, today);
-        writeText(subNumber, fake.number().digits(5));
-        chooseFromDropDownRandom(koapArticle);
-        click(inspector);
-        List<WebElement> inspectors = getElementList(select2drop);
-        click(inspectors.get(random.nextInt(inspectors.size())));
-        click(deliveryType);
-        List<WebElement> deliveryTypes = getElementList(select2drop);
-        click(deliveryTypes.get(random.nextInt(deliveryTypes.size())));
-        click(violatorType);
-        List<WebElement> violatorTypes = getElementList(select2drop);
-        click(violatorTypes.get(random.nextInt(violatorTypes.size())));
-        writeText(content, warnContent);
-        click(saveWarning);
-        Upload.file(driver, warnCategory, warnPath);
-        click(saveWarning);
-        click(toInsp);
+        clickJS(warningBtn);
+        Warning w = new Warning(driver);
+        w.populate();
+        }
+
     }
 
 
-}
+

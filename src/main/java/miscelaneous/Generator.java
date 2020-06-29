@@ -14,7 +14,7 @@ public class Generator {
 	
 	
 	public static String getCurrentDate() {
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("ddMMyyyy");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 		LocalDate localDate = LocalDate.now();
 		String currentDate = dtf.format(localDate);
 		return currentDate;
@@ -22,7 +22,7 @@ public class Generator {
 	};
 
 	public static String getCurrentDatePlus5() {
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("ddMMyyyy");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 		LocalDate localDate = LocalDate.now().plusDays(5);
 		String currentDatePlus5 = dtf.format(localDate);
 		return currentDatePlus5;

@@ -144,22 +144,14 @@ public class UnauthorizedBuilding extends CorePage {
     public void addActualization(int prilNumber) {
         scrollIntoViewBy(btnActualize);
         click(btnActualize);
-        click(actualize819Pril);
-        List<WebElement> prils = getElementList(select2drop);
-        for (WebElement webElement : prils) {
+
             if (prilNumber == 2) {
-                if (getText(webElement).contains("приложение 2")) {
-                    click(webElement);
-                    break;
-                }
+                chooseFromDropDown(actualize819Pril, "приложение 2");
             }
             else if(prilNumber == 3){
-                if (getText(webElement).contains("приложение 3")) {
-                    click(webElement);
-                    break;
-                }
+                chooseFromDropDown(actualize819Pril, "приложение 3");
             }
-        }
+
         click(btnSaveActualization819Pril);
         writeText(PP819NumberM, Integer.toString(random.nextInt(100)));
         click(btnSavePP819Number);
@@ -167,7 +159,9 @@ public class UnauthorizedBuilding extends CorePage {
             writeText(PP819NumberM, Integer.toString(random.nextInt(100)));
             click(btnSavePP819Number);
         }
-        click(btnActualizationToUbs);
+        while (driver.getCurrentUrl().contains("EditUbActualization")) {
+            click(btnActualizationToUbs);
+        }
     }
 
     public void verify() throws InterruptedException {
